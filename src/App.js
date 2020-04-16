@@ -1,7 +1,8 @@
 import React from 'react';
+import VistaProfes from './componentes/vistaProfes';
 
 const App = () => {
-  return (<div><h2>COMPONENTE APP</h2></div>);
+  return (<div><VistaProfes /></div>);
 }
 
 export default App;
