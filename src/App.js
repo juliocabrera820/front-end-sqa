@@ -1,8 +1,8 @@
 import React from 'react';
-import Login from './componentes/login';
+import VistaProfes from './componentes/vistaProfes';
 
 const App = () => {
-  return (<div><Login/></div>);
+  return (<div><VistaProfes /></div>);
 }
 
 export default App;
