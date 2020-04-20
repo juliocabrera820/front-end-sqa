@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import imagen from '../imagenes/aula.jpeg'
 import signin from '../imagenes/iniciar-sesion.png'
 import styled from 'styled-components'
+import { useForm } from 'react-hook-form'
 
  
 
@@ -28,7 +29,7 @@ const Cuerpo = styled.div`
 
 const Seccion = styled.div`
     margin: 0 auto;
-    margin-top: 20%;
+    margin-top: 15%;
 `;
 
 const InputF = styled.div`
@@ -61,9 +62,19 @@ const Formato = styled.div`
     font-size: 20px;
 `;
 
+
+
 function Login() {
+
+    const { register, handleSubmit, errors} = useForm();
+
+    const onSubmit=(data, event) =>{
+        console.log(data);
+        event.target.reset();
+    }
+
     return (
-        <div className="container-fluid">
+        <div className="container-fluid" >
             <div className="row">
                 <div className="col-5">
                     <Image src={imagen}></Image>
@@ -76,22 +87,40 @@ function Login() {
                                 Ingresa tu usuario para consultar tu horario
                             </Cuerpo>
                             <div className="col-12">
-                                <form >
+                                <form onSubmit={handleSubmit(onSubmit)}>
                                     <Formato>
                                         <InputF className="form-group">
                                             <label className="Control-label">Usuario:</label>
-                                            <Input type="text" className="form-control " name="user" placeholder="Ingresa tu usuario"></Input>
-                                        </InputF>
+                                            <Input 
+                                                type="text" 
+                                                className={`form-control ${errors.username ? 'is-invalid' : 'is-valid'}`}
+                                                name="username" 
+                                                placeholder="Ingresa tu usuario"
+                                                ref={register({ required: 'Debes ingresar un usuario valido', validate: username => username .trim() !== "" || 'No debe tener espacios en blanco' })}
+                                            />
+                                            <div className="invalid-feedback">
+                                                {errors.username && errors.username.message}
+                                            </div>
+                                        </InputF>                                   
                                     </Formato>
 
                                     <Formato>
                                         <InputF className="form-group">
                                             <label className="Control-label">Contraseña:</label>
-                                            <Input type="password" className="form-control" name="pwd" placeholder="Ingresa tu contraseña"></Input>
+                                            <Input 
+                                            type="password" 
+                                            className={`form-control ${errors.password ? 'is-invalid' : 'is-valid'}`} 
+                                            name="password"  
+                                            placeholder="Ingresa tu contraseña"
+                                            ref={register({ required: 'Debes ingresar una contraseña valida', validate: password => password.trim() !== "" || 'No debe tener espacios en blanco' })}
+                                            />   
+                                            <div className="invalid-feedback">
+                                            {errors.password && errors.password.message}
+                                            </div>
                                         </InputF>
                                     </Formato>
                                     <div className="col-12 text-center">
-                                        <Button type="submit" className="btn btn-light">Entrar <image src={signin}></image> </Button>
+                                        <Button className="btn btn-light" >Entrar <image src={signin}></image> </Button>
                                     </div>
                                 </form>
                             </div>          
