@@ -1,10 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-import VistaProfes from './componentes/vistaProfes';
-
-const App = () => {
-  return (<div><VistaProfes /></div>);
-=======
 import {BrowserRouter as Router,Switch, Route} from 'react-router-dom';
 import login from './componentes/login';
 import vistaAlumno from './componentes/VistaAlumno';
@@ -22,7 +16,6 @@ const App = () => {
         </Switch>
     </Router>
   );
->>>>>>> validadciones y redirecciones
 }
 
 export default App;
