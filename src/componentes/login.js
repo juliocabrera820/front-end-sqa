@@ -15,7 +15,7 @@ toast.configure({
     position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-const Image = styled.image`
+const Img = styled.img`
     object-fit: cover;
     object-position: center center;
     width: 100%;
@@ -113,7 +113,7 @@ function Login(props) {
         <div className="container-fluid" >
             <div className="row">
                 <div className="col-5">
-                    <Image src={imagen}></Image>
+                    <Img src={imagen}></Img>
                 </div>
                 <div className="col-7 ">
                     <Seccion className="col-sm-8 "> 
@@ -156,7 +156,7 @@ function Login(props) {
                                         </InputF>
                                     </Formato>
                                     <div className="col-12 text-center">
-                                        <Button className="btn btn-light" >Entrar <image src={signin}></image> </Button>
+                                        <Button className="btn btn-light" >Entrar <img src={signin}></img> </Button>
                                     </div>
                                 </form>
                             </div>          
