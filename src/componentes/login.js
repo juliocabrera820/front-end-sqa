@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import imagen from '../imagenes/aula.jpeg'
 import signin from '../imagenes/iniciar-sesion.png'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {Redirect, withRouter} from 'react-router-dom';
 
  
+toast.configure({
+    autoClose: 2000,
+    draggable: false,
+    position: toast.POSITION.BOTTOM_RIGHT,
+});
 
 const Image = styled.image`
     object-fit: cover;
@@ -64,15 +73,42 @@ const Formato = styled.div`
 
 
 
-function Login() {
-
+function Login(props) {
+    
+    const {history} = props;
     const { register, handleSubmit, errors} = useForm();
 
     const onSubmit=(data, event) =>{
-        console.log(data);
-        event.target.reset();
+        login(data);
     }
 
+    const notify = (error) => toast(error,{
+        type: toast.TYPE.ERROR,
+        toastId: 1
+    });
+
+    const login = (data)=>{
+        axios.get(`http://localhost/SGH-BackEnd/api/usuarios/${data['username']}`).then(response=>{
+            if(response.data.data[0]['Usuario']===data['username']){
+                if(response.data.data[0]['contrasena']===data['password']){
+                    if(response.data.data[0]['TipoUser']==='1'){
+                        sessionStorage.setItem('userData', response.data.data[0]);
+                        history.push('/Administrador');
+                    }else{
+                        if(response.data.data[0]['TipoUser']==='2'){
+                            sessionStorage.setItem('userData', response.data.data[0]);
+                            history.push('/Maestro');
+                        }else{
+                            sessionStorage.setItem('userData', response.data.data[0]);
+                            history.push('/Alumno');
+                        }
+                    }
+                }else{
+                    notify("contraseña invalida");
+                }
+            }
+        }).catch(error=>notify("usuario y contraseña invalida"));
+    }
     return (
         <div className="container-fluid" >
             <div className="row">
@@ -96,7 +132,7 @@ function Login() {
                                                 className={`form-control ${errors.username ? 'is-invalid' : 'is-valid'}`}
                                                 name="username" 
                                                 placeholder="Ingresa tu usuario"
-                                                ref={register({ required: 'Debes ingresar un usuario valido', validate: username => username .trim() !== "" || 'No debe tener espacios en blanco' })}
+                                                ref={register({ required: 'Debes ingresar un usuario valido', validate: username => username.trim() !== "" || 'No debe tener espacios en blanco' })}
                                             />
                                             <div className="invalid-feedback">
                                                 {errors.username && errors.username.message}
@@ -131,4 +167,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default withRouter(Login);
