@@ -106,6 +106,8 @@ function Login(props) {
                 }else{
                     notify("contraseña invalida");
                 }
+            }else{
+                notify("usuario y contraseña invalida")
             }
         }).catch(error=>notify("usuario y contraseña invalida"));
     }
