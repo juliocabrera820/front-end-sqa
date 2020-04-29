@@ -1,10 +1,28 @@
 import React, { useState,useEffect } from 'react';
 import ItemHorario from './itemHorario';
-import Header from './header'
-import axios from 'axios'
-import styled from 'styled-components'
+import Header from './header';
+import axios from 'axios';
+import styled from 'styled-components';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
-function VistaAlumno (){
+
+
+const Horario = styled.div`
+    margin-left: 10%;
+    margin-right: 10%;
+`;
+
+const Grupo = styled.td`
+    border: 1px solid black;
+    width: 9%;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #e7e3e2;
+    border : #b2b2b0 1px solid;
+`;
+
+const VistaAlumno = () =>{
 
     const {horario, setHorario} = useState();
     const horarios=[
@@ -85,31 +103,31 @@ function VistaAlumno (){
             "Nombres":"Victor Hugo",
             "ApellidoM":"Menendez",
             "ApellidoP":"Dominguez",
-            "Materia":"Interaccion humano computadora",
+            "Materia":"Construccion de Software",
             "Clv_Materia":"CS",
             "aula":"D2",
             "HInicio":"08:30:00",
             "HFinal":"10:00:00",
-            "Dia":"Viernes"
+            "Dia":"Martes"
         },
         {
             "Clv_Horario":8,
             "Nombres":"Victor Hugo",
             "ApellidoM":"Menendez",
             "ApellidoP":"Dominguez",
-            "Materia":"Interaccion humano computadora",
+            "Materia":"Construccion de Software",
             "Clv_Materia":"CS",
             "aula":"D2",
             "HInicio":"08:30:00",
             "HFinal":"10:00:00",
-            "Dia":"Viernes"
+            "Dia":"Miercoles"
         },
         {
             "Clv_Horario":9,
             "Nombres":"Victor Hugo",
             "ApellidoM":"Menendez",
             "ApellidoP":"Dominguez",
-            "Materia":"Interaccion humano computadora",
+            "Materia":"Construccion de Software",
             "Clv_Materia":"CS",
             "aula":"D2",
             "HInicio":"08:30:00",
@@ -128,72 +146,16 @@ function VistaAlumno (){
         }).catch(error=>console.log("no se pudo conectar con el servidor"));*/
     });
 
-
-    const Horario = styled.div`
-        margin-left: 10%;
-        margin-right: 10%;
-    `;
-
-    const Table = styled.table`
-        height: 100%;
-        border-collapse: separate;
-        border-spacing: 10px;
-    `;
-
-    const Titulo = styled.td`
-        font-family: 'Yanone Kaffeesatz', sans-serif;
-        font-size: 30px;
-        opacity: .8;
-        border : #b2b2b0 1px solid;
-        text-align:center;
-        padding: 25px;
-        border-radius: 3px;
-        background-color: #e7e3e2;
-    `;
-
-    const Thead = styled.thead`
-
-    `;
-
-    const Tbody = styled.tbody`
-        font-family: 'Yanone Kaffeesatz', sans-serif;
-        font-size: 20px;
-        opacity: .8;
-    `;
-
-    const Tr = styled.tr`
-        
-    `;
-
-    const Td = styled.td`
-        border: 1px solid black;
-        width: 13%;
-        padding: 5px;
-        border-radius: 3px;
-        background-color: #e7e3e2;
-        border : #b2b2b0 1px solid;
-    `;
-    const Grupo = styled.td`
-        border: 1px solid black;
-        width: 9%;
-        padding: 10px;
-        border-radius: 3px;
-        background-color: #e7e3e2;
-        border : #b2b2b0 1px solid;
-    `;
-
-
-
     const creartabla=()=>{
         let aux = new Array();
         for(let i =0; i<asg.length; i++){
             let hora = horarios.filter(x=>x.Clv_Materia===asg[i]);
             aux[i] = {
-                Nombre: hora[i].Nombres,
-                ApellidoM: hora[i].ApellidoM,
-                ApellidoP: hora[i].ApellidoP,
-                Clv_Materia: hora[i].Clv_Materia,
-                Materia: hora[i].Materia,
+                Nombre: hora[0].Nombres,
+                ApellidoM: hora[0].ApellidoM,
+                ApellidoP: hora[0].ApellidoP,
+                Clv_Materia: hora[0].Clv_Materia,
+                Materia: hora[0].Materia,
                 Grupo: "GrupoA",
                 Lunes: {
                     Aula: "",
@@ -221,15 +183,13 @@ function VistaAlumno (){
                     HoraF: "",
                 },
             };
-        
-            
             for(let j = 0; j<hora.length; j++){
                 aux[i][hora[j].Dia]["Aula"]=hora[j].aula;
                 aux[i][hora[j].Dia]["HoraI"]=hora[j].HInicio;
                 aux[i][hora[j].Dia]["HoraF"]=hora[j].HFinal;
             }
         }
-
+        //console.log(aux);
         return aux;
     }
 
@@ -243,26 +203,26 @@ function VistaAlumno (){
             <Header />
             <div className="contariner-fluid">
                 <Horario >
-                    <Table class="table">
+                    <Table>
                         <Thead>
                             <Tr>
-                                <Titulo >Asignatura</Titulo>
-                                <Titulo >Profesor</Titulo>
-                                <Titulo >Grupo</Titulo>
-                                <Titulo >Lunes</Titulo>
-                                <Titulo >Martes</Titulo>
-                                <Titulo >Miercoles</Titulo>
-                                <Titulo >Jueves</Titulo>
-                                <Titulo >Viernes</Titulo>
+                                <Th >Asignatura</Th>
+                                <Th >Profesor</Th>
+                                <Th >Grupo</Th>
+                                <Th >Lunes</Th>
+                                <Th >Martes</Th>
+                                <Th >Miercoles</Th>
+                                <Th >Jueves</Th>
+                                <Th >Viernes</Th>
                             
                             </Tr>
                         </Thead>
-                        <Tbody className="text-center">
+                        <Tbody >
                             {/*prueba*/}
                             <Tr>
                                 <Td>Ciencias de la computacion</Td>
                                 <Td>Carlos Mojica Ruiz</Td>
-                                <Grupo>GrupoA</Grupo>
+                                <Td>GrupoA</Td>
                                 <Td><ItemHorario hora="08:30-10:00" aula="CC1" profesor="Carlos Mojica Ruiz"/></Td>
                                 <Td><ItemHorario hora="08:30-10:00" aula="CC1" profesor="Carlos Mojica Ruiz"/></Td>
                                 <Td><ItemHorario hora="08:30-10:00" aula="CC1" profesor="Carlos Mojica Ruiz"/></Td>
@@ -273,10 +233,10 @@ function VistaAlumno (){
                     
                             {
                                 materias.map((mat)=>{
-                                    return  <Tr>
+                                    return  <Tr key={mat.Clv_Materia}>
                                                 <Td>{mat.Materia}</Td>
                                                 <Td>{mat.Nombre+" "+mat.ApellidoM+" "+mat.ApellidoP}</Td>
-                                                <Grupo>{mat.Grupo}</Grupo>
+                                                <Td>{mat.Grupo}</Td>
                                                 <Td><ItemHorario 
                                                         hora={formatoH(mat.Lunes.HoraI)+"-"+formatoH(mat.Lunes.HoraF)} 
                                                         aula={mat.Lunes.Aula} 

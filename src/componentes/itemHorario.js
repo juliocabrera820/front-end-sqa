@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components'
 
 
+
+
 const itemHorario = (props) => {
 
     const generarColor= ()=> {
@@ -12,23 +14,6 @@ const itemHorario = (props) => {
         background-color:${generarColor()};
         border-radius: 5px;
         margin:0px;    
-    `;
-
-    const Div = styled.div`
-        background-color: white;
-        margin-left: 5px;
-    `;
-
-    const Hora = styled.div`
-      font-size: 20px;  
-    `;
-
-    const Aula = styled.div`
-        font-size: 20px;
-    `;
-
-    const Maestro = styled.div`
-        font-size: 18px;
     `;
 
     if(props.hora ==="" || props.aula===""){
@@ -50,5 +35,24 @@ const itemHorario = (props) => {
     }
     
 }
+
+
+
+const Div = styled.div`
+    background-color: white;
+    margin-left: 5px;
+`;
+
+const Hora = styled.div`
+    font-size: 20px;  
+`;
+
+const Aula = styled.div`
+    font-size: 20px;
+`;
+
+const Maestro = styled.div`
+    font-size: 18px;
+`;
 
 export default itemHorario;
