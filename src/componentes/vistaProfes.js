@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react';
 import ItemHorario from './itemHorario';
-import Header from './header'
 import axios from 'axios'
 import styled from 'styled-components'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
@@ -195,7 +194,6 @@ const VistaProfes = () => {
 
     return (
         <div>
-            <Header />
             <Div>
                 <Table>
                     <Thead>
