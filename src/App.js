@@ -1,15 +1,19 @@
-import React from 'react';
-import {BrowserRouter as Router,Switch, Route} from 'react-router-dom';
-import login from './componentes/login';
-import vistaAlumno from './componentes/VistaAlumno';
-import vistaAdmin from './componentes/vistaAdmin';
-import vistaprofes from './componentes/vistaProfes';
-import Header from './componentes/header'
+import React from "react";
+import login from "./componentes/login";
+import vistaAlumno from "./componentes/VistaAlumno";
+import vistaAdmin from "./componentes/vistaAdmin";
+import vistaprofes from "./componentes/vistaProfes";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+} from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
-const App = () => {
-  return (
+const App = () => (
+  <Provider store={store}>
     <Router>
-      <Header />
       <Switch>
         <Route exact path="/" component={login} />
         <Route exact path="/Maestro" component={vistaprofes} />
@@ -17,8 +21,7 @@ const App = () => {
         <Route exact path="/Administrador" component={vistaAdmin} />
       </Switch>
     </Router>
-  );
-}
+  </Provider>
+);
 
 export default App;
- 
