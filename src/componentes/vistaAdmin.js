@@ -12,7 +12,7 @@ const VistaAdmin = (props) => {
     }
   }, []);
   return (
-    <div className="container-fluid">
+    <div>
       <Header />
       <h2 className="text-center">Vista admin</h2>
     </div>

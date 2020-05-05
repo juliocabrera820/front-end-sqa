@@ -204,7 +204,7 @@ const VistaAlumno = (props) => {
   const materias = creartabla();
   return (
     <div>
-      <div className="contariner-fluid">
+      <div>
           <Header/>
         <Horario>
           <Table>

@@ -1,8 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
+import {useSelector} from 'react-redux';
 
 const Header = (props) => {
+  const usuario = useSelector(state => state);
   const { history } = props;
   const dispatch = useDispatch();
   const salir = () => {
@@ -12,7 +14,7 @@ const Header = (props) => {
 
   return (
     <nav className="navbar navbar-light bg-dark">
-      <a className="navbar-brand text-white">SGH</a>
+      <a className="navbar-brand text-white">{usuario.Usuario.Usuario}</a>
       <form className="form-inline">
         <button className="btn btn-outline-danger my-2 my-sm-0" onClick={salir}>
           Cerrar sesion
