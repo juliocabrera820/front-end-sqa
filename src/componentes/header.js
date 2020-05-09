@@ -2,6 +2,29 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {useSelector} from 'react-redux';
+import styled from "styled-components";
+import calendar from "../imagenes/calendar.png";
+
+const Nav = styled.nav`
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 2em;
+  background-color: #fcfee9;
+  margin-bottom:20px;
+  opacity: 0.9;
+`;
+
+const Button = styled.button`
+  font-size: 1em;
+  background: none;
+  border: none;
+  color: black;
+  margin-left: 30px;
+`;
+
+const Img = styled.img`
+    width: 50px;
+    margin-right: 20px;
+`;
 
 const Header = (props) => {
   const usuario = useSelector(state => state);
@@ -13,14 +36,17 @@ const Header = (props) => {
   };
 
   return (
-    <nav className="navbar navbar-light bg-dark">
-      <a className="navbar-brand text-white">{usuario.Usuario.Usuario}</a>
-      <form className="form-inline">
-        <button className="btn btn-outline-danger my-2 my-sm-0" onClick={salir}>
-          Cerrar sesion
-        </button>
-      </form>
-    </nav>
+    <Nav className="navbar" >
+      <a><Img src={calendar} ></Img>SISTEMA DE HORARIOS</a>
+      <div className="navbar">
+        <a>{usuario.Usuario.Usuario}</a>
+        <form className="form-inline">
+          <Button className="btn btn-light" onClick={salir}>
+            Cerrar sesion
+          </Button>
+        </form>
+      </div>
+    </Nav>
   );
 };
 
