@@ -22,6 +22,12 @@ const Grupo = styled.td`
   border: #b2b2b0 1px solid;
 `;
 
+const A=styled.div`
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 2em;
+  opacity: .85;
+`;
+
 const VistaAlumno = (props) => {
   const { horario, setHorario } = useState();
   const horarios = [
@@ -205,7 +211,8 @@ const VistaAlumno = (props) => {
   return (
     <div>
       <div>
-          <Header/>
+        <Header/>
+        <A>Consulta tu horario</A>
         <Horario>
           <Table>
             <Thead>

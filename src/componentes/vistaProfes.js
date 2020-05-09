@@ -12,13 +12,11 @@ const Div = styled.div`
   margin-left: 10%;
   margin-right: 10%;
 `;
-const Grupo = styled.td`
-  border: 1px solid black;
-  width: 9%;
-  padding: 10px;
-  border-radius: 3px;
-  background-color: #e7e3e2;
-  border: #b2b2b0 1px solid;
+
+const A=styled.div`
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 2em;
+  opacity: .85;
 `;
 
 const VistaProfes = (props) => {
@@ -206,14 +204,15 @@ const VistaProfes = (props) => {
 
   return (
     <div>
+      <Header/>
       <Div>
-          <Header/>
+        <A>Consulta tu horario</A>
         <Table>
           <Thead>
             <Tr>
               <Th>Maestro</Th>
               <Th>Materia</Th>
-              <Grupo>Grupo</Grupo>
+              <Th>Grupo</Th>
               <Th>Lunes</Th>
               <Th>Martes</Th>
               <Th>Miercoles</Th>
@@ -229,7 +228,7 @@ const VistaProfes = (props) => {
                   <Td>
                     {mat.Nombre + " " + mat.ApellidoM + " " + mat.ApellidoP}
                   </Td>
-                  <Grupo>{mat.Grupo}</Grupo>
+                  <Td>{mat.Grupo}</Td>
                   <Td>
                     <ItemHorario
                       hora={
