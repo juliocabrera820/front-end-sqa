@@ -18,11 +18,12 @@ const itemMateria = (props) => {
 }
 
 const Item = styled.div`
+    font-family: 'Yanone Kaffeesatz', sans-serif;
     text-align: center;
     border-radius: 5px;
     margin:0px;
     margin-bottom : 20px;
-    font-size: 1em;
+    font-size: 1.5em;
     height:50px;
     ${() =>{
         return `background-color:${generarColor()};`;

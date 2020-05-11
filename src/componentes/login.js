@@ -126,7 +126,7 @@ function Login(props) {
           notify("usuario y contraseña invalida");
         }
       })
-      .catch((error) => notify("usuario y contraseña invalida"));
+      .catch((error) => notify("Error al conectarse al servidor"));
   };
   return (
     <div className="container-fluid">

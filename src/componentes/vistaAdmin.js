@@ -5,6 +5,9 @@ import Header from "./header";
 import axios from "axios";
 import ItemHorario from "./itemHorario";
 import ItemMateria from "./itemMateria";
+import ItemHora from "./itemHora"
+import styled from "styled-components";
+
 
 const VistaAdmin = (props) => {
   const { history } = props;
@@ -32,6 +35,8 @@ const VistaAdmin = (props) => {
   const getMaterias = (e)=>{
     const select = e.currentTarget.value;
     setSelectGrupo(select);
+    setSelectMateria("");
+    setMaestros([]);
     axios
     .get(`http://localhost/SGH-BackEnd/api/grupos/${select}`)
     .then(response=>{
@@ -57,9 +62,9 @@ const VistaAdmin = (props) => {
       <div className="container-fluid">
         <div className="row "> 
             <div className="col-12 col-md-12 col-xl-3 row">
-              <div className="col-12 center">
-                <div class="form-group">
-                  <label for="sel1">Selecciona un grupo:</label>
+              <div className="col-12">
+                <Select className="form-group">
+                  <label >Selecciona un grupo:</label>
                   <select className="form-control" onChange={e=>getMaterias(e)}>
                     <option>Selecciona un grupo</option>
                     {
@@ -70,7 +75,7 @@ const VistaAdmin = (props) => {
                       })
                     }
                   </select>
-                </div>
+                </Select>
                 </div>
                   {
                     materias.map(m=>{
@@ -84,17 +89,17 @@ const VistaAdmin = (props) => {
                     })
                   }
             </div>
-            <div className="col-8 row">
-              <div className="col-4 col-xl-4 row">
-                Nombre del Grupo: {selectGrupo}
-              </div>
-              <div className="col-4 col-xl-4 row">
-                Materia: {selectMateria}
-              </div>
+            <div className="col-12 col-xl-9 row">
+              <Div className="col-6 col-xl-4">
+                <Text>Nombre del Grupo: {selectGrupo}</Text>
+              </Div>
+              <Div className="col-6 col-xl-4">
+                <Text>Materia: {selectMateria}</Text>
+              </Div>
 
-              <div class="form-group">
-                  <label for="sel1">Selecciona un grupo:</label>
-                  <select className="form-control" onChange={e=>console.log(e.currentTarget.value)}>
+              <Select className="col-12 col-xl-4">
+                  <label >Selecciona un profesor:</label>
+                  <select className="form-control" onChange={e=>console.log(e.currentTarget.value)} >
                     <option>Selecciona un profesor</option>
                     {
                       maestros.map(m=>{
@@ -104,7 +109,48 @@ const VistaAdmin = (props) => {
                       })
                     }
                   </select>
-                </div>  
+                </Select> 
+
+                  <div className=" col-xl-1">
+                    <Titulo>Hora/Día</Titulo>
+                    <div>Inicio</div>
+                    <div>Final</div>
+                  </div>
+                  <div className=" col-xl-2">
+                    <ItemHora/>
+                    <div className="form-check form-check-inline">
+                      <Input type="checkbox" className="form-check-input"></Input>
+                    </div>
+                  </div>
+                  <div className=" col-xl-2">
+                    <ItemHora/>
+                    <div className="form-check form-check-inline">
+                      <Input type="checkbox" className="form-check-input"></Input>
+                    </div>
+                  </div>
+                  <div className=" col-xl-2">
+                   <ItemHora/>
+                   <div className="form-check form-check-inline">
+                      <Input type="checkbox" className="form-check-input"></Input>
+                    </div>
+                  </div>
+                  <div className=" col-xl-2">
+                    <ItemHora/>
+                    <div className="form-check form-check-inline">
+                      <Input type="checkbox" className="form-check-input"></Input>
+                    </div>
+                  </div>
+                  <div className=" col-xl-2">
+                   <ItemHora/>
+                   <div className="form-check form-check-inline">
+                      <Input type="checkbox" className="form-check-input"></Input>
+                    </div>
+                  </div>
+                  <div className=" col-xl-1">
+                        <Titulo>Opciones</Titulo>
+                        <button>Aceptar</button>
+                        <button>Cancelar</button>
+                  </div>
             </div>
         </div>
       </div>
@@ -112,5 +158,30 @@ const VistaAdmin = (props) => {
   );
 };
 
+const Div = styled.div`
+  height: 100px;
+  margin-botton:  0px
+`;
+
+const Select = styled.div`
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 1.7em;
+`;
+
+
+const Text = styled.div`
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 1.7em;
+`;
+
+const Titulo = styled.div`
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 20px;  
+`;
+const Input = styled.input`
+    transform: scale(1.5);
+`;
 
 export default withRouter(VistaAdmin);
