@@ -25,10 +25,7 @@ const Item = styled.div`
     margin-bottom : 20px;
     font-size: 1.5em;
     height:50px;
-    ${() =>{
-        return `background-color:${generarColor()};`;
-    } 
-    }    
+    background-color:#9D81B3;
 `;
 
 const Div = styled.div`

@@ -17,6 +17,11 @@ const VistaAdmin = (props) => {
   const [maestros, setMaestros] = useState([]);
   const [selectGrupo, setSelectGrupo] = useState("");
   const [selectMateria,setSelectMateria] = useState("");
+  const [lunes, setLunes] = useState(true);
+  const [martes, setMartes] = useState(true);
+  const [miercoles, setMiercoles] = useState(true);
+  const [jueves, setJueves] = useState(true);
+  const [viernes, setViernes] = useState(true);
 
 
   useEffect(() => {
@@ -116,36 +121,36 @@ const VistaAdmin = (props) => {
                     <div>Inicio</div>
                     <div>Final</div>
                   </div>
-                  <div className=" col-xl-2">
-                    <ItemHora/>
+                  <Item className=" col-xl-2">
+                    <ItemHora dia="Lunes" status={lunes}/>
                     <div className="form-check form-check-inline">
-                      <Input type="checkbox" className="form-check-input"></Input>
+                      <Input type="checkbox" className="form-check-input" onChange={e=>setLunes(!lunes)}></Input>
                     </div>
-                  </div>
-                  <div className=" col-xl-2">
-                    <ItemHora/>
+                  </Item>
+                  <Item className=" col-xl-2">
+                    <ItemHora dia="Martes" status={martes}/>
                     <div className="form-check form-check-inline">
-                      <Input type="checkbox" className="form-check-input"></Input>
+                      <Input type="checkbox" className="form-check-input" onChange={e=>setMartes(!martes)}></Input>
                     </div>
-                  </div>
-                  <div className=" col-xl-2">
-                   <ItemHora/>
+                  </Item>
+                  <Item className=" col-xl-2">
+                   <ItemHora dia="Miercoles" status={miercoles}/>
                    <div className="form-check form-check-inline">
-                      <Input type="checkbox" className="form-check-input"></Input>
+                      <Input type="checkbox" className="form-check-input" onChange={e=>setMiercoles(!miercoles)}></Input>
                     </div>
-                  </div>
-                  <div className=" col-xl-2">
-                    <ItemHora/>
+                  </Item>
+                  <Item className=" col-xl-2">
+                    <ItemHora dia="Jueves" status={jueves}/>
                     <div className="form-check form-check-inline">
-                      <Input type="checkbox" className="form-check-input"></Input>
+                      <Input type="checkbox" className="form-check-input" onChange={e=>setJueves(!jueves)}></Input>
                     </div>
-                  </div>
-                  <div className=" col-xl-2">
-                   <ItemHora/>
+                  </Item>
+                  <Item className=" col-xl-2">
+                   <ItemHora dia="Viernes" status={viernes}/>
                    <div className="form-check form-check-inline">
-                      <Input type="checkbox" className="form-check-input"></Input>
+                      <Input type="checkbox" className="form-check-input" onChange={e=>setViernes(!viernes)}></Input>
                     </div>
-                  </div>
+                  </Item>
                   <div className=" col-xl-1">
                         <Titulo>Opciones</Titulo>
                         <button>Aceptar</button>
@@ -161,6 +166,11 @@ const VistaAdmin = (props) => {
 const Div = styled.div`
   height: 100px;
   margin-botton:  0px
+`;
+
+const Item = styled.div`
+  text-align: center; 
+  vertical-align: middle;
 `;
 
 const Select = styled.div`

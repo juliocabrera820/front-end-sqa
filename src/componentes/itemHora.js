@@ -6,16 +6,16 @@ const itemHora = (props) => {
 
     return (
         <Item className="" >
-            <Titulo>Lunes</Titulo>
+            <Titulo>{props.dia}</Titulo>
             <div className="col-12 form-inline">
-                <select className="form-control-sm">
+                <select className="form-control-sm" disabled={props.status}>
                     {Horas.map(h=>{
                     return(
                     <option>{h.hora}</option>
                     );
                     })}
                 </select>
-                <select className="form-control-sm">
+                <select className="form-control-sm" disabled={props.status}>
                 {Minutos.map(h=>{
                     return(
                     <option>{h.minutos}</option>
@@ -25,14 +25,14 @@ const itemHora = (props) => {
             </div>
         
             <div className="col-12 form-inline">
-                <select className="form-control-sm">
+                <select className="form-control-sm" disabled={props.status}>
                     {Horas.map(h=>{
                     return(
                     <option>{h.hora}</option>
                     );
                     })}
                 </select>
-                <select className="form-control-sm">
+                <select className="form-control-sm" disabled={props.status}>
                 {Minutos.map(h=>{
                     return(
                     <option>{h.minutos}</option>
