@@ -15,13 +15,17 @@ const VistaAdmin = (props) => {
   const [grupos, setGrupos] = useState([])
   const [materias, SetMaterias]=useState([]);
   const [maestros, setMaestros] = useState([]);
+  const [aulas, setAulas] = useState([]);
+  const [materia, setMateria] = useState("");
   const [selectGrupo, setSelectGrupo] = useState("");
   const [selectMateria,setSelectMateria] = useState("");
+  const [selectMaestro, setSelectMaestro] = useState("");
   const [lunes, setLunes] = useState(true);
   const [martes, setMartes] = useState(true);
   const [miercoles, setMiercoles] = useState(true);
   const [jueves, setJueves] = useState(true);
   const [viernes, setViernes] = useState(true);
+  //const [horario, setHorario] = useState([]);
 
 
   useEffect(() => {
@@ -35,6 +39,16 @@ const VistaAdmin = (props) => {
       setGrupos(response.data.data);
     })
     .catch(error=>console.log("no se pudo conectar con el servidor"));
+
+
+    axios
+    .get("http://localhost/SGH-BackEnd/api/aulas")
+    .then(response => {
+      setAulas(response.data.data);
+    })
+    .catch(error=>console.log("no se pudo conectar con el servidor"));
+
+
   }, [estado,history]);
 
   const getMaterias = (e)=>{
@@ -52,13 +66,18 @@ const VistaAdmin = (props) => {
   }
 
   const Materia = (Clv_Materia,materia)=>{
-    setSelectMateria(materia);
+    setSelectMateria(Clv_Materia);
+    setMateria(materia);
     axios
     .get(`http://localhost/SGH-BackEnd/api/maestros/materias/${Clv_Materia}`)
     .then(response=>{
       setMaestros(response.data.data);
     })
     .catch(error=>console.log("no se pudo conectar con el servidor"));
+  }
+
+  const SelecionarMaestro = (Clv_Maestro) => {
+    setSelectMaestro(Clv_Maestro);
   }
 
   return (
@@ -99,12 +118,12 @@ const VistaAdmin = (props) => {
                 <Text>Nombre del Grupo: {selectGrupo}</Text>
               </Div>
               <Div className="col-6 col-xl-4">
-                <Text>Materia: {selectMateria}</Text>
+                <Text>Materia: {materia}</Text>
               </Div>
 
               <Select className="col-12 col-xl-4">
                   <label >Selecciona un profesor:</label>
-                  <select className="form-control" onChange={e=>console.log(e.currentTarget.value)} >
+                  <select className="form-control" onChange={e=>SelecionarMaestro(e.currentTarget.value)} >
                     <option>Selecciona un profesor</option>
                     {
                       maestros.map(m=>{
@@ -116,45 +135,50 @@ const VistaAdmin = (props) => {
                   </select>
                 </Select> 
 
-                  <div className=" col-xl-1">
-                    <Titulo>Hora/Día</Titulo>
-                    <div>Inicio</div>
-                    <div>Final</div>
-                  </div>
                   <Item className=" col-xl-2">
-                    <ItemHora dia="Lunes" status={lunes}/>
+                    <ItemHora dia="Lunes" status={lunes} aulas={aulas}/>
                     <div className="form-check form-check-inline">
                       <Input type="checkbox" className="form-check-input" onChange={e=>setLunes(!lunes)}></Input>
+                      <label className="form-check-label">{!lunes? "habilitado":"Deshabilitado"}</label>
                     </div>
                   </Item>
                   <Item className=" col-xl-2">
-                    <ItemHora dia="Martes" status={martes}/>
+                    <ItemHora dia="Martes" status={martes} aulas={aulas}/>
                     <div className="form-check form-check-inline">
                       <Input type="checkbox" className="form-check-input" onChange={e=>setMartes(!martes)}></Input>
+                      <label className="form-check-label" >{!martes? "habilitado":"Deshabilitado"}</label>
                     </div>
                   </Item>
                   <Item className=" col-xl-2">
-                   <ItemHora dia="Miercoles" status={miercoles}/>
+                   <ItemHora dia="Miercoles" status={miercoles} aulas={aulas}/>
                    <div className="form-check form-check-inline">
                       <Input type="checkbox" className="form-check-input" onChange={e=>setMiercoles(!miercoles)}></Input>
+                      <label className="form-check-label" >{!miercoles? "habilitado":"Deshabilitado"}</label>
                     </div>
                   </Item>
                   <Item className=" col-xl-2">
-                    <ItemHora dia="Jueves" status={jueves}/>
+                    <ItemHora dia="Jueves" status={jueves} aulas={aulas}/>
                     <div className="form-check form-check-inline">
                       <Input type="checkbox" className="form-check-input" onChange={e=>setJueves(!jueves)}></Input>
+                      <label className="form-check-label">{!jueves? "habilitado":"Deshabilitado"}</label>
                     </div>
                   </Item>
                   <Item className=" col-xl-2">
-                   <ItemHora dia="Viernes" status={viernes}/>
+                   <ItemHora dia="Viernes" status={viernes} aulas={aulas}/>
                    <div className="form-check form-check-inline">
                       <Input type="checkbox" className="form-check-input" onChange={e=>setViernes(!viernes)}></Input>
+                      <label className="form-check-label" >{!viernes? "habilitado":"Deshabilitado"}</label>
                     </div>
                   </Item>
-                  <div className=" col-xl-1">
-                        <Titulo>Opciones</Titulo>
-                        <button>Aceptar</button>
-                        <button>Cancelar</button>
+                  <div className=" col-xl-2 row">
+                        <Titulo className="col-12 align-self-start">Opciones</Titulo>
+                        <div className="col-12 align-self-center">
+                          <Button className="btn btn-success">Aceptar</Button>
+                        </div>
+                        <div className="col-12 align-self-center">
+                          <Button className="btn btn-danger">Cancelar</Button>
+                        </div>
+                        
                   </div>
             </div>
         </div>
@@ -170,7 +194,10 @@ const Div = styled.div`
 
 const Item = styled.div`
   text-align: center; 
-  vertical-align: middle;
+`;
+
+const Button = styled.button`
+  
 `;
 
 const Select = styled.div`

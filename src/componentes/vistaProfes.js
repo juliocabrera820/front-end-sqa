@@ -124,9 +124,6 @@ toast(error, {
     return aux;
   };
 
-  const generarColor = () => {
-    return "#" + Math.random().toString(16).substr(-6);
-  };
 
   const formatoH = (hora) => {
     return hora.slice(0, -3);

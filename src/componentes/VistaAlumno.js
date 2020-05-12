@@ -14,14 +14,7 @@ const Horario = styled.div`
   margin-right: 10%;
 `;
 
-const Grupo = styled.td`
-  border: 1px solid black;
-  width: 9%;
-  padding: 10px;
-  border-radius: 3px;
-  background-color: #e7e3e2;
-  border: #b2b2b0 1px solid;
-`;
+
 
 const A=styled.div`
   font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -62,7 +55,7 @@ const VistaAlumno = (props) => {
 
   const creartabla = () => {
     const asg = [...new Set(horario.map((x) => x.Clv_materia))];
-    let aux = new Array();
+    let aux = [];
     console.log(horario);
     for (let i = 0; i < asg.length; i++) {
       let hora = horario.filter((x) => x.Clv_materia === asg[i]);

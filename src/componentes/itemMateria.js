@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const generarColor= ()=> {
-    return '#' +  Math.random().toString(16).substr(-6);
-};
+
 
 const itemMateria = (props) => {
 
@@ -24,14 +22,16 @@ const Item = styled.div`
     margin:0px;
     margin-bottom : 20px;
     font-size: 1.5em;
-    height:50px;
+    height:60px;
     background-color:#9D81B3;
 `;
 
 const Div = styled.div`
+    padding-top: 10px;
+    border : solid 1px #E8E6CA;
     background-color: #fcfee9;
     margin-left: 5px;
-    height:50px;
+    height:60px;
     &:hover {
         background-color: #D1E8FF;
     }
