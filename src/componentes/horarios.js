@@ -1,4 +1,5 @@
 export const Horas = [
+    {hora:"HH"},
     {hora:"7"},
     {hora:"8"},
     {hora:"9"},
@@ -16,7 +17,8 @@ export const Horas = [
 ]
 
 export const Minutos = [
+    {minutos:"MM"},
     {minutos:"00"},
-    {minutos:"30"}
+    {minutos:"30"},
 ]
 
