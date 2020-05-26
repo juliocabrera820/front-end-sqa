@@ -4,17 +4,13 @@ import axios from "axios";
 import styled from "styled-components";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Header from './header';
-import { toast } from "react-toastify";
 
 const Horario = styled.div`
-  margin-left: 10%;
-  margin-right: 10%;
+    margin-top: 40px;
+    margin-left: 5%;
+    margin-right: 5%;
 `;
-
-
 
 const A=styled.div`
   font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -22,36 +18,21 @@ const A=styled.div`
   opacity: .85;
 `;
 
-toast.configure({
-  autoClose: 4000,
-  draggable: false,
-  position: toast.POSITION.BOTTOM_RIGHT,
-});
 
-const VistaAlumno = (props) => {
-  
-  const estado = useSelector((state) => state);
+const HorarioAdmin = (props) => {
+
   const { history } = props;
   const [ horario, setHorario ] = useState([]);
   
-  const notify = (error) =>
-  toast(error, {
-    type: toast.TYPE.WARNING,
-    toastId: 1,
-  });
 
   useEffect(() => {
-    if (estado.Usuario === "No hay usuario") {
-      history.push("/");
-    }
-
     axios
-    .get(`http://localhost/SGH-BackEnd/api/alumnos/${estado.Usuario.Usuario}/horarios`)
+    .get(`http://localhost/SGH-BackEnd/api/alumnos/13008092/horarios`)
     .then(response=>{
-      response.data.data.mensaje!=="No se encontraron coincidencias" ? setHorario(response.data.data):notify("Todavía no tienes asginado un horario");
+      response.data.data.mensaje!=="No se encontraron coincidencias" ? setHorario(response.data.data):console.log();
     })
     .catch(error=>console.log("no se pudo conectar con el servidor"));
-  }, [estado,history]);
+  }, [history]);
 
   const creartabla = () => {
     const asg = [...new Set(horario.map((x) => x.Clv_materia))];
@@ -108,11 +89,7 @@ const VistaAlumno = (props) => {
   
   const materias = creartabla();
   return (
-    <div>
-      <div>
-        <Header/>
         <Horario>
-        <A>Consulta tu horario</A>
           <Table>
             <Thead>
               <Tr>
@@ -206,9 +183,7 @@ const VistaAlumno = (props) => {
             </Tbody>
           </Table>
         </Horario>
-      </div>
-    </div>
   );
 };
 
-export default withRouter(VistaAlumno);
+export default withRouter(HorarioAdmin);
