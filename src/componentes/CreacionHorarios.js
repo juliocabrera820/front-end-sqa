@@ -4,6 +4,14 @@ import axios from "axios";
 import ItemMateria from "./itemMateria";
 import ItemHora from "./itemHora"
 import styled from "styled-components";
+import { toast } from "react-toastify";
+
+
+toast.configure({
+  autoClose: 4000,
+  draggable: false,
+  position: toast.POSITION.BOTTOM_RIGHT,
+});
 
 
 const CreacionHorarios = (props) => {
@@ -105,6 +113,24 @@ const CreacionHorarios = (props) => {
     });
 
 
+    const horarioExitoso = (dia) =>
+    toast(`El horario del ${dia} ha sido cargado exitosamente` , {
+      type: toast.TYPE.SUCCESS,
+      toastId: dia,
+    });
+
+    const horarioError = (dia) =>
+    toast(`El horario del dia ${dia} tuvo un error revise los campos correctamente`, {
+      type: toast.TYPE.ERROR,
+      toastId: dia,
+    });
+
+    const camposVacios = (mensaje,id) =>
+    toast(mensaje, {
+      type: toast.TYPE.WARNING,
+      toastId:id,
+    });
+
   useEffect(() => {
     if (estado.Usuario === "No hay usuario") {
       history.push("/");
@@ -159,40 +185,93 @@ const CreacionHorarios = (props) => {
 
   const enviarHorario =(dia)=>{
     const post = {
-        maestro: "maestro",
-        grupo: "grupo",
-        materia: "materia",
-        aula: "aula",
-        HInicio: "HI",
-        HFinal: "HF",
-        dia: "dia"
-    }
+      "maestro" : `${selectMaestro}`,
+      "grupo":`${selectGrupo}`,
+      "materia": `${selectMateria}`,
+      "aula" : `${horario[dia].aula}`,
+      "hInicio" : `${horario[dia].horaInicio.hora}:${horario[dia].horaInicio.minutos}:00`,
+      "hFinal" : `${horario[dia].horaFinal.hora}:${horario[dia].horaFinal.minutos}:00`,
+      "dia" : `${dia}`
+      }
+      console.log(post);
+
+
+      /*
+      Valida que los datos de "post"
+        *El maestro no tenga clases a ese horario,
+        *La aula no este ocupada
+        *El grupo no tenga clases en ese horario
+
+
+        1.- Una manera seria que se haga un condicion en la sentencia SQL, que cumple con todo lo de arriba, se ingrese a la BD
+        2.- Otra seria que verifiques lo horario del maestro, la del grupo, para veer si esta ocupados.
+        3.- Si tienen otra idea 
+      */
+      
     axios
     .post("http://localhost/SGH-BackEnd/api/horarios",post)
-    .then(response=>console.log(response.data.data))
-    .catch(error=>console.log("no se puede eviar horario"));  
+    .then(response=>console.log(response.data))
+    .catch(error=>console.log("no se puede enviar horario"));  
+  }
+
+  const validarHoras = (dia) =>{
+    /*Valida que las hora de inicio sea menor que la hora final, si es posible filtra los valores
+    ejemplo selecciona 8:30, entonces el combobox de hora final comienza desde 9:00.
+    */
+    return false;
   }
 
   const crearHorario = () =>{
+      if(selectGrupo===""){
+        camposVacios("Seleccione un Grupo",1);
+      }
+
+      if(selectMateria===""){
+        camposVacios("Seleccione una Materia",2);
+      }
+
+      if(selectMaestro===""){
+        camposVacios("Seleccione un Maestro",3);
+      }
       const encabezado = (selectGrupo==="" || selectMateria==="" || selectMaestro==="");
-      if(!encabezado && !checkbox.lunes){ 
+      if(!encabezado && !checkbox.lunes){
+        if(validarHoras("Lunes")){
           enviarHorario("Lunes");
+        }else{
+          horarioError("Lunes");
+        }
       }
 
       if(!encabezado && !checkbox.martes){
-        console.log("se puede");   
+        if(validarHoras("Martes")){
+          enviarHorario("Martes");
+        }else{
+          horarioError("Martes");
+        }
       }
 
       if(!encabezado && !checkbox.miercoles){
-        console.log("se puede");   
+        if(validarHoras("Miercoles")){
+          enviarHorario("Miercoles");
+        }else{
+          horarioError("Miercoles");
+        }   
       }
-
 
       if(!encabezado && !checkbox.jueves){
-        console.log("se puede");   
+        if(validarHoras("Jueves")){
+          enviarHorario("Jueves");
+        }else{
+          horarioError("Jueves");
+        }  
       }
+
       if(!encabezado && !checkbox.viernes){
-        console.log("se puede");   
+        if(validarHoras("Viernes")){
+          enviarHorario("Viernes");
+        }else{
+          horarioError("Viernes");
+        }  
       }
   }
 
