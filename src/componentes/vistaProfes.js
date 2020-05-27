@@ -6,8 +6,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { withRouter } from "react-router-dom";
 import {useSelector} from 'react-redux';
-import Header from './header';
-import { toast } from "react-toastify";
+import Header from './header'
 
 const Div = styled.div`
   margin-left: 10%;
@@ -20,44 +19,106 @@ const A=styled.div`
   opacity: .85;
 `;
 
-
-toast.configure({
-  autoClose: 4000,
-  draggable: false,
-  position: toast.POSITION.BOTTOM_RIGHT,
-});
-
-
 const VistaProfes = (props) => {
-  const [ horario, setHorario ] = useState([]);
+  const { horario, setHorario } = useState();
   const { history } = props;
   const estado = useSelector((state) => state);
-
-const notify = (error) =>
-toast(error, {
-  type: toast.TYPE.WARNING,
-  toastId: 1,
-});
-  
   useEffect(() => {
     if (estado.Usuario === "No hay usuario") {
       history.push("/");
     }
-
-    axios
-    .get(`http://localhost/SGH-BackEnd/api/maestros/${estado.Usuario.Usuario}/horarios`)
-    .then(response=>{
-      response.data.data.mensaje!=="No se encontraron coincidencias" ? setHorario(response.data.data):notify("Todavía no tienes asginado un horario");
-    })
-    .catch(error=>console.log("no se pudo conectar con el servidor"));
-
-  }, [estado,history]);
-  
+  }, []);
+  const horarios = [
+    {
+      Clv_Horario: 1,
+      Clv_Grupo: "GrupoA",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Lunes",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 2,
+      Clv_Grupo: "GrupoA",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Martes",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 3,
+      Clv_Grupo: "GrupoA",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Miercoles",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 4,
+      Clv_Grupo: "GrupoA",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Jueves",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 5,
+      Clv_Grupo: "GrupoB",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "04:30:00",
+      HFinal: "4:30:00",
+      Dia: "Viernes",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 6,
+      Clv_Grupo: "GrupoB",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "CS",
+      Materia: "Construccion de software",
+      aula: "D1",
+      HInicio: "08:30:00",
+      HFinal: "10:30:00",
+      Dia: "Viernes",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+  ];
 
   const filtrar = () => {
     let asg = [
       ...new Set(
-        horario.map((x) => {
+        horarios.map((x) => {
           return {
             Clv_Materia: x.Clv_Materia,
             Clv_Grupo: x.Clv_Grupo,
@@ -75,7 +136,7 @@ toast(error, {
     let aux = [];
 
     for (let i = 0; i < asignaturas.length; i++) {
-      let hora = horario.filter(
+      let hora = horarios.filter(
         (x) =>
           x.Clv_Materia === asignaturas[i].Clv_Materia &&
           x.Clv_Grupo === asignaturas[i].Clv_Grupo
@@ -124,6 +185,9 @@ toast(error, {
     return aux;
   };
 
+  const generarColor = () => {
+    return "#" + Math.random().toString(16).substr(-6);
+  };
 
   const formatoH = (hora) => {
     return hora.slice(0, -3);

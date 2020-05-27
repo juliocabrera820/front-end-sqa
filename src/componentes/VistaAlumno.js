@@ -6,15 +6,21 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Header from './header';
-import { toast } from "react-toastify";
+import Header from './header'
 
 const Horario = styled.div`
   margin-left: 10%;
   margin-right: 10%;
 `;
 
-
+const Grupo = styled.td`
+  border: 1px solid black;
+  width: 9%;
+  padding: 10px;
+  border-radius: 3px;
+  background-color: #e7e3e2;
+  border: #b2b2b0 1px solid;
+`;
 
 const A=styled.div`
   font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -22,50 +28,145 @@ const A=styled.div`
   opacity: .85;
 `;
 
-toast.configure({
-  autoClose: 4000,
-  draggable: false,
-  position: toast.POSITION.BOTTOM_RIGHT,
-});
-
 const VistaAlumno = (props) => {
-  
+  const { horario, setHorario } = useState();
+  const horarios = [
+    {
+      Clv_Horario: 1,
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+      Materia: "Aseguramiento de la calidad",
+      Clv_Materia: "QA",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Lunes",
+    },
+    {
+      Clv_Horario: 2,
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+      Materia: "Aseguramiento de la calidad",
+      Clv_Materia: "QA",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Jueves",
+    },
+    {
+      Clv_Horario: 3,
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+      Materia: "Aseguramiento de la calidad",
+      Clv_Materia: "QA",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Viernes",
+    },
+    {
+      Clv_Horario: 4,
+      Nombres: "Victor Hugo",
+      ApellidoM: "Menendez",
+      ApellidoP: "Dominguez",
+      Materia: "Interaccion humano computadora",
+      Clv_Materia: "IHC",
+      aula: "D2",
+      HInicio: "08:30:00",
+      HFinal: "10:00:00",
+      Dia: "Lunes",
+    },
+    {
+      Clv_Horario: 5,
+      Nombres: "Victor Hugo",
+      ApellidoM: "Menendez",
+      ApellidoP: "Dominguez",
+      Materia: "Interaccion humano computadora",
+      Clv_Materia: "IHC",
+      aula: "D2",
+      HInicio: "08:30:00",
+      HFinal: "10:00:00",
+      Dia: "Miercoles",
+    },
+    {
+      Clv_Horario: 6,
+      Nombres: "Victor Hugo",
+      ApellidoM: "Menendez",
+      ApellidoP: "Dominguez",
+      Materia: "Interaccion humano computadora",
+      Clv_Materia: "IHC",
+      aula: "D2",
+      HInicio: "08:30:00",
+      HFinal: "10:00:00",
+      Dia: "Viernes",
+    },
+    {
+      Clv_Horario: 7,
+      Nombres: "Victor Hugo",
+      ApellidoM: "Menendez",
+      ApellidoP: "Dominguez",
+      Materia: "Construccion de Software",
+      Clv_Materia: "CS",
+      aula: "D2",
+      HInicio: "08:30:00",
+      HFinal: "10:00:00",
+      Dia: "Martes",
+    },
+    {
+      Clv_Horario: 8,
+      Nombres: "Victor Hugo",
+      ApellidoM: "Menendez",
+      ApellidoP: "Dominguez",
+      Materia: "Construccion de Software",
+      Clv_Materia: "CS",
+      aula: "D2",
+      HInicio: "08:30:00",
+      HFinal: "10:00:00",
+      Dia: "Miercoles",
+    },
+    {
+      Clv_Horario: 9,
+      Nombres: "Victor Hugo",
+      ApellidoM: "Menendez",
+      ApellidoP: "Dominguez",
+      Materia: "Construccion de Software",
+      Clv_Materia: "CS",
+      aula: "D2",
+      HInicio: "08:30:00",
+      HFinal: "10:00:00",
+      Dia: "Viernes",
+    },
+  ];
+
+  const asg = [...new Set(horarios.map((x) => x.Clv_Materia))];
   const estado = useSelector((state) => state);
   const { history } = props;
-  const [ horario, setHorario ] = useState([]);
-  
-  const notify = (error) =>
-  toast(error, {
-    type: toast.TYPE.WARNING,
-    toastId: 1,
-  });
-
   useEffect(() => {
     if (estado.Usuario === "No hay usuario") {
       history.push("/");
     }
+  }, []);
 
-    axios
-    .get(`http://localhost/SGH-BackEnd/api/alumnos/${estado.Usuario.Usuario}/horarios`)
-    .then(response=>{
-      response.data.data.mensaje!=="No se encontraron coincidencias" ? setHorario(response.data.data):notify("Todavía no tienes asginado un horario");
-    })
-    .catch(error=>console.log("no se pudo conectar con el servidor"));
-  }, [estado,history]);
+  useEffect(() => {
+    /*axios.get("http://localhost/SGH-BackEnd/api/").then(response=>{
+                setHorario(response.data.data);
+        }).catch(error=>console.log("no se pudo conectar con el servidor"));*/
+  });
 
   const creartabla = () => {
-    const asg = [...new Set(horario.map((x) => x.Clv_materia))];
-    let aux = [];
-    console.log(horario);
+    let aux = new Array();
     for (let i = 0; i < asg.length; i++) {
-      let hora = horario.filter((x) => x.Clv_materia === asg[i]);
+      let hora = horarios.filter((x) => x.Clv_Materia === asg[i]);
       aux[i] = {
         Nombre: hora[0].Nombres,
         ApellidoM: hora[0].ApellidoM,
         ApellidoP: hora[0].ApellidoP,
-        Clv_Materia: hora[0].Clv_materia,
+        Clv_Materia: hora[0].Clv_Materia,
         Materia: hora[0].Materia,
-        Grupo: hora[0].Clv_Grupo,
+        Grupo: "GrupoA",
         Lunes: {
           Aula: "",
           HoraI: "",
@@ -98,6 +199,7 @@ const VistaAlumno = (props) => {
         aux[i][hora[j].Dia]["HoraF"] = hora[j].HFinal;
       }
     }
+    //console.log(aux);
     return aux;
   };
 
@@ -105,14 +207,13 @@ const VistaAlumno = (props) => {
     return hora.slice(0, -3);
   };
 
-  
   const materias = creartabla();
   return (
     <div>
       <div>
         <Header/>
-        <Horario>
         <A>Consulta tu horario</A>
+        <Horario>
           <Table>
             <Thead>
               <Tr>
@@ -127,6 +228,48 @@ const VistaAlumno = (props) => {
               </Tr>
             </Thead>
             <Tbody>
+              {/*prueba*/}
+              <Tr>
+                <Td>Ciencias de la computacion</Td>
+                <Td>Carlos Mojica Ruiz</Td>
+                <Td>GrupoA</Td>
+                <Td>
+                  <ItemHorario
+                    hora="08:30-10:00"
+                    aula="CC1"
+                    profesor="Carlos Mojica Ruiz"
+                  />
+                </Td>
+                <Td>
+                  <ItemHorario
+                    hora="08:30-10:00"
+                    aula="CC1"
+                    profesor="Carlos Mojica Ruiz"
+                  />
+                </Td>
+                <Td>
+                  <ItemHorario
+                    hora="08:30-10:00"
+                    aula="CC1"
+                    profesor="Carlos Mojica Ruiz"
+                  />
+                </Td>
+                <Td>
+                  <ItemHorario
+                    hora="08:30-10:00"
+                    aula="CC1"
+                    profesor="Carlos Mojica Ruiz"
+                  />
+                </Td>
+                <Td>
+                  <ItemHorario
+                    hora="08:30-10:00"
+                    aula="CC1"
+                    profesor="Carlos Mojica Ruiz"
+                  />
+                </Td>
+              </Tr>
+
               {materias.map((mat) => {
                 return (
                   <Tr key={mat.Clv_Materia}>
