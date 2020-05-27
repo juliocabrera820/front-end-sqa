@@ -35,6 +35,7 @@ const Div = styled.div`
     &:hover {
         background-color: #D1E8FF;
     }
+    cursor: pointer;
 `;
 
 
