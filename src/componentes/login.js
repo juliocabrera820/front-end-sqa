@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useState, useEffect } from "react";
 import imagen from "../imagenes/aula.jpeg";
 import signin from "../imagenes/iniciar-sesion.png";
 import styled from "styled-components";
@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {  withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 toast.configure({
@@ -126,13 +126,13 @@ function Login(props) {
           notify("usuario y contraseña invalida");
         }
       })
-      .catch((error) => notify("Error al conectarse al servidor"));
+      .catch((error) => notify("usuario y contraseña invalida"));
   };
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-5">
-          <Img src={imagen} alt="imagen"></Img>
+          <Img src={imagen}></Img>
         </div>
         <div className="col-7 ">
           <Seccion className="col-sm-8 ">
@@ -190,7 +190,7 @@ function Login(props) {
                 </Formato>
                 <div className="col-12 text-center">
                   <Button className="btn btn-light">
-                    Entrar <img src={signin} alt="entrar"></img>{" "}
+                    Entrar <img src={signin}></img>{" "}
                   </Button>
                 </div>
               </form>
