@@ -5,7 +5,7 @@ import ItemMateria from "./itemMateria";
 import ItemHora from "./itemHora";
 import styled from "styled-components";
 import { toast } from "react-toastify";
-import moment from 'moment';
+import moment from "moment";
 
 toast.configure({
   autoClose: 4000,
@@ -111,14 +111,11 @@ const CreacionHorarios = (props) => {
       toastId: dia,
     });
 
-  const horarioError = (dia) =>
-    toast(
-      `El horario del dia ${dia} tuvo un error revise los campos correctamente`,
-      {
-        type: toast.TYPE.ERROR,
-        toastId: dia,
-      }
-    );
+  const horarioError = (dia, mensaje) =>
+    toast(`${mensaje}`, {
+      type: toast.TYPE.ERROR,
+      toastId: dia,
+    });
 
   const camposVacios = (mensaje, id) =>
     toast(mensaje, {
@@ -162,19 +159,19 @@ const CreacionHorarios = (props) => {
       .catch((error) => console.log("no se pudo conectar con el servidor"));
   };
 
-  const Materia = (Clv_Materia, materia) => {
-    setSelectMateria(Clv_Materia);
+  const Materia = (clvMateria, materia) => {
+    setSelectMateria(clvMateria);
     setMateria(materia);
     axios
-      .get(`http://localhost/SGH-BackEnd/api/maestros/materias/${Clv_Materia}`)
+      .get(`http://localhost/SGH-BackEnd/api/maestros/materias/${clvMateria}`)
       .then((response) => {
         setMaestros(response.data.data);
       })
       .catch((error) => console.log("no se pudo conectar con el servidor"));
   };
 
-  const SelecionarMaestro = (Clv_Maestro) => {
-    setSelectMaestro(Clv_Maestro);
+  const SelecionarMaestro = (clvMaestro) => {
+    setSelectMaestro(clvMaestro);
   };
 
   const enviarHorario = (dia) => {
@@ -187,42 +184,48 @@ const CreacionHorarios = (props) => {
       hFinal: `${horario[dia].horaFinal.hora}:${horario[dia].horaFinal.minutos}:00`,
       dia: `${dia}`,
     };
-    console.log(post);
-
-    /*
-      Valida que los datos de "post"
-        *El maestro no tenga clases a ese horario,
-        *La aula no este ocupada
-        *El grupo no tenga clases en ese horario
-
-
-        1.- Una manera seria que se haga un condicion en la sentencia SQL, que cumple con todo lo de arriba, se ingrese a la BD
-        2.- Otra seria que verifiques lo horario del maestro, la del grupo, para veer si esta ocupados.
-        3.- Si tienen otra idea 
-      */
 
     axios
       .post("http://localhost/SGH-BackEnd/api/horarios", post)
-      .then((response) => console.log(response.data))
+      .then((response) => {
+        console.log(response.data.data);
+
+        if (response.data.data.data === "Horario Creado.") {
+          horarioExitoso(dia);
+        } else {
+          let mensaje = `No se puede guardar el horario del ${dia}. `;
+          response.data.data.aula
+            ? (mensaje += "Aula ocupada. ")
+            : (mensaje += " ");
+          response.data.data.grupo
+            ? (mensaje += "El grupo ya tienen una materia en esa hora. ")
+            : (mensaje += " ");
+          response.data.data.maestro
+            ? (mensaje +=
+                "El  Maestro ya tienen una materia asignada a esa hora.")
+            : (mensaje += "");
+          horarioError(dia, mensaje);
+        }
+      })
       .catch((error) => console.log("no se puede enviar horario"));
   };
 
   const validarHoras = (dia) => {
-    /*Valida que las hora de inicio sea menor que la hora final, si es posible filtra los valores
-    ejemplo selecciona 8:30, entonces el combobox de hora final comienza desde 9:00.
-    */
-   const inicio = moment([
-     parseInt(horario[dia].horaInicio.hora),
-     parseInt(horario[dia].horaInicio.minutos)
-   ],"HH:mm");
-   const final = moment(
-     [
-       parseInt(horario[dia].horaFinal.hora),
-       parseInt(horario[dia].horaFinal.minutos),
-     ],
-     "HH:mm"
-   );
-   return inicio.isBefore(final);
+    const inicio = moment(
+      [
+        parseInt(horario[dia].horaInicio.hora),
+        parseInt(horario[dia].horaInicio.minutos),
+      ],
+      "HH:mm"
+    );
+    const final = moment(
+      [
+        parseInt(horario[dia].horaFinal.hora),
+        parseInt(horario[dia].horaFinal.minutos),
+      ],
+      "HH:mm"
+    );
+    return inicio.isBefore(final);
   };
 
   const crearHorario = () => {
@@ -240,43 +243,107 @@ const CreacionHorarios = (props) => {
     const encabezado =
       selectGrupo === "" || selectMateria === "" || selectMaestro === "";
     if (!encabezado && !checkbox.lunes) {
-      if (validarHoras("Lunes")) {
+      if (
+        validarHoras("Lunes") &&
+        horario.Lunes.aula !== "" &&
+        horario.Lunes.aula !== "Selecciona un salón"
+      ) {
         enviarHorario("Lunes");
       } else {
-        horarioError("Lunes");
+        horarioError(
+          "Lunes",
+          "Revise que los datos del horario Lunes esten correctos"
+        );
       }
+    } else {
+      horarioError(
+        "Lunes",
+        "Revise que los datos del horario Lunes esten correctos"
+      );
     }
 
-    if (!encabezado && !checkbox.martes) {
+    if (
+      !encabezado &&
+      !checkbox.martes &&
+      horario.Martes.aula !== "" &&
+      horario.Martes.aula !== "Selecciona un salón"
+    ) {
       if (validarHoras("Martes")) {
         enviarHorario("Martes");
       } else {
-        horarioError("Martes");
+        horarioError(
+          "Martes",
+          "Revise que los datos del horario Martes esten correctos"
+        );
       }
+    } else {
+      horarioError(
+        "Martes",
+        "Revise que los datos del horario Martes esten correctos"
+      );
     }
 
-    if (!encabezado && !checkbox.miercoles) {
+    if (
+      !encabezado &&
+      !checkbox.miercoles &&
+      horario.Miercoles.aula !== "" &&
+      horario.Miercoles.aula !== "Selecciona un salón"
+    ) {
       if (validarHoras("Miercoles")) {
         enviarHorario("Miercoles");
       } else {
-        horarioError("Miercoles");
+        horarioError(
+          "Miercoles",
+          "Revise que los datos del horario Miercoles esten correctos"
+        );
       }
+    } else {
+      horarioError(
+        "Miercoles",
+        "Revise que los datos del horario Miercoles esten correctos"
+      );
     }
 
-    if (!encabezado && !checkbox.jueves) {
+    if (
+      !encabezado &&
+      !checkbox.jueves &&
+      horario.Jueves.aula !== "" &&
+      horario.Jueves.aula !== "Selecciona un salón"
+    ) {
       if (validarHoras("Jueves")) {
         enviarHorario("Jueves");
       } else {
-        horarioError("Jueves");
+        horarioError(
+          "Jueves",
+          "Revise que los datos del horario Jueves esten correctos"
+        );
       }
+    } else {
+      horarioError(
+        "Jueves",
+        "Revise que los datos del horario Jueves esten correctos"
+      );
     }
 
-    if (!encabezado && !checkbox.viernes) {
+    if (
+      !encabezado &&
+      !checkbox.viernes &&
+      horario.Viernes.aula !== "" &&
+      horario.Viernes.aula !== "Selecciona un salón"
+    ) {
       if (validarHoras("Viernes")) {
         enviarHorario("Viernes");
       } else {
-        horarioError("Viernes");
+        horarioError(
+          "Viernes",
+          "Revise que los datos del horario Viernes esten correctos"
+        );
       }
+    } else {
+      horarioError(
+        "Viernes",
+        "Revise que los datos del horario Viernes esten correctos"
+      );
     }
   };
 
@@ -311,25 +378,25 @@ const CreacionHorarios = (props) => {
                   onChange={(e) => getMaterias(e)}
                 >
                   <option>Selecciona un grupo</option>
-                  {grupos.map((g) => {
+                  {grupos.map((grupo) => {
                     return (
-                      <option key={g.Clv_Grupo} value={g.Clv_Grupo}>
-                        {g.Clv_Grupo}
+                      <option key={grupo.Clv_Grupo} value={grupo.Clv_Grupo}>
+                        {grupo.Clv_Grupo}
                       </option>
                     );
                   })}
                 </select>
               </Select>
             </div>
-            {materias.map((m) => {
+            {materias.map((materia) => {
               return (
                 <div
-                  key={m.clv_materia}
+                  key={materia.clv_materia}
                   className="col-12 col-md-6 col-xl-12"
-                  onClick={(e) => Materia(m.clv_materia, m.Materia)}
+                  onClick={(e) => Materia(materia.clv_materia, materia.Materia)}
                 >
                   <ItemMateria
-                    materia={m.Materia}
+                    materia={materia.Materia}
                     className="align-items-center"
                   />
                 </div>
@@ -351,10 +418,10 @@ const CreacionHorarios = (props) => {
                 onChange={(e) => SelecionarMaestro(e.currentTarget.value)}
               >
                 <option>Selecciona un profesor</option>
-                {maestros.map((m) => {
+                {maestros.map((maestros) => {
                   return (
-                    <option key={m.Maestro} value={m.Maestro}>
-                      {`${m.Nombres} ${m.ApellidoM} ${m.ApellidoP}`}
+                    <option key={maestros.Maestro} value={maestros.Maestro}>
+                      {`${maestros.Nombres} ${maestros.ApellidoM} ${maestros.ApellidoP}`}
                     </option>
                   );
                 })}

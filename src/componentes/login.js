@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import imagen from "../imagenes/aula.jpeg";
 import signin from "../imagenes/iniciar-sesion.png";
 import styled from "styled-components";
@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 toast.configure({
@@ -75,7 +75,6 @@ function Login(props) {
   const { register, handleSubmit, errors } = useForm();
   const estado = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log(estado);
 
   const onSubmit = (data, event) => {
     login(data);
@@ -94,26 +93,23 @@ function Login(props) {
         if (response.data.data[0]["Usuario"] === data["username"]) {
           if (response.data.data[0]["contrasena"] === data["password"]) {
             if (response.data.data[0]["TipoUser"] === "1") {
-              //sessionStorage.setItem('userData', response.data.data[0]);
               dispatch({
                 type: "SET_USUARIO",
-                payload: response.data.data[0]
+                payload: response.data.data[0],
               });
               history.push("/Administrador");
             } else {
               if (response.data.data[0]["TipoUser"] === "2") {
-                //sessionStorage.setItem('userData', response.data.data[0]);
                 dispatch({
                   type: "SET_USUARIO",
-                  payload: response.data.data[0]
+                  payload: response.data.data[0],
                 });
 
                 history.push("/Maestro");
               } else {
-                //sessionStorage.setItem('userData', response.data.data[0]);
                 dispatch({
                   type: "SET_USUARIO",
-                  payload: response.data.data[0]
+                  payload: response.data.data[0],
                 });
 
                 history.push("/Alumno");
@@ -126,13 +122,13 @@ function Login(props) {
           notify("usuario y contraseña invalida");
         }
       })
-      .catch((error) => notify("usuario y contraseña invalida"));
+      .catch((error) => notify("Error al conectarse al servidor"));
   };
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-5">
-          <Img src={imagen}></Img>
+          <Img src={imagen} alt="imagen"></Img>
         </div>
         <div className="col-7 ">
           <Seccion className="col-sm-8 ">
@@ -190,7 +186,7 @@ function Login(props) {
                 </Formato>
                 <div className="col-12 text-center">
                   <Button className="btn btn-light">
-                    Entrar <img src={signin}></img>{" "}
+                    Entrar <img src={signin} alt="entrar"></img>{" "}
                   </Button>
                 </div>
               </form>
