@@ -5,49 +5,115 @@ import styled from "styled-components";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Header from "./header";
-import { toast } from "react-toastify";
+import {useSelector} from 'react-redux';
+import Header from './header'
 
 const Div = styled.div`
   margin-left: 10%;
   margin-right: 10%;
 `;
 
-const A = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
+const A=styled.div`
+  font-family: 'Yanone Kaffeesatz', sans-serif;
   font-size: 2em;
-  opacity: 0.85;
+  opacity: .85;
 `;
 
-toast.configure({
-  autoClose: 4000,
-  draggable: false,
-  position: toast.POSITION.BOTTOM_RIGHT,
-});
-
 const VistaProfes = (props) => {
-  const [horario, setHorario] = useState([]);
+  const { horario, setHorario } = useState();
   const { history } = props;
   const estado = useSelector((state) => state);
-
-  const notify = (error) =>
-    toast(error, {
-      type: toast.TYPE.WARNING,
-      toastId: 1,
-    });
-
-    axios
-      .get(
-        `http://localhost/SGH-BackEnd/api/maestros/${estado.Usuario.Usuario}/horarios`
-      )
-      .then((response) => {
-        response.data.data.mensaje !== "No se encontraron coincidencias"
-          ? setHorario(response.data.data)
-          : notify("Todavía no tienes asginado un horario");
-      })
-      .catch((error) => console.log("no se pudo conectar con el servidor"));
-  }, [estado, history]);
+  useEffect(() => {
+    if (estado.Usuario === "No hay usuario") {
+      history.push("/");
+    }
+  }, []);
+  const horarios = [
+    {
+      Clv_Horario: 1,
+      Clv_Grupo: "GrupoA",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Lunes",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 2,
+      Clv_Grupo: "GrupoA",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Martes",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 3,
+      Clv_Grupo: "GrupoA",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Miercoles",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 4,
+      Clv_Grupo: "GrupoA",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "07:30:00",
+      HFinal: "08:30:00",
+      Dia: "Jueves",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 5,
+      Clv_Grupo: "GrupoB",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "QA",
+      Materia: "Aseguramiento de la calidad",
+      aula: "D1",
+      HInicio: "04:30:00",
+      HFinal: "4:30:00",
+      Dia: "Viernes",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+    {
+      Clv_Horario: 6,
+      Clv_Grupo: "GrupoB",
+      Clv_Carreta: "LIS",
+      Clv_Materia: "CS",
+      Materia: "Construccion de software",
+      aula: "D1",
+      HInicio: "08:30:00",
+      HFinal: "10:30:00",
+      Dia: "Viernes",
+      Nombres: "Carlos Benito",
+      ApellidoM: "Mojica",
+      ApellidoP: "Ruiz",
+    },
+  ];
 
   const filtrar = () => {
     let asg = [
@@ -129,9 +195,16 @@ const VistaProfes = (props) => {
 
   const materias = creartabla();
 
+  useEffect(() => {
+    /*axios.get("http://localhost/SGH-BackEnd/api/").then(response=>{
+                setHorario(response.data.data);
+        }).catch(error=>console.log("no se pudo conectar con el servidor"));*/
+    console.log(materias);
+  });
+
   return (
     <div>
-      <Header />
+      <Header/>
       <Div>
         <A>Consulta tu horario</A>
         <Table>
@@ -148,76 +221,76 @@ const VistaProfes = (props) => {
             </Tr>
           </Thead>
           <Tbody>
-            {materias.map((materia) => {
+            {materias.map((mat) => {
               return (
-                <Tr key={materia.Clv_materiaeria + " " + materia.Grupo}>
-                  <Td>{materia.Materia}</Td>
+                <Tr key={mat.Clv_Materia + " " + mat.Grupo}>
+                  <Td>{mat.Materia}</Td>
                   <Td>
-                    {materia.Nombre + " " + materia.ApellidoM + " " + materia.ApellidoP}
+                    {mat.Nombre + " " + mat.ApellidoM + " " + mat.ApellidoP}
                   </Td>
-                  <Td>{materia.Grupo}</Td>
+                  <Td>{mat.Grupo}</Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Lunes.HoraI) +
+                        formatoH(mat.Lunes.HoraI) +
                         "-" +
-                        formatoH(materia.Lunes.HoraF)
+                        formatoH(mat.Lunes.HoraF)
                       }
-                      aula={materia.Lunes.Aula}
+                      aula={mat.Lunes.Aula}
                       profesor={
-                        materia.Nombre + " " + materia.ApellidoM + " " + materia.ApellidoP
+                        mat.Nombre + " " + mat.ApellidoM + " " + mat.ApellidoP
                       }
                     />
                   </Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Martes.HoraI) +
+                        formatoH(mat.Martes.HoraI) +
                         "-" +
-                        formatoH(materia.Martes.HoraF)
+                        formatoH(mat.Martes.HoraF)
                       }
-                      aula={materia.Martes.Aula}
+                      aula={mat.Martes.Aula}
                       profesor={
-                        materia.Nombre + " " + materia.ApellidoM + " " + materia.ApellidoP
+                        mat.Nombre + " " + mat.ApellidoM + " " + mat.ApellidoP
                       }
                     />
                   </Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Miercoles.HoraI) +
+                        formatoH(mat.Miercoles.HoraI) +
                         "-" +
-                        formatoH(materia.Miercoles.HoraF)
+                        formatoH(mat.Miercoles.HoraF)
                       }
-                      aula={materia.Miercoles.Aula}
+                      aula={mat.Miercoles.Aula}
                       profesor={
-                        materia.Nombre + " " + materia.ApellidoM + " " + materia.ApellidoP
+                        mat.Nombre + " " + mat.ApellidoM + " " + mat.ApellidoP
                       }
                     />
                   </Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Jueves.HoraI) +
+                        formatoH(mat.Jueves.HoraI) +
                         "-" +
-                        formatoH(materia.Jueves.HoraF)
+                        formatoH(mat.Jueves.HoraF)
                       }
-                      aula={materia.Jueves.Aula}
+                      aula={mat.Jueves.Aula}
                       profesor={
-                        materia.Nombre + " " + materia.ApellidoM + " " + materia.ApellidoP
+                        mat.Nombre + " " + mat.ApellidoM + " " + mat.ApellidoP
                       }
                     />
                   </Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Viernes.HoraI) +
+                        formatoH(mat.Viernes.HoraI) +
                         "-" +
-                        formatoH(materia.Viernes.HoraF)
+                        formatoH(mat.Viernes.HoraF)
                       }
-                      aula={materia.Viernes.Aula}
+                      aula={mat.Viernes.Aula}
                       profesor={
-                        materia.Nombre + " " + materia.ApellidoM + " " + materia.ApellidoP
+                        mat.Nombre + " " + mat.ApellidoM + " " + mat.ApellidoP
                       }
                     />
                   </Td>

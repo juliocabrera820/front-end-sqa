@@ -1,7 +1,7 @@
-import React from "react";
-import Header from "./header";
-import Creacion from "./CreacionHorarios";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
+import Header from "./header";
 
 const VistaAdmin = (props) => {
   const { history } = props;
@@ -14,7 +14,7 @@ const VistaAdmin = (props) => {
   return (
     <div>
       <Header />
-      <Creacion />
+      <h2 className="text-center">Vista admin</h2>
     </div>
   );
 };

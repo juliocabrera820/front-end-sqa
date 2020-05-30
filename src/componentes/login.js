@@ -75,6 +75,7 @@ function Login(props) {
   const { register, handleSubmit, errors } = useForm();
   const estado = useSelector((state) => state);
   const dispatch = useDispatch();
+  console.log(estado);
 
   const onSubmit = (data, event) => {
     login(data);
@@ -93,23 +94,26 @@ function Login(props) {
         if (response.data.data[0]["Usuario"] === data["username"]) {
           if (response.data.data[0]["contrasena"] === data["password"]) {
             if (response.data.data[0]["TipoUser"] === "1") {
+              //sessionStorage.setItem('userData', response.data.data[0]);
               dispatch({
                 type: "SET_USUARIO",
-                payload: response.data.data[0],
+                payload: response.data.data[0]
               });
               history.push("/Administrador");
             } else {
               if (response.data.data[0]["TipoUser"] === "2") {
+                //sessionStorage.setItem('userData', response.data.data[0]);
                 dispatch({
                   type: "SET_USUARIO",
-                  payload: response.data.data[0],
+                  payload: response.data.data[0]
                 });
 
                 history.push("/Maestro");
               } else {
+                //sessionStorage.setItem('userData', response.data.data[0]);
                 dispatch({
                   type: "SET_USUARIO",
-                  payload: response.data.data[0],
+                  payload: response.data.data[0]
                 });
 
                 history.push("/Alumno");
