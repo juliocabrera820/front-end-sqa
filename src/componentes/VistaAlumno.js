@@ -14,17 +14,20 @@ const Horario = styled.div`
   margin-right: 10%;
 `;
 
-const A = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
+const Grupo = styled.td`
+  border: 1px solid black;
+  width: 9%;
+  padding: 10px;
+  border-radius: 3px;
+  background-color: #e7e3e2;
+  border: #b2b2b0 1px solid;
+`;
+
+const A=styled.div`
+  font-family: 'Yanone Kaffeesatz', sans-serif;
   font-size: 2em;
   opacity: 0.85;
 `;
-
-toast.configure({
-  autoClose: 4000,
-  draggable: false,
-  position: toast.POSITION.BOTTOM_RIGHT,
-});
 
 const VistaAlumno = (props) => {
   const estado = useSelector((state) => state);
@@ -41,6 +44,7 @@ const VistaAlumno = (props) => {
     if (estado.Usuario === "No hay usuario") {
       history.push("/");
     }
+  }, []);
 
     axios
       .get(
@@ -55,18 +59,16 @@ const VistaAlumno = (props) => {
   }, [estado, history]);
 
   const creartabla = () => {
-    const asg = [...new Set(horario.map((x) => x.Clv_materia))];
-    let aux = [];
-    console.log(horario);
+    let aux = new Array();
     for (let i = 0; i < asg.length; i++) {
-      let hora = horario.filter((x) => x.Clv_materia === asg[i]);
+      let hora = horarios.filter((x) => x.Clv_Materia === asg[i]);
       aux[i] = {
         Nombre: hora[0].Nombres,
         ApellidoM: hora[0].ApellidoM,
         ApellidoP: hora[0].ApellidoP,
-        Clv_Materia: hora[0].Clv_materia,
+        Clv_Materia: hora[0].Clv_Materia,
         Materia: hora[0].Materia,
-        Grupo: hora[0].Clv_Grupo,
+        Grupo: "GrupoA",
         Lunes: {
           Aula: "",
           HoraI: "",
@@ -99,6 +101,7 @@ const VistaAlumno = (props) => {
         aux[i][hora[j].Dia]["HoraF"] = hora[j].HFinal;
       }
     }
+    //console.log(aux);
     return aux;
   };
 

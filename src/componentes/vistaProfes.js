@@ -37,11 +37,6 @@ const VistaProfes = (props) => {
       toastId: 1,
     });
 
-  useEffect(() => {
-    if (estado.Usuario === "No hay usuario") {
-      history.push("/");
-    }
-
     axios
       .get(
         `http://localhost/SGH-BackEnd/api/maestros/${estado.Usuario.Usuario}/horarios`
@@ -57,7 +52,7 @@ const VistaProfes = (props) => {
   const filtrar = () => {
     let asg = [
       ...new Set(
-        horario.map((x) => {
+        horarios.map((x) => {
           return {
             Clv_Materia: x.Clv_Materia,
             Clv_Grupo: x.Clv_Grupo,
@@ -75,7 +70,7 @@ const VistaProfes = (props) => {
     let aux = [];
 
     for (let i = 0; i < asignaturas.length; i++) {
-      let hora = horario.filter(
+      let hora = horarios.filter(
         (x) =>
           x.Clv_Materia === asignaturas[i].Clv_Materia &&
           x.Clv_Grupo === asignaturas[i].Clv_Grupo
@@ -122,6 +117,10 @@ const VistaProfes = (props) => {
     }
 
     return aux;
+  };
+
+  const generarColor = () => {
+    return "#" + Math.random().toString(16).substr(-6);
   };
 
   const formatoH = (hora) => {

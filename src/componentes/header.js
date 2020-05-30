@@ -37,9 +37,9 @@ const Header = (props) => {
 
   return (
     <Nav className="navbar" >
-      <div><Img src={calendar} ></Img>SISTEMA DE HORARIOS</div>
+      <a><Img src={calendar} ></Img>SISTEMA DE HORARIOS</a>
       <div className="navbar">
-        <div>{usuario.Usuario.Usuario}</div>
+        <a>{usuario.Usuario.Usuario}</a>
         <form className="form-inline">
           <Button className="btn btn-light" onClick={salir}>
             Cerrar sesion

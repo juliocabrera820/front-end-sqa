@@ -111,9 +111,9 @@ const CreacionHorarios = (props) => {
       toastId: dia,
     });
 
-  const horarioError = (dia, mensaje) =>
+  const horarioError = (dia) =>
     toast(
-      `${mensaje}`,
+      `El horario del dia ${dia} tuvo un error revise los campos correctamente`,
       {
         type: toast.TYPE.ERROR,
         toastId: dia,
