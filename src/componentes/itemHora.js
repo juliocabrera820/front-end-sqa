@@ -55,7 +55,7 @@ const itemHora = (props) => {
         >
           {Horas.map((h) => {
             return <option key={h.hora}>{h.hora}</option>;
-          })}
+          })} 
         </select>
         <select
           className="col-6 form-control-sm"
