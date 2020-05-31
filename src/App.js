@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import login from "./paginas/login";
+import vistaAlumno from "./paginas/vistaAlumno";
+import vistaAdmin from "./paginas/vistaAdmin";
+import vistaprofes from "./paginas/vistaProfes";
+import NotFound from "./paginas/NotFound";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import {RutaAdministrador,RutaAlumno,RutaMaestro} from './rutas';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={login} />
+      <RutaMaestro exact path="/Maestro" component={vistaprofes} />
+      <RutaAlumno exact path="/Alumno" component={vistaAlumno} />
+      <RutaAdministrador exact path="/Administrador" component={vistaAdmin} />
+      <Route component={NotFound} />
+    </Switch>
+  </Router>
+);
 
 export default App;

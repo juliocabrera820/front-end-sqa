@@ -1,0 +1,117 @@
+.contenedor {
+  background-color: antiquewhite;
+  padding-top: 5%;
+}
+.cara {
+  width: 300px;
+  height: 300px;
+  border: 4px solid #383a41;
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin: 0 auto;
+}
+
+.banda {
+  width: 350px;
+  height: 27px;
+  border: 4px solid #383a41;
+  border-radius: 5px;
+  margin-left: -25px;
+  margin-top: 50px;
+}
+
+.rojo {
+  height: calc(100% / 3);
+  width: 100%;
+  background-color: #eb6d6d;
+}
+
+.blanco {
+  height: calc(100% / 3);
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.azul {
+  height: calc(100% / 3);
+  width: 100%;
+  background-color: #5e7fdc;
+}
+
+.ojos {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.ojos::before {
+  content: "";
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  border: 7px solid #383a41;
+  margin-right: 15%;
+  margin-left: 5%;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  border-bottom: 0;
+}
+
+.ojos::after {
+  content: "";
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  border: 7px solid #383a41;
+  margin-left: 15%;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  border-bottom: 0;
+}
+
+.mejillas {
+  width: 180px;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+
+.mejillas::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 80px;
+  border-radius: 50%;
+  background-color: #eb6d6d;
+}
+
+.mejillas::after {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 80px;
+  border-radius: 50%;
+  background-color: #eb6d6d;
+}
+
+.boca {
+  width: 40px;
+  height: 5px;
+  border-radius: 5px;
+  background-color: #383a41;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+
+.mensaje {
+  font-weight: 800;
+  color: #383a41;
+  text-align: center;
+  font-size: 2.5em;
+  padding-top: 20px;
+}
+
+.inicio {
+  font-family: "Karla";
+}
