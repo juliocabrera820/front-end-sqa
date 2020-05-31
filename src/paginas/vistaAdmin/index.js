@@ -3,13 +3,11 @@ import Header from "../../componentes/header";
 import Creacion from "../../componentes/creacionHorarios";
 import { withRouter } from "react-router-dom";
 
-const VistaAdmin = (props) => {
-  return (
-    <div>
-      <Header />
-      <Creacion />
-    </div>
-  );
-};
+const VistaAdmin = () => (
+  <div>
+    <Header />
+    <Creacion />
+  </div>
+);
 
 export default withRouter(VistaAdmin);

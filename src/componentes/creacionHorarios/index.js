@@ -190,7 +190,7 @@ const CreacionHorarios = (props) => {
       .then((response) => {
         console.log(response.data.data);
 
-        if (response.data.data.data === "Horario Creado.") {
+        if (response.data.data === "Horario Creado.") {
           horarioExitoso(dia);
         } else {
           let mensaje = `No se puede guardar el horario del ${dia}. `;
@@ -242,6 +242,7 @@ const CreacionHorarios = (props) => {
     }
     const encabezado =
       selectGrupo === "" || selectMateria === "" || selectMaestro === "";
+
     if (!encabezado && !checkbox.lunes) {
       if (
         validarHoras("Lunes") &&
@@ -255,11 +256,6 @@ const CreacionHorarios = (props) => {
           "Revise que los datos del horario Lunes esten correctos"
         );
       }
-    } else {
-      horarioError(
-        "Lunes",
-        "Revise que los datos del horario Lunes esten correctos"
-      );
     }
 
     if (
@@ -276,11 +272,6 @@ const CreacionHorarios = (props) => {
           "Revise que los datos del horario Martes esten correctos"
         );
       }
-    } else {
-      horarioError(
-        "Martes",
-        "Revise que los datos del horario Martes esten correctos"
-      );
     }
 
     if (
@@ -297,11 +288,6 @@ const CreacionHorarios = (props) => {
           "Revise que los datos del horario Miercoles esten correctos"
         );
       }
-    } else {
-      horarioError(
-        "Miercoles",
-        "Revise que los datos del horario Miercoles esten correctos"
-      );
     }
 
     if (
@@ -318,11 +304,6 @@ const CreacionHorarios = (props) => {
           "Revise que los datos del horario Jueves esten correctos"
         );
       }
-    } else {
-      horarioError(
-        "Jueves",
-        "Revise que los datos del horario Jueves esten correctos"
-      );
     }
 
     if (
@@ -339,11 +320,6 @@ const CreacionHorarios = (props) => {
           "Revise que los datos del horario Viernes esten correctos"
         );
       }
-    } else {
-      horarioError(
-        "Viernes",
-        "Revise que los datos del horario Viernes esten correctos"
-      );
     }
   };
 
