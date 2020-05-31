@@ -5,6 +5,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import { withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import "../../estilos/SuperResponsiveTableStyle.css";
 import Header from "../../componentes/header";
 import { toast } from "react-toastify";
 import { Div, A } from "./styles";

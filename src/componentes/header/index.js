@@ -6,7 +6,7 @@ import calendar from "../../assets/calendar.png";
 import { Nav, Button, Img } from "./styles";
 
 const Header = (props) => {
-  const usuario = useSelector((state) => state);
+  const {Usuario} = useSelector((state) => state.Usuario);
   const { history } = props;
   const dispatch = useDispatch();
   const salir = () => {
@@ -20,7 +20,7 @@ const Header = (props) => {
         <Img src={calendar}></Img>SISTEMA DE HORARIOS
       </a>
       <div className="navbar">
-        <a>{usuario.Usuario.Usuario}</a>
+        <a>{Usuario}</a>
         <form className="form-inline">
           <Button className="btn btn-light" onClick={salir}>
             Cerrar sesion
