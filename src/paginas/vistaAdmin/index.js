@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "./header";
-import Creacion from "./CreacionHorarios";
+import Header from "../../componentes/header";
+import Creacion from "../../componentes/creacionHorarios";
 import { withRouter } from "react-router-dom";
 
 const VistaAdmin = (props) => {

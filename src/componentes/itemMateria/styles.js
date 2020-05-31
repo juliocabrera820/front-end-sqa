@@ -1,17 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-const itemMateria = (props) => {
-  return (
-    <Item>
-      <Div>
-        <div>{props.materia}</div>
-      </Div>
-    </Item>
-  );
-};
-
-const Item = styled.div`
+export const Item = styled.div`
   font-family: "Yanone Kaffeesatz", sans-serif;
   text-align: center;
   border-radius: 5px;
@@ -22,7 +11,7 @@ const Item = styled.div`
   background-color: #9d81b3;
 `;
 
-const Div = styled.div`
+export const Div = styled.div`
   padding-top: 10px;
   border: solid 1px #e8e6ca;
   background-color: #fcfee9;
@@ -33,5 +22,3 @@ const Div = styled.div`
   }
   cursor: pointer;
 `;
-
-export default itemMateria;
