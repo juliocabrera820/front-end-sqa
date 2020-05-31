@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from "react";
-import ItemHorario from "./itemHorario";
+import ItemHorario from "../../componentes/itemHorario";
 import axios from "axios";
-import styled from "styled-components";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Header from "./header";
+import Header from "../../componentes/header";
 import { toast } from "react-toastify";
-
-const Horario = styled.div`
-  margin-left: 10%;
-  margin-right: 10%;
-`;
-
-const A = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 2em;
-  opacity: 0.85;
-`;
+import { Horario, A } from "./styles";
 
 toast.configure({
   autoClose: 4000,

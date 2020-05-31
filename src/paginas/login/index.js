@@ -1,74 +1,19 @@
 import React from "react";
-import imagen from "../imagenes/aula.jpeg";
-import signin from "../imagenes/iniciar-sesion.png";
-import styled from "styled-components";
+import imagen from "../../assets/aula.jpeg";
+import signin from "../../assets/iniciar-sesion.png";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import {Img,Titulo,Cuerpo,Seccion,Input,InputF,Button,Formato} from './styles';
 
 toast.configure({
   autoClose: 2000,
   draggable: false,
   position: toast.POSITION.BOTTOM_RIGHT,
 });
-
-const Img = styled.img`
-  object-fit: cover;
-  object-position: center center;
-  width: 100%;
-  height: 750px;
-`;
-
-const Titulo = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 60px;
-  opacity: 0.8;
-`;
-
-const Cuerpo = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 30px;
-  opacity: 0.8;
-  margin-bottom: 10px;
-`;
-
-const Seccion = styled.div`
-  margin: 0 auto;
-  margin-top: 15%;
-`;
-
-const InputF = styled.div`
-  padding: 15px;
-  margin-left: 3%;
-  box-shadow: 0px 0px 10px 0.1px #e1e1e1;
-  background: white;
-  margin-bottom: 0px;
-`;
-
-const Input = styled.input`
-  border: none;
-`;
-
-const Button = styled.button`
-  margin-top: 20px;
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 20px;
-  background: white;
-  border: none;
-  color: black;
-`;
-
-const Formato = styled.div`
-  background: #8f6464;
-  border-radius: 10px;
-  margin: 0px;
-  padding: 0px;
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 20px;
-`;
 
 function Login(props) {
   const { history } = props;

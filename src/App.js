@@ -1,9 +1,9 @@
 import React from "react";
-import login from "./componentes/login";
-import vistaAlumno from "./componentes/VistaAlumno";
-import vistaAdmin from "./componentes/vistaAdmin";
-import vistaprofes from "./componentes/vistaProfes";
-import NoFound from "./componentes/NoFound";
+import login from "./paginas/login";
+import vistaAlumno from "./paginas/vistaAlumno";
+import vistaAdmin from "./paginas/vistaAdmin";
+import vistaprofes from "./paginas/vistaProfes";
+import NotFound from "./paginas/NotFound";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import {RutaAdministrador,RutaAlumno,RutaMaestro} from './rutas';
 
@@ -14,7 +14,7 @@ const App = () => (
       <RutaMaestro exact path="/Maestro" component={vistaprofes} />
       <RutaAlumno exact path="/Alumno" component={vistaAlumno} />
       <RutaAdministrador exact path="/Administrador" component={vistaAdmin} />
-      <Route component={NoFound} />
+      <Route component={NotFound} />
     </Switch>
   </Router>
 );

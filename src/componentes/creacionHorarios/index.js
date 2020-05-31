@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import ItemMateria from "./itemMateria";
-import ItemHora from "./itemHora";
-import styled from "styled-components";
+import ItemMateria from "../itemMateria";
+import ItemHora from "../itemHora";
 import { toast } from "react-toastify";
 import moment from "moment";
+import { Div, Item, Input, Button, Select, Text, Titulo } from "./styles";
 
 toast.configure({
   autoClose: 4000,
@@ -568,36 +568,5 @@ const CreacionHorarios = (props) => {
     </div>
   );
 };
-
-const Div = styled.div`
-  height: 100px;
-  margin-botton: 0px;
-`;
-
-const Item = styled.div`
-  text-align: center;
-`;
-
-const Button = styled.button``;
-
-const Select = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 1.7em;
-`;
-
-const Text = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 1.7em;
-`;
-
-const Titulo = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 1.5em;
-  text-align: center;
-  margin-bottom: 20px;
-`;
-const Input = styled.input`
-  transform: scale(1.5);
-`;
 
 export default CreacionHorarios;

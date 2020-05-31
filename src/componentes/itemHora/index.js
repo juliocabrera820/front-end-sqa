@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-import { Horas, Minutos } from "./horarios";
+import { Horas, Minutos } from "../../utils/horarios";
+import { Item, Label, Titulo } from "./styles";
 
 const itemHora = (props) => {
   const { Dia, hi, hf, mi, mf } = props;
@@ -72,20 +72,3 @@ const itemHora = (props) => {
 };
 
 export default itemHora;
-
-const Item = styled.div`
-  text-align: center;
-  vertical-align: middle;
-`;
-
-const Label = styled.label`
-  padding-right: 15px;
-  padding-left: 15px;
-`;
-
-const Titulo = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 1.5em;
-  text-align: center;
-  margin-bottom: 20px;
-`;
