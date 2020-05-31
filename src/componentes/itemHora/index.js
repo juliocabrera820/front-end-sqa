@@ -7,15 +7,15 @@ const itemHora = (props) => {
 
   return (
     <Item className="row">
-      <Titulo className="col-12">{props.dia}</Titulo>
-      <Label>Aula</Label>
+      <Titulo className="col-12" id="dia">{props.dia}</Titulo>
+      <Label id="aula">Aula</Label>
       <div className="col-12 form-group">
         <select
           className="form-control"
           disabled={props.status}
           onChange={(e) => Dia(props.dia, e.currentTarget.value)}
         >
-          <option>Selecciona un salón</option>
+          <option id="msjSeleccionar">Selecciona un salón</option>
           {props.aulas.map((a) => {
             return (
               <option key={a.Clv_Aula} value={a.Clv_Aula}>
@@ -25,7 +25,7 @@ const itemHora = (props) => {
           })}
         </select>
       </div>
-      <Label>Hora Inicio</Label>
+      <Label id="hrInicio">Hora Inicio</Label>
       <div className="col-12 form-group">
         <select
           className="col-6 form-control-sm"
@@ -46,7 +46,7 @@ const itemHora = (props) => {
           })}
         </select>
       </div>
-      <Label>Hora Final</Label>
+      <Label id="hrFinal">Hora Final</Label>
       <div className="col-12 form-group">
         <select
           className="col-6 form-control-sm"

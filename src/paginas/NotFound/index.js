@@ -21,6 +21,7 @@ const NotFound = () => (
         <Link
           to="/"
           className=" inicio btn btn-success btn-lg text-uppercase font-weight-bold hvr-box-shadow-outset"
+          id="boton"
         >
           Regresar al login
         </Link>

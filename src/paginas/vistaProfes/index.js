@@ -141,14 +141,10 @@ const VistaProfes = (props) => {
           <Tbody>
             {materias.map((materia) => {
               return (
-                <Tr key={materia.Clv_materiaeria + " " + materia.Grupo}>
-                  <Td>{materia.Materia}</Td>
+                <Tr key={materia.Clv_Materia + " " + materia.Grupo}>
+                  <Td>{`${materia.Nombre} ${materia.ApellidoP} ${materia.ApellidoM}`}</Td>
                   <Td>
-                    {materia.Nombre +
-                      " " +
-                      materia.ApellidoM +
-                      " " +
-                      materia.ApellidoP}
+                    {materia.Materia}
                   </Td>
                   <Td>{materia.Grupo}</Td>
                   <Td>

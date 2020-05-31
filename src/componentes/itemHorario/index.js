@@ -8,9 +8,9 @@ const itemHorario = ({ hora, aula, profesor }) => {
     return (
       <Item>
         <Div>
-          <Hora>{hora}</Hora>
-          <Aula>Aula: {aula}</Aula>
-          <Maestro>Maestro: {profesor}</Maestro>
+          <Hora id="hora">{hora}</Hora>
+          <Aula id="aula">Aula: {aula}</Aula>
+          <Maestro id="maestro">Maestro: {profesor}</Maestro>
         </Div>
       </Item>
     );
