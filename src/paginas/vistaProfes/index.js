@@ -105,12 +105,12 @@ const VistaProfes = (props) => {
       };
 
       for (let j = 0; j < hora.length; j++) {
-        aux[i][hora[j].Dia]["Aula"] = hora[j].aula;
+        aux[i][hora[j].Dia]["Aula"] = hora[j].Aula;
         aux[i][hora[j].Dia]["HoraI"] = hora[j].HInicio;
         aux[i][hora[j].Dia]["HoraF"] = hora[j].HFinal;
       }
     }
-
+    console.log(aux);
     return aux;
   };
 
@@ -128,8 +128,8 @@ const VistaProfes = (props) => {
         <Table>
           <Thead>
             <Tr>
-              <Th>Maestro</Th>
               <Th>Materia</Th>
+              <Th>Maestro</Th>
               <Th>Grupo</Th>
               <Th>Lunes</Th>
               <Th>Martes</Th>
