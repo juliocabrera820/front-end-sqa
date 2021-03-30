@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { titles } from "../../shared/consts/fonts";
 
 export const Div = styled.div`
   margin-left: 10%;
@@ -6,7 +7,7 @@ export const Div = styled.div`
 `;
 
 export const A = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-family: ${titles};
   font-size: 2em;
   opacity: 0.85;
 `;

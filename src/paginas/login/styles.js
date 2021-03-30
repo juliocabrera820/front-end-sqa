@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { titles } from "../../shared/consts/fonts";
 
 export const Img = styled.img`
   object-fit: cover;
@@ -8,13 +9,13 @@ export const Img = styled.img`
 `;
 
 export const Titulo = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-family: ${titles};
   font-size: 60px;
   opacity: 0.8;
 `;
 
 export const Cuerpo = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-family: ${titles};
   font-size: 30px;
   opacity: 0.8;
   margin-bottom: 10px;
@@ -39,7 +40,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   margin-top: 20px;
-  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-family: ${titles};
   font-size: 20px;
   background: white;
   border: none;
@@ -51,6 +52,6 @@ export const Formato = styled.div`
   border-radius: 10px;
   margin: 0px;
   padding: 0px;
-  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-family: ${titles};
   font-size: 20px;
 `;
