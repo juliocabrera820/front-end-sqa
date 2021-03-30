@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { titles } from "../../shared/consts/fonts";
 
 export const Item = styled.div`
   text-align: center;
@@ -11,7 +12,7 @@ export const Label = styled.label`
 `;
 
 export const Titulo = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-family: ${titles};
   font-size: 1.5em;
   text-align: center;
   margin-bottom: 20px;

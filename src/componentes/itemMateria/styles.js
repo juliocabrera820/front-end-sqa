@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { titles } from "../../shared/consts/fonts";
 
 export const Item = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-family: ${titles};
   text-align: center;
   border-radius: 5px;
   margin: 0px;

@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { titles } from "../../shared/consts/fonts";
 
 export const Nav = styled.nav`
-  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-family: ${titles};
   font-size: 2em;
   background-color: #fcfee9;
   margin-bottom: 20px;
