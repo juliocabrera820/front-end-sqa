@@ -5,7 +5,7 @@ import vistaAdmin from "./paginas/vistaAdmin";
 import vistaprofes from "./paginas/vistaProfes";
 import NotFound from "./paginas/NotFound";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import {RutaAdministrador,RutaAlumno,RutaMaestro} from './rutas';
+import { RutaAdministrador, RutaAlumno, RutaMaestro } from "./rutas";
 
 const App = () => (
   <Router>
