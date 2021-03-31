@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import ItemHorario from "../../componentes/itemHorario";
-import axios from "axios";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
+import { useSession } from "../../shared/hooks/useSession";
+import maestrosService from "../../services/maestrosService";
+import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
-import { toast } from "react-toastify";
 import { Div, A } from "./styles";
 
 toast.configure({
@@ -16,11 +17,9 @@ toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-const VistaProfes = (props) => {
+const VistaProfes = () => {
   const [horario, setHorario] = useState([]);
-  const { history } = props;
-  const estado = useSelector((state) => state);
-
+  const [session, setSession] = useSession();
   const notify = (error) =>
     toast(error, {
       type: toast.TYPE.WARNING,
@@ -28,21 +27,15 @@ const VistaProfes = (props) => {
     });
 
   useEffect(() => {
-    if (estado.Usuario === "No hay usuario") {
-      history.push("/");
-    }
-
-    axios
-      .get(
-        `http://localhost/SGH-BackEnd/api/maestros/${estado.Usuario.Usuario}/horarios`
-      )
+    maestrosService()
+      .getHorario(session().Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
           ? setHorario(response.data.data)
           : notify("Todavía no tienes asginado un horario");
       })
       .catch((error) => console.log("no se pudo conectar con el servidor"));
-  }, [estado, history]);
+  }, []);
 
   const filtrar = () => {
     let asg = [
@@ -110,7 +103,6 @@ const VistaProfes = (props) => {
         aux[i][hora[j].Dia]["HoraF"] = hora[j].HFinal;
       }
     }
-    console.log(aux);
     return aux;
   };
 

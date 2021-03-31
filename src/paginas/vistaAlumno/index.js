@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import ItemHorario from "../../componentes/itemHorario";
-import axios from "axios";
+import { withRouter } from "react-router-dom";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
-import { useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import alumnosService from "../../services/alumnosService";
+import { useSession } from "../../shared/hooks/useSession";
+import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
-import { toast } from "react-toastify";
 import { Horario, A } from "./styles";
 
 toast.configure({
@@ -16,10 +17,9 @@ toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-const VistaAlumno = (props) => {
-  const estado = useSelector((state) => state);
-  const { history } = props;
+const VistaAlumno = () => {
   const [horario, setHorario] = useState([]);
+  const [session, setSession] = useSession();
 
   const notify = (error) =>
     toast(error, {
@@ -28,26 +28,19 @@ const VistaAlumno = (props) => {
     });
 
   useEffect(() => {
-    if (estado.Usuario === "No hay usuario") {
-      history.push("/");
-    }
-
-    axios
-      .get(
-        `http://localhost/SGH-BackEnd/api/alumnos/${estado.Usuario.Usuario}/horarios`
-      )
+    alumnosService()
+      .getHorario(session().Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
           ? setHorario(response.data.data)
           : notify("Todavía no tienes asginado un horario");
       })
       .catch((error) => console.log("no se pudo conectar con el servidor"));
-  }, [estado, history]);
+  }, []);
 
   const creartabla = () => {
     const asg = [...new Set(horario.map((x) => x.Clv_materia))];
     let aux = [];
-    console.log(horario);
     for (let i = 0; i < asg.length; i++) {
       let hora = horario.filter((x) => x.Clv_materia === asg[i]);
       aux[i] = {
