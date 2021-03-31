@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { generarColor } from "../../shared/utils/generarColor";
+import { generarColor } from "../../utils/generarColor";
 
 export const Item = styled.div`
   border-radius: 5px;
