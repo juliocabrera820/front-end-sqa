@@ -1,26 +1,27 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSession } from "../../shared/hooks/useSession";
 import calendar from "../../assets/calendar.png";
 import { Nav, Button, Img } from "./styles";
 
 const Header = (props) => {
-  const {Usuario} = useSelector((state) => state.Usuario);
   const { history } = props;
-  const dispatch = useDispatch();
+  const [session, setSession] = useSession();
+  
+  const usuario = session().Usuario
+
   const salir = () => {
-    dispatch({ type: "SET_USUARIO", payload: "No hay usuario" });
+    setSession("No hay usuario");
     history.push("/");
   };
-
+  
   return (
     <Nav className="navbar">
       <a>
         <Img src={calendar}></Img>SISTEMA DE HORARIOS
       </a>
       <div className="navbar">
-        <a>{Usuario}</a>
+        <a>{usuario}</a>
         <form className="form-inline">
           <Button className="btn btn-light" onClick={salir}>
             Cerrar sesion
