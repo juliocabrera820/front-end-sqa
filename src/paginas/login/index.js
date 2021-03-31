@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { withRouter } from "react-router-dom";
+import {yupResolver} from '@hookform/resolvers/yup'
+import {loginSchema} from '../../schemas/loginSchema'
 import imagen from "../../assets/aula.jpeg";
 import signin from "../../assets/iniciar-sesion.png";
 import { toast } from "react-toastify";
@@ -26,7 +28,10 @@ toast.configure({
 
 function Login(props) {
   const { history } = props;
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(loginSchema)
+  });
+  
   const [session, setSession] = useSession();
   const onSubmit = (data, event) => {
     login(data);
@@ -89,12 +94,7 @@ function Login(props) {
                       }`}
                       name="username"
                       placeholder="Ingresa tu usuario"
-                      ref={register({
-                        required: "Debes ingresar un usuario valido",
-                        validate: (username) =>
-                          username.trim() !== "" ||
-                          "No debe tener espacios en blanco",
-                      })}
+                      ref={register}
                     />
                     <div className="invalid-feedback">
                       {errors.username && errors.username.message}
@@ -111,12 +111,7 @@ function Login(props) {
                       }`}
                       name="password"
                       placeholder="Ingresa tu contraseña"
-                      ref={register({
-                        required: "Debes ingresar una contraseña valida",
-                        validate: (password) =>
-                          password.trim() !== "" ||
-                          "No debe tener espacios en blanco",
-                      })}
+                      ref={register}
                     />
                     <div className="invalid-feedback">
                       {errors.password && errors.password.message}
