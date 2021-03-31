@@ -1,10 +1,10 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSession } from "./shared/hooks/useSession";
 
 export const RutaAdministrador = ({ component: Component, ...rest }) => {
-  const usuario = useSelector((state) => state);
-  const TipoUser = usuario.Usuario.TipoUser;
+  const [session, setSession] = useSession();
+  const TipoUser = session().TipoUser;
   return (
     <Route
       {...rest}
@@ -24,9 +24,8 @@ export const RutaAdministrador = ({ component: Component, ...rest }) => {
 };
 
 export const RutaMaestro = ({ component: Component, ...rest }) => {
-  const usuario = useSelector((state) => state);
-  const TipoUser = usuario.Usuario.TipoUser;
-
+  const [session, setSession] = useSession();
+  const TipoUser = session().TipoUser;
   return (
     <Route
       {...rest}
@@ -46,9 +45,8 @@ export const RutaMaestro = ({ component: Component, ...rest }) => {
 };
 
 export const RutaAlumno = ({ component: Component, ...rest }) => {
-  const usuario = useSelector((state) => state);
-  const TipoUser = usuario.Usuario.TipoUser;
-
+  const [session, setSession] = useSession();
+  const TipoUser = session().TipoUser;
   return (
     <Route
       {...rest}
