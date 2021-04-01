@@ -1,12 +1,12 @@
 import React from "react";
-import imagen from "../../assets/aula.jpeg";
-import signin from "../../assets/iniciar-sesion.png";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import usuariosService from '../../services/usuariosService'
+import imagen from "../../assets/aula.jpeg";
+import signin from "../../assets/iniciar-sesion.png";
 import {Img,Titulo,Cuerpo,Seccion,Input,InputF,Button,Formato} from './styles';
 
 toast.configure({
@@ -31,12 +31,11 @@ function Login(props) {
       toastId: 1,
     });
 
-  const login = (data) => {
-    axios
-      .get(`http://localhost/SGH-BackEnd/api/usuarios/${data["username"]}`)
+  const login = ({username, password}) => {
+      usuariosService().getOne(username)
       .then((response) => {
-        if (response.data.data[0]["Usuario"] === data["username"]) {
-          if (response.data.data[0]["contrasena"] === data["password"]) {
+        if (response.data.data[0]["Usuario"] === username) {
+          if (response.data.data[0]["contrasena"] === password) {
             if (response.data.data[0]["TipoUser"] === "1") {
               dispatch({
                 type: "SET_USUARIO",

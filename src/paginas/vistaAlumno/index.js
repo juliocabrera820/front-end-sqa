@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import ItemHorario from "../../componentes/itemHorario";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
-import { useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import alumnosService from '../../services/alumnosService'
+import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
-import { toast } from "react-toastify";
 import { Horario, A } from "./styles";
 
 toast.configure({
@@ -32,10 +32,7 @@ const VistaAlumno = (props) => {
       history.push("/");
     }
 
-    axios
-      .get(
-        `http://localhost/SGH-BackEnd/api/alumnos/${estado.Usuario.Usuario}/horarios`
-      )
+      alumnosService().getHorario(estado.Usuario.Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
           ? setHorario(response.data.data)
