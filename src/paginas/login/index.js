@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {Img,Titulo,Cuerpo,Seccion,Input,InputF,Button,Formato} from './styles';
+import { yupResolver } from '@hookform/resolvers/yup'
+import { loginSchema } from '../../schemas/loginSchema'
 
 toast.configure({
   autoClose: 2000,
@@ -17,7 +19,9 @@ toast.configure({
 
 function Login(props) {
   const { history } = props;
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(loginSchema)
+  });
   const estado = useSelector((state) => state);
   const dispatch = useDispatch();
 
