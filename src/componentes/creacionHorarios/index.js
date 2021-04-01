@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios'
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -177,7 +176,7 @@ const CreacionHorarios = (props) => {
   };
 
   const enviarHorario = (dia) => {
-    const post = {
+    const horarioSeleccionado = {
       maestro: `${selectMaestro}`,
       grupo: `${selectGrupo}`,
       materia: `${selectMateria}`,
@@ -187,8 +186,7 @@ const CreacionHorarios = (props) => {
       dia: `${dia}`,
     };
 
-    axios
-      .post("http://localhost/SGH-BackEnd/api/horarios", post)
+      horariosService().create(horarioSeleccionado)
       .then((response) => {
         console.log(response.data.data);
 
