@@ -9,6 +9,8 @@ import usuariosService from '../../services/usuariosService'
 import imagen from "../../assets/aula.jpeg";
 import signin from "../../assets/iniciar-sesion.png";
 import {Img,Titulo,Cuerpo,Seccion,Input,InputF,Button,Formato} from './styles';
+import { yupResolver } from '@hookform/resolvers/yup'
+import { loginSchema } from '../../schemas/loginSchema'
 
 toast.configure({
   autoClose: 2000,
@@ -18,6 +20,9 @@ toast.configure({
 
 function Login(props) {
   const { history } = props;
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(loginSchema)
+  });
   const { register, handleSubmit, errors } = useForm();
   const [session, setSession] = useSession()
 
