@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import ItemHorario from "../../componentes/itemHorario";
-import axios from "axios";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import { withRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
+import maestrosService from '../../services/maestrosService'
+import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
 import { toast } from "react-toastify";
 import { Div, A } from "./styles";
@@ -28,10 +29,7 @@ const VistaProfes = () => {
     });
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost/SGH-BackEnd/api/maestros/${Usuario}/horarios`
-      )
+      maestrosService().getHorario(estado.Usuario.Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
           ? setHorario(response.data.data)
