@@ -9,6 +9,7 @@ import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
 import { toast } from "react-toastify";
 import { Div, A } from "./styles";
+import { useSession } from '../../shared/hooks/useSession'
 
 toast.configure({
   autoClose: 4000,
@@ -16,10 +17,10 @@ toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-const VistaProfes = (props) => {
+const VistaProfes = () => {
   const [horario, setHorario] = useState([]);
-  const { history } = props;
-  const estado = useSelector((state) => state);
+  const [session, setSession] = useSession()
+  const [ Usuario ] = session()
 
   const notify = (error) =>
     toast(error, {
@@ -28,10 +29,6 @@ const VistaProfes = (props) => {
     });
 
   useEffect(() => {
-    if (estado.Usuario === "No hay usuario") {
-      history.push("/");
-    }
-
       maestrosService().getHorario(estado.Usuario.Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
@@ -39,7 +36,7 @@ const VistaProfes = (props) => {
           : notify("Todavía no tienes asginado un horario");
       })
       .catch((error) => console.log("no se pudo conectar con el servidor"));
-  }, [estado, history]);
+  }, []);
 
   const filtrar = () => {
     let asg = [

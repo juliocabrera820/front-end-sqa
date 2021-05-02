@@ -1,4 +1,5 @@
 import React from "react";
+import { useSession } from '../../shared/hooks/useSession'
 import { useForm } from "react-hook-form";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,8 +19,7 @@ toast.configure({
 function Login(props) {
   const { history } = props;
   const { register, handleSubmit, errors } = useForm();
-  const estado = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const [session, setSession] = useSession()
 
   const onSubmit = (data, event) => {
     login(data);
@@ -37,25 +37,14 @@ function Login(props) {
         if (response.data.data[0]["Usuario"] === username) {
           if (response.data.data[0]["contrasena"] === password) {
             if (response.data.data[0]["TipoUser"] === "1") {
-              dispatch({
-                type: "SET_USUARIO",
-                payload: response.data.data[0],
-              });
+              setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
               history.push("/Administrador");
             } else {
               if (response.data.data[0]["TipoUser"] === "2") {
-                dispatch({
-                  type: "SET_USUARIO",
-                  payload: response.data.data[0],
-                });
-
+                setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
                 history.push("/Maestro");
               } else {
-                dispatch({
-                  type: "SET_USUARIO",
-                  payload: response.data.data[0],
-                });
-
+                setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
                 history.push("/Alumno");
               }
             }

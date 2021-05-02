@@ -5,10 +5,12 @@ import { toast } from "react-toastify";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
+import { withRouter } from "react-router-dom";
 import alumnosService from '../../services/alumnosService'
 import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
 import { Horario, A } from "./styles";
+import { useSession } from '../../shared/hooks/useSession'
 
 toast.configure({
   autoClose: 4000,
@@ -16,10 +18,10 @@ toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-const VistaAlumno = (props) => {
-  const estado = useSelector((state) => state);
-  const { history } = props;
+const VistaAlumno = () => {
+  const [session, setSession] = useSession()
   const [horario, setHorario] = useState([]);
+  const { Usuario } = session()
 
   const notify = (error) =>
     toast(error, {
@@ -28,10 +30,6 @@ const VistaAlumno = (props) => {
     });
 
   useEffect(() => {
-    if (estado.Usuario === "No hay usuario") {
-      history.push("/");
-    }
-
       alumnosService().getHorario(estado.Usuario.Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
@@ -39,7 +37,7 @@ const VistaAlumno = (props) => {
           : notify("Todavía no tienes asginado un horario");
       })
       .catch((error) => console.log("no se pudo conectar con el servidor"));
-  }, [estado, history]);
+  }, []);
 
   const creartabla = () => {
     const asg = [...new Set(horario.map((x) => x.Clv_materia))];
