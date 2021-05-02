@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import moment from "moment";
+import { toast } from "react-toastify";
+import gruposService from '../../services/gruposService'
+import aulasService from '../../services/aulasService'
+import maestrosService from '../../services/maestrosService'
+import horariosService from '../../services/horariosService'
 import ItemMateria from "../itemMateria";
 import ItemHora from "../itemHora";
-import { toast } from "react-toastify";
-import moment from "moment";
 import { Div, Item, Input, Button, Select, Text, Titulo } from "./styles";
 
 toast.configure({
@@ -128,15 +131,13 @@ const CreacionHorarios = (props) => {
       history.push("/");
     }
 
-    axios
-      .get("http://localhost/SGH-BackEnd/api/grupos")
+      gruposService().getAll()
       .then((response) => {
         setGrupos(response.data.data);
       })
       .catch((error) => console.log("no se pudo conectar con el servidor"));
 
-    axios
-      .get("http://localhost/SGH-BackEnd/api/aulas")
+      aulasService().getAll()
       .then((response) => {
         setAulas(response.data.data);
       })
@@ -149,8 +150,8 @@ const CreacionHorarios = (props) => {
     setSelectMateria("");
     setMateria("");
     setMaestros([]);
-    axios
-      .get(`http://localhost/SGH-BackEnd/api/grupos/${select}`)
+
+      gruposService().getOne(select)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
           ? SetMaterias(response.data.data)
@@ -162,8 +163,8 @@ const CreacionHorarios = (props) => {
   const Materia = (clvMateria, materia) => {
     setSelectMateria(clvMateria);
     setMateria(materia);
-    axios
-      .get(`http://localhost/SGH-BackEnd/api/maestros/materias/${clvMateria}`)
+
+      maestrosService().getMateria(clvMateria)
       .then((response) => {
         setMaestros(response.data.data);
       })
@@ -175,7 +176,7 @@ const CreacionHorarios = (props) => {
   };
 
   const enviarHorario = (dia) => {
-    const post = {
+    const horarioSeleccionado = {
       maestro: `${selectMaestro}`,
       grupo: `${selectGrupo}`,
       materia: `${selectMateria}`,
@@ -185,8 +186,7 @@ const CreacionHorarios = (props) => {
       dia: `${dia}`,
     };
 
-    axios
-      .post("http://localhost/SGH-BackEnd/api/horarios", post)
+      horariosService().create(horarioSeleccionado)
       .then((response) => {
         console.log(response.data.data);
 
