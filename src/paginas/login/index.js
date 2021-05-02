@@ -2,7 +2,6 @@ import React from "react";
 import { useSession } from '../../shared/hooks/useSession'
 import { useForm } from "react-hook-form";
 import { withRouter } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import usuariosService from '../../services/usuariosService'
@@ -23,7 +22,6 @@ function Login(props) {
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(loginSchema)
   });
-  const { register, handleSubmit, errors } = useForm();
   const [session, setSession] = useSession()
 
   const onSubmit = (data, event) => {

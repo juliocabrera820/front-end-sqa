@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import moment from "moment";
 import { toast } from "react-toastify";
 import gruposService from '../../services/gruposService'
@@ -16,9 +15,7 @@ toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-const CreacionHorarios = (props) => {
-  const { history } = props;
-  const estado = useSelector((state) => state);
+const CreacionHorarios = () => {
   const [grupos, setGrupos] = useState([]);
   const [materias, SetMaterias] = useState([]);
   const [maestros, setMaestros] = useState([]);
@@ -127,10 +124,6 @@ const CreacionHorarios = (props) => {
     });
 
   useEffect(() => {
-    if (estado.Usuario === "No hay usuario") {
-      history.push("/");
-    }
-
       gruposService().getAll()
       .then((response) => {
         setGrupos(response.data.data);
@@ -142,7 +135,7 @@ const CreacionHorarios = (props) => {
         setAulas(response.data.data);
       })
       .catch((error) => console.log("no se pudo conectar con el servidor"));
-  }, [estado, history]);
+  }, []);
 
   const getMaterias = (e) => {
     const select = e.currentTarget.value;

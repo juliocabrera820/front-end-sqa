@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
@@ -20,7 +19,7 @@ toast.configure({
 const VistaProfes = () => {
   const [horario, setHorario] = useState([]);
   const [session, setSession] = useSession()
-  const [ Usuario ] = session()
+  const { Usuario } = session()
 
   const notify = (error) =>
     toast(error, {
@@ -29,7 +28,7 @@ const VistaProfes = () => {
     });
 
   useEffect(() => {
-      maestrosService().getHorario(estado.Usuario.Usuario)
+      maestrosService().getHorario(Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
           ? setHorario(response.data.data)

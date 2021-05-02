@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
-import { withRouter } from "react-router-dom";
 import alumnosService from '../../services/alumnosService'
 import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
@@ -19,8 +17,8 @@ toast.configure({
 });
 
 const VistaAlumno = () => {
-  const [session, setSession] = useSession()
   const [horario, setHorario] = useState([]);
+  const [session, setSession] = useSession()
   const { Usuario } = session()
 
   const notify = (error) =>
@@ -30,7 +28,7 @@ const VistaAlumno = () => {
     });
 
   useEffect(() => {
-      alumnosService().getHorario(estado.Usuario.Usuario)
+      alumnosService().getHorario(Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
           ? setHorario(response.data.data)
