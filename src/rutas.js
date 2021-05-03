@@ -1,22 +1,22 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSession } from './shared/hooks/useSession'
 
 export const RutaAdministrador = ({ component: Component, ...rest }) => {
-  const usuario = useSelector((state) => state);
-  const TipoUser = usuario.Usuario.TipoUser;
+  const [session, setSession] = useSession()
+  const currentSession = session()
+
   return (
     <Route
       {...rest}
       render={(props) =>
-        TipoUser === "1" ? (
+        !currentSession.isLoggedIn ? <Redirect to="/"/> 
+        : currentSession.TipoUser === "1" ? (
           <Component {...props} />
-        ) : TipoUser === "2" ? (
+        ) : currentSession.TipoUser === "2" ? (
           <Redirect to="/Maestro" />
-        ) : TipoUser === "3" ? (
+        ) : currentSession.TipoUser === "3" && (
           <Redirect to="/Alumno" />
-        ) : (
-          <Redirect to="/" />
         )
       }
     />
@@ -24,21 +24,20 @@ export const RutaAdministrador = ({ component: Component, ...rest }) => {
 };
 
 export const RutaMaestro = ({ component: Component, ...rest }) => {
-  const usuario = useSelector((state) => state);
-  const TipoUser = usuario.Usuario.TipoUser;
+  const [session, setSession] = useSession()
+  const currentSession = session()
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        TipoUser === "2" ? (
+        !currentSession.isLoggedIn ? <Redirect to="/"/> 
+        : currentSession.TipoUser === "2" ? (
           <Component {...props} />
-        ) : TipoUser === "1" ? (
+        ) : currentSession.TipoUser === "1" ? (
           <Redirect to="/Administrador" />
-        ) : TipoUser === "3" ? (
+        ) : currentSession.TipoUser === "3" && (
           <Redirect to="/Alumno" />
-        ) : (
-          <Redirect to="/" />
         )
       }
     />
@@ -46,21 +45,20 @@ export const RutaMaestro = ({ component: Component, ...rest }) => {
 };
 
 export const RutaAlumno = ({ component: Component, ...rest }) => {
-  const usuario = useSelector((state) => state);
-  const TipoUser = usuario.Usuario.TipoUser;
+  const [session, setSession] = useSession()
+  const currentSession = session()
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        TipoUser === "3" ? (
+        !currentSession.isLoggedIn ? <Redirect to="/"/> 
+        : currentSession.TipoUser === "3" ? (
           <Component {...props} />
-        ) : TipoUser === "2" ? (
+        ) : currentSession.TipoUser === "2" ? (
           <Redirect to="/Maestro" />
-        ) : TipoUser === "1" ? (
+        ) : currentSession.TipoUser === "1" && (
           <Redirect to="/Administrador" />
-        ) : (
-          <Redirect to="/" />
         )
       }
     />
