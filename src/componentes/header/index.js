@@ -1,16 +1,16 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSession }  from '../../shared/hooks/useSession'
 import calendar from "../../assets/calendar.png";
 import { Nav, Button, Img } from "./styles";
 
 const Header = (props) => {
-  const {Usuario} = useSelector((state) => state.Usuario);
+  const [session, setSession] = useSession()
   const { history } = props;
-  const dispatch = useDispatch();
+  const { Usuario } = session()
+
   const salir = () => {
-    dispatch({ type: "SET_USUARIO", payload: "No hay usuario" });
+    setSession({isLoggedIn: false})
     history.push("/");
   };
 

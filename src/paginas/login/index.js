@@ -1,13 +1,16 @@
 import React from "react";
-import imagen from "../../assets/aula.jpeg";
-import signin from "../../assets/iniciar-sesion.png";
+import { useSession } from '../../shared/hooks/useSession'
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import usuariosService from '../../services/usuariosService'
+import imagen from "../../assets/aula.jpeg";
+import signin from "../../assets/iniciar-sesion.png";
 import {Img,Titulo,Cuerpo,Seccion,Input,InputF,Button,Formato} from './styles';
+import { yupResolver } from '@hookform/resolvers/yup'
+import { loginSchema } from '../../schemas/loginSchema'
 
 toast.configure({
   autoClose: 2000,
@@ -17,9 +20,11 @@ toast.configure({
 
 function Login(props) {
   const { history } = props;
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(loginSchema)
+  });
   const { register, handleSubmit, errors } = useForm();
-  const estado = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const [session, setSession] = useSession()
 
   const onSubmit = (data, event) => {
     login(data);
@@ -31,32 +36,20 @@ function Login(props) {
       toastId: 1,
     });
 
-  const login = (data) => {
-    axios
-      .get(`http://localhost/SGH-BackEnd/api/usuarios/${data["username"]}`)
+  const login = ({username, password}) => {
+      usuariosService().getOne(username)
       .then((response) => {
-        if (response.data.data[0]["Usuario"] === data["username"]) {
-          if (response.data.data[0]["contrasena"] === data["password"]) {
+        if (response.data.data[0]["Usuario"] === username) {
+          if (response.data.data[0]["contrasena"] === password) {
             if (response.data.data[0]["TipoUser"] === "1") {
-              dispatch({
-                type: "SET_USUARIO",
-                payload: response.data.data[0],
-              });
+              setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
               history.push("/Administrador");
             } else {
               if (response.data.data[0]["TipoUser"] === "2") {
-                dispatch({
-                  type: "SET_USUARIO",
-                  payload: response.data.data[0],
-                });
-
+                setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
                 history.push("/Maestro");
               } else {
-                dispatch({
-                  type: "SET_USUARIO",
-                  payload: response.data.data[0],
-                });
-
+                setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
                 history.push("/Alumno");
               }
             }
