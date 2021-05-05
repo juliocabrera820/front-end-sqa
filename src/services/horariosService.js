@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_API_URL} from "../shared/consts/envar";
+import { BASE_API_URL } from "../shared/consts/envar";
 
 function horariosService() {
   function create(horario) {
