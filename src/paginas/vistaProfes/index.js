@@ -3,12 +3,11 @@ import { withRouter } from "react-router-dom";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
-import maestrosService from '../../services/maestrosService'
+import maestrosService from "../../services/maestrosService";
 import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
 import { toast } from "react-toastify";
 import { Div, A } from "./styles";
-import { useSession } from '../../shared/hooks/useSession'
 
 toast.configure({
   autoClose: 4000,
@@ -18,8 +17,6 @@ toast.configure({
 
 const VistaProfes = () => {
   const [horario, setHorario] = useState([]);
-  const [session, setSession] = useSession()
-  const { Usuario } = session()
 
   const notify = (error) =>
     toast(error, {
@@ -28,13 +25,14 @@ const VistaProfes = () => {
     });
 
   useEffect(() => {
-      maestrosService().getHorario(Usuario)
-      .then((response) => {
-        response.data.data.mensaje !== "No se encontraron coincidencias"
-          ? setHorario(response.data.data)
-          : notify("Todavía no tienes asginado un horario");
-      })
-      .catch((error) => console.log("no se pudo conectar con el servidor"));
+    // maestrosService()
+    //   .getHorario(Usuario)
+    //   .then((response) => {
+    //     response.data.data.mensaje !== "No se encontraron coincidencias"
+    //       ? setHorario(response.data.data)
+    //       : notify("Todavía no tienes asginado un horario");
+    //   })
+    //   .catch((error) => console.log("no se pudo conectar con el servidor"));
   }, []);
 
   const filtrar = () => {

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "../../estilos/SuperResponsiveTableStyle.css";
-import alumnosService from '../../services/alumnosService'
+import alumnosService from "../../services/alumnosService";
 import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
 import { Horario, A } from "./styles";
-import { useSession } from '../../shared/hooks/useSession'
+import { useUser } from "../../shared/hooks/useUser";
+import { Redirect } from "react-router-dom";
 
 toast.configure({
   autoClose: 4000,
@@ -16,10 +16,9 @@ toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-const VistaAlumno = () => {
+const VistaAlumno = ({ history }) => {
   const [horario, setHorario] = useState([]);
-  const [session, setSession] = useSession()
-  const { Usuario } = session()
+  const { currentUser, isLoading, redirectTo } = useUser();
 
   const notify = (error) =>
     toast(error, {
@@ -28,7 +27,8 @@ const VistaAlumno = () => {
     });
 
   useEffect(() => {
-      alumnosService().getHorario(Usuario)
+    alumnosService()
+      .getHorario(currentUser.Usuario)
       .then((response) => {
         response.data.data.mensaje !== "No se encontraron coincidencias"
           ? setHorario(response.data.data)
@@ -36,7 +36,6 @@ const VistaAlumno = () => {
       })
       .catch((error) => console.log("no se pudo conectar con el servidor"));
   }, []);
-
   const creartabla = () => {
     const asg = [...new Set(horario.map((x) => x.Clv_materia))];
     let aux = [];
@@ -218,4 +217,4 @@ const VistaAlumno = () => {
   );
 };
 
-export default withRouter(VistaAlumno);
+export default VistaAlumno;
