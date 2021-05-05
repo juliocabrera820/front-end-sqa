@@ -1,15 +1,25 @@
 import React from "react";
-import { useSession } from '../../shared/hooks/useSession'
 import { useForm } from "react-hook-form";
-import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import usuariosService from '../../services/usuariosService'
 import imagen from "../../assets/aula.jpeg";
 import signin from "../../assets/iniciar-sesion.png";
-import {Img,Titulo,Cuerpo,Seccion,Input,InputF,Button,Formato} from './styles';
-import { yupResolver } from '@hookform/resolvers/yup'
-import { loginSchema } from '../../schemas/loginSchema'
+import { Redirect } from "react-router-dom";
+import {
+  Img,
+  Titulo,
+  Cuerpo,
+  Seccion,
+  Input,
+  InputF,
+  Button,
+  Formato,
+} from "./styles";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../../schemas/loginSchema";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions/sessionAction";
+import { useUser } from "../../shared/hooks/useUser";
 
 toast.configure({
   autoClose: 2000,
@@ -17,15 +27,15 @@ toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
 });
 
-function Login(props) {
-  const { history } = props;
+function Login() {
+  const dispatch = useDispatch();
+  const { redirectTo } = useUser();
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(loginSchema)
+    resolver: yupResolver(loginSchema),
   });
-  const [session, setSession] = useSession()
 
-  const onSubmit = (data, event) => {
-    login(data);
+  const onSubmit = (data) => {
+    dispatch(login(data.username, data.password));
   };
 
   const notify = (error) =>
@@ -34,32 +44,9 @@ function Login(props) {
       toastId: 1,
     });
 
-  const login = ({username, password}) => {
-      usuariosService().getOne(username)
-      .then((response) => {
-        if (response.data.data[0]["Usuario"] === username) {
-          if (response.data.data[0]["contrasena"] === password) {
-            if (response.data.data[0]["TipoUser"] === "1") {
-              setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
-              history.push("/Administrador");
-            } else {
-              if (response.data.data[0]["TipoUser"] === "2") {
-                setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
-                history.push("/Maestro");
-              } else {
-                setSession({Usuario: response.data.data[0]["Usuario"], TipoUser: response.data.data[0]["TipoUser"]})
-                history.push("/Alumno");
-              }
-            }
-          } else {
-            notify("contraseña invalida");
-          }
-        } else {
-          notify("usuario y contraseña invalida");
-        }
-      })
-      .catch((error) => notify("Error al conectarse al servidor"));
-  };
+  if (redirectTo) {
+    return <Redirect to={redirectTo} />;
+  }
   return (
     <div className="container-fluid">
       <div className="row">
@@ -134,4 +121,4 @@ function Login(props) {
   );
 }
 
-export default withRouter(Login);
+export default Login;
