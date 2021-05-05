@@ -1,16 +1,18 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
-import { useSession }  from '../../shared/hooks/useSession'
+import { useDispatch } from "react-redux";
+import { useUser } from "../../shared/hooks/useUser";
 import calendar from "../../assets/calendar.png";
 import { Nav, Button, Img } from "./styles";
+import { logout } from "../../redux/actions/sessionAction";
+import { useHistory } from "react-router";
 
-const Header = (props) => {
-  const [session, setSession] = useSession()
-  const { history } = props;
-  const { Usuario } = session()
+const Header = () => {
+  const { currentUser, isLoading } = useUser();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const salir = () => {
-    setSession({isLoggedIn: false})
+    dispatch(logout());
     history.push("/");
   };
 
@@ -20,15 +22,15 @@ const Header = (props) => {
         <Img src={calendar}></Img>SISTEMA DE HORARIOS
       </a>
       <div className="navbar">
-        <a>{Usuario}</a>
-        <form className="form-inline">
+        <a>{currentUser.Usuario}</a>
+        <div className="form-inline">
           <Button className="btn btn-light" onClick={salir}>
             Cerrar sesion
           </Button>
-        </form>
+        </div>
       </div>
     </Nav>
   );
 };
 
-export default withRouter(Header);
+export default Header;
