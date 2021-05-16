@@ -1,11 +1,11 @@
 import { Schedule } from "../types";
 
-const initalState = {
+const initialState = {
   currentSchedule: null,
   isLoading: false,
 };
 
-const sessionReducer = (state = initalState, { type, payload }) => {
+const sessionReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case Schedule.GET_SCHEDULE:
       return (state = {
