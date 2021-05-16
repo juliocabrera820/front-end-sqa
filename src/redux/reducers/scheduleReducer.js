@@ -3,8 +3,6 @@ import { Schedule } from "../types";
 const initalState = {
   currentSchedule: null,
   isLoading: false,
-  isError: null,
-  errorMessage: null,
 };
 
 const sessionReducer = (state = initalState, { type, payload }) => {
@@ -12,18 +10,19 @@ const sessionReducer = (state = initalState, { type, payload }) => {
     case Schedule.GET_SCHEDULE:
       return (state = {
         ...state,
-        currentSchedule: payload.schedule,
+        isLoading: true,
       });
     case Schedule.GET_SCHEDULE_SUCCESSFUL:
       return (state = {
         ...state,
-        currentSchedule: payload.schedule,
+        currentSchedule: payload,
+        isLoading: false,
       });
 
     case Schedule.GET_SCHEDULE_ERROR:
       return (state = {
         ...state,
-        currentSchedule: payload.schedule,
+        currentSchedule: payload,
       });
     default:
       return state;
