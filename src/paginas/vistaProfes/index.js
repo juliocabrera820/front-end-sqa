@@ -84,7 +84,6 @@ const VistaProfes = () => {
         aux[i][hora[j].Dia]["HoraF"] = hora[j].HFinal;
       }
     }
-    console.log(aux);
     return aux;
   };
 

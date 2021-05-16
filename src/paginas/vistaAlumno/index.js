@@ -21,7 +21,6 @@ const VistaAlumno = () => {
   const creartabla = () => {
     const asg = [...new Set(currentSchedule?.map((x) => x.Clv_materia))];
     let aux = [];
-    console.log(currentSchedule);
     for (let i = 0; i < asg.length; i++) {
       let hora = currentSchedule.filter((x) => x.Clv_materia === asg[i]);
       aux[i] = {
