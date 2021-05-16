@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Notificacion = (message, type) => {
+const Notificacion = (message, type, id) => {
   toast.configure({
     autoClose: 2000,
     draggable: false,
@@ -9,7 +9,7 @@ const Notificacion = (message, type) => {
   });
   return toast(message, {
     type: type,
-    toastId: 1,
+    toastId: id,
   });
 };
 
