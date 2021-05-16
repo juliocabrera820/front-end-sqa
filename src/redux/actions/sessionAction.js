@@ -1,5 +1,6 @@
 import usuariosService from "../../services/usuariosService";
 import { Auth } from "../types";
+import notificacion from "../../componentes/notificacion";
 
 export const login = (user, password) => async (dispatch) => {
   try {
@@ -11,8 +12,10 @@ export const login = (user, password) => async (dispatch) => {
     userData.redirectTo = routes[data.data[0].TipoUser].call();
     console.log(userData);
     loginSuccessful(dispatch, userData);
+    notificacion("Has iniciado sesión", "success");
   } catch (error) {
     loginError(dispatch, error);
+    notificacion("Error al iniciar sesión", "error");
   }
 };
 
