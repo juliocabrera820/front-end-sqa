@@ -10,7 +10,7 @@ export const getGroups = () => async (dispatch) => {
     getGroupsSuccessful(dispatch, data.data);
   } catch (error) {
     getGroupsError(dispatch, error);
-    notificacion("Hubo un error con los grupos", "error");
+    notificacion("Hubo un error con los grupos", "error", 1);
   }
 };
 

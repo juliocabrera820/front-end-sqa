@@ -8,10 +8,10 @@ export const getSchedule = (id, typeUser) => async (dispatch) => {
     const { data } = await scheduleService().get(id, typeUser);
     getScheduleSuccessful(dispatch, data.data);
     data.data.length === 0 &&
-      notificacion("No tienes un horario asignado", "warning");
+      notificacion("No tienes un horario asignado", "warning", 1);
   } catch (error) {
     getScheduleError(dispatch, error);
-    notificacion("Hubo un error con el horario", "error");
+    notificacion("Hubo un error con el horario", "error", 1);
   }
 };
 

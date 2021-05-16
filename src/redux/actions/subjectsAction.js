@@ -9,12 +9,11 @@ export const getSubjects = (id) => async (dispatch) => {
     getSubjectsSuccessful(dispatch, data.data);
   } catch (error) {
     getSubjectsError(dispatch, error);
-    notificacion("Hubo un error con las materias", "error");
+    notificacion("Hubo un error con las materias", "error", 1);
   }
 };
 
 const getSubjectsSuccessful = (distpatch, subjects) => {
-  console.log(subjects);
   distpatch({
     type: Subject.GET_SUBJECTS_SUCCESSFUL,
     payload: subjects,

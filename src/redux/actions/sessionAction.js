@@ -10,12 +10,11 @@ export const login = (user, password) => async (dispatch) => {
     userData.currentUser = data.data[0];
     userData.token = "123";
     userData.redirectTo = routes[data.data[0].TipoUser].call();
-    console.log(userData);
     loginSuccessful(dispatch, userData);
-    notificacion("Has iniciado sesión", "success");
+    notificacion("Has iniciado sesión", "success", 1);
   } catch (error) {
     loginError(dispatch, error);
-    notificacion("Error al iniciar sesión", "error");
+    notificacion("Error al iniciar sesión", "error", 1);
   }
 };
 
