@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { toast } from "react-toastify";
-import gruposService from '../../services/gruposService'
-import aulasService from '../../services/aulasService'
-import maestrosService from '../../services/maestrosService'
-import horariosService from '../../services/horariosService'
+import aulasService from "../../services/aulasService";
+import horariosService from "../../services/horariosService";
 import ItemMateria from "../itemMateria";
 import ItemHora from "../itemHora";
 import { Div, Item, Input, Button, Select, Text, Titulo } from "./styles";
-
-toast.configure({
-  autoClose: 4000,
-  draggable: false,
-  position: toast.POSITION.BOTTOM_RIGHT,
-});
+import { useDispatch, useSelector } from "react-redux";
+import { getGroups, setCurrentGroup } from "../../redux/actions/groupAction";
+import { setCurrentSubject } from "../../redux/actions/subjectsAction";
+import notificacion from "../../componentes/notificacion";
 
 const CreacionHorarios = () => {
-  const [grupos, setGrupos] = useState([]);
-  const [materias, SetMaterias] = useState([]);
+  const { groups, currentGroup } = useSelector((state) => state.group);
+  const { subjects, currentSubject } = useSelector((state) => state.subject);
   const [maestros, setMaestros] = useState([]);
   const [aulas, setAulas] = useState([]);
-  const [materia, setMateria] = useState("");
-  const [selectGrupo, setSelectGrupo] = useState("");
-  const [selectMateria, setSelectMateria] = useState("");
   const [selectMaestro, setSelectMaestro] = useState("");
   const [checkbox, setCheckbox] = useState({
     lunes: true,
@@ -32,6 +24,7 @@ const CreacionHorarios = () => {
     viernes: true,
   });
 
+  const dispatch = useDispatch();
   const [horario, setHorario] = useState({
     Lunes: {
       aula: "",
@@ -106,31 +99,18 @@ const CreacionHorarios = () => {
   });
 
   const horarioExitoso = (dia) =>
-    toast(`El horario del ${dia} ha sido cargado exitosamente`, {
-      type: toast.TYPE.SUCCESS,
-      toastId: dia,
-    });
+    notificacion(
+      `El horario del ${dia} ha sido cargado exitosamente`,
+      "success",
+      1
+    );
 
-  const horarioError = (dia, mensaje) =>
-    toast(`${mensaje}`, {
-      type: toast.TYPE.ERROR,
-      toastId: dia,
-    });
-
-  const camposVacios = (mensaje, id) =>
-    toast(mensaje, {
-      type: toast.TYPE.WARNING,
-      toastId: id,
-    });
+  const horarioError = (dia, mensaje) => notificacion(mensaje, "error", 1);
 
   useEffect(() => {
-      gruposService().getAll()
-      .then((response) => {
-        setGrupos(response.data.data);
-      })
-      .catch((error) => console.log("no se pudo conectar con el servidor"));
-
-      aulasService().getAll()
+    dispatch(getGroups());
+    aulasService()
+      .getAll()
       .then((response) => {
         setAulas(response.data.data);
       })
@@ -139,29 +119,11 @@ const CreacionHorarios = () => {
 
   const getMaterias = (e) => {
     const select = e.currentTarget.value;
-    setSelectGrupo(select);
-    setSelectMateria("");
-    setMateria("");
-    setMaestros([]);
-
-      gruposService().getOne(select)
-      .then((response) => {
-        response.data.data.mensaje !== "No se encontraron coincidencias"
-          ? SetMaterias(response.data.data)
-          : SetMaterias([]);
-      })
-      .catch((error) => console.log("no se pudo conectar con el servidor"));
+    dispatch(setCurrentGroup(select));
   };
 
-  const Materia = (clvMateria, materia) => {
-    setSelectMateria(clvMateria);
-    setMateria(materia);
-
-      maestrosService().getMateria(clvMateria)
-      .then((response) => {
-        setMaestros(response.data.data);
-      })
-      .catch((error) => console.log("no se pudo conectar con el servidor"));
+  const Materia = (materia) => {
+    dispatch(setCurrentSubject(materia));
   };
 
   const SelecionarMaestro = (clvMaestro) => {
@@ -171,15 +133,16 @@ const CreacionHorarios = () => {
   const enviarHorario = (dia) => {
     const horarioSeleccionado = {
       maestro: `${selectMaestro}`,
-      grupo: `${selectGrupo}`,
-      materia: `${selectMateria}`,
+      grupo: `${currentGroup}`,
+      materia: `${currentSubject}`,
       aula: `${horario[dia].aula}`,
       hInicio: `${horario[dia].horaInicio.hora}:${horario[dia].horaInicio.minutos}:00`,
       hFinal: `${horario[dia].horaFinal.hora}:${horario[dia].horaFinal.minutos}:00`,
       dia: `${dia}`,
     };
 
-      horariosService().create(horarioSeleccionado)
+    horariosService()
+      .create(horarioSeleccionado)
       .then((response) => {
         console.log(response.data.data);
 
@@ -222,19 +185,18 @@ const CreacionHorarios = () => {
   };
 
   const crearHorario = () => {
-    if (selectGrupo === "") {
-      camposVacios("Seleccione un Grupo", 1);
+    if (!currentGroup) {
+      notificacion("Seleccione un Grup", "warning", 1);
     }
 
-    if (selectMateria === "") {
-      camposVacios("Seleccione una Materia", 2);
+    if (!currentSubject) {
+      notificacion("Seleccione una Materia", "warning", 2);
     }
 
     if (selectMaestro === "") {
-      camposVacios("Seleccione un Maestro", 3);
+      notificacion("Seleccione un Maestro", "warning", 3);
     }
-    const encabezado =
-      selectGrupo === "" || selectMateria === "" || selectMaestro === "";
+    const encabezado = currentGroup || currentSubject || selectMaestro === "";
 
     if (!encabezado && !checkbox.lunes) {
       if (
@@ -347,7 +309,7 @@ const CreacionHorarios = () => {
                   onChange={(e) => getMaterias(e)}
                 >
                   <option>Selecciona un grupo</option>
-                  {grupos.map((grupo) => {
+                  {groups?.map((grupo) => {
                     return (
                       <option key={grupo.Clv_Grupo} value={grupo.Clv_Grupo}>
                         {grupo.Clv_Grupo}
@@ -357,12 +319,12 @@ const CreacionHorarios = () => {
                 </select>
               </Select>
             </div>
-            {materias.map((materia) => {
+            {subjects?.map((materia) => {
               return (
                 <div
                   key={materia.clv_materia}
                   className="col-12 col-md-6 col-xl-12"
-                  onClick={(e) => Materia(materia.clv_materia, materia.Materia)}
+                  onClick={(e) => Materia(materia)}
                 >
                   <ItemMateria
                     materia={materia.Materia}
@@ -374,10 +336,10 @@ const CreacionHorarios = () => {
           </div>
           <div className="col-12 col-xl-9 row">
             <Div className="col-6 col-xl-4">
-              <Text>Nombre del Grupo: {selectGrupo}</Text>
+              <Text>Nombre del Grupo: {currentGroup}</Text>
             </Div>
             <Div className="col-6 col-xl-4">
-              <Text>Materia: {materia}</Text>
+              <Text>Materia: {currentSubject?.Materia}</Text>
             </Div>
 
             <Select className="col-12 col-xl-4">
@@ -387,10 +349,10 @@ const CreacionHorarios = () => {
                 onChange={(e) => SelecionarMaestro(e.currentTarget.value)}
               >
                 <option>Selecciona un profesor</option>
-                {maestros.map((maestros) => {
+                {maestros.map((maestro) => {
                   return (
-                    <option key={maestros.Maestro} value={maestros.Maestro}>
-                      {`${maestros.Nombres} ${maestros.ApellidoM} ${maestros.ApellidoP}`}
+                    <option key={maestro.Maestro} value={maestro.Maestro}>
+                      {`${maestro.Nombres} ${maestro.ApellidoM} ${maestro.ApellidoP}`}
                     </option>
                   );
                 })}
