@@ -4,16 +4,20 @@ import thunk from "redux-thunk";
 import storage from "redux-persist/lib/storage";
 import SessionReducer from "./reducers/sessionReducer";
 import ScheduleReducer from "./reducers/scheduleReducer";
+import GroupReducer from "./reducers/groupsReducer";
+import SubjectReducer from "./reducers/subjectsReducer";
 
 const persistConfig = {
   key: "root",
-  blacklist: ["schedule"],
+  blacklist: ["schedule", "group", "subject"],
   storage,
 };
 
 const rootReducer = combineReducers({
   auth: SessionReducer,
   schedule: ScheduleReducer,
+  group: GroupReducer,
+  subject: SubjectReducer,
 });
 
 const persistRed = persistReducer(persistConfig, rootReducer);
