@@ -1,7 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import imagen from "../../assets/aula.jpeg";
 import signin from "../../assets/iniciar-sesion.png";
 import { Redirect } from "react-router-dom";
@@ -21,12 +19,6 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/sessionAction";
 import { useUser } from "../../shared/hooks/useUser";
 
-toast.configure({
-  autoClose: 2000,
-  draggable: false,
-  position: toast.POSITION.BOTTOM_RIGHT,
-});
-
 function Login() {
   const dispatch = useDispatch();
   const { redirectTo } = useUser();
@@ -37,12 +29,6 @@ function Login() {
   const onSubmit = (data) => {
     dispatch(login(data.username, data.password));
   };
-
-  const notify = (error) =>
-    toast(error, {
-      type: toast.TYPE.ERROR,
-      toastId: 1,
-    });
 
   if (redirectTo) {
     return <Redirect to={redirectTo} />;
