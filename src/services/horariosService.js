@@ -9,8 +9,17 @@ function horariosService() {
       url: `/${tipoUsuario}/${id}/horarios`,
     });
   }
+  function create(horario) {
+    return axios({
+      baseURL: BASE_API_URL,
+      method: "POST",
+      url: "/horarios",
+      data: horario,
+    });
+  }
   return {
     get,
+    create,
   };
 }
 

@@ -31,3 +31,44 @@ const setLoading = (dispatch) =>
   dispatch({
     type: Schedule.GET_SCHEDULE,
   });
+
+export const selectClassroom = (day, classroom) => (dispatch) => {
+  dispatch({
+    type: Schedule.SELECT_CLASSROOM,
+    payload: { day, classroom },
+  });
+};
+
+export const selectStartHour = (day, sh) => (dispatch) => {
+  dispatch({
+    type: Schedule.SELECT_START_HOUR,
+    payload: { day, sh },
+  });
+};
+
+export const selectStartMinutes = (day, sm) => (dispatch) => {
+  dispatch({
+    type: Schedule.SELECT_START_MINUTES,
+    payload: { day, sm },
+  });
+};
+
+export const selectFinishHour = (day, fh) => (dispatch) => {
+  dispatch({
+    type: Schedule.SELECT_FINISH_HOUR,
+    payload: { day, fh },
+  });
+};
+
+export const selectFinishMinutes = (day, fm) => (dispatch) => {
+  dispatch({
+    type: Schedule.SELECT_FINISH_MINUTES,
+    payload: { day, fm },
+  });
+};
+
+export const cleanSchedule = () => (dispatch) => {
+  dispatch({
+    type: Schedule.CLEAN_SCHEDULE,
+  });
+};

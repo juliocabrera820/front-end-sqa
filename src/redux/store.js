@@ -6,10 +6,12 @@ import SessionReducer from "./reducers/sessionReducer";
 import ScheduleReducer from "./reducers/scheduleReducer";
 import GroupReducer from "./reducers/groupsReducer";
 import SubjectReducer from "./reducers/subjectsReducer";
+import TeacherReducer from "./reducers/teacherReducer";
+import ClassroomReducer from "./reducers/classroomReducer";
 
 const persistConfig = {
   key: "root",
-  blacklist: ["schedule", "group", "subject"],
+  blacklist: ["schedule", "group", "subject", "teacher", "classroom"],
   storage,
 };
 
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
   schedule: ScheduleReducer,
   group: GroupReducer,
   subject: SubjectReducer,
+  teacher: TeacherReducer,
+  classroom: ClassroomReducer,
 });
 
 const persistRed = persistReducer(persistConfig, rootReducer);

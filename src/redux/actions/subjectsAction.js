@@ -1,6 +1,7 @@
 import groupService from "../../services/gruposService";
 import { Subject } from "../types";
 import notificacion from "../../componentes/notificacion";
+import { getTeachers } from "./teacherAction";
 
 export const getSubjects = (id) => async (dispatch) => {
   try {
@@ -36,4 +37,5 @@ export const setCurrentSubject = (subject) => (dispatch) => {
     type: Subject.SET_CURRENT_SUBJECT,
     payload: subject,
   });
+  dispatch(getTeachers(subject.clv_materia));
 };
