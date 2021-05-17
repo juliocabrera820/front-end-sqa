@@ -6,7 +6,6 @@ export const getTeachers = (id) => async (dispatch) => {
   try {
     setLoading(dispatch);
     const { data } = await TeacherService().getMateria(id);
-    console.log(data.data);
     getTeachersSuccessful(dispatch, data.data);
   } catch (error) {
     getTeachersError(dispatch, error);

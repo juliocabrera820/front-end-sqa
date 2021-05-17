@@ -23,7 +23,6 @@ export const saveSchedule = (newSchedule) => async (dispatch) => {
       notificacion(mensaje, "error", 1);
     }
   } catch (error) {
-    console.log(error);
     notificacion("Hubo un error en el servidor", "error", 1);
   }
 };

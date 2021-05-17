@@ -11,7 +11,6 @@ import {
 } from "../../redux/actions/scheduleAction";
 
 const ItemHora = (props) => {
-  //const { Dia, hi, hf, mi, mf } = props;
   const dispatch = useDispatch();
 
   const { classrooms } = useSelector((state) => state.classroom);
