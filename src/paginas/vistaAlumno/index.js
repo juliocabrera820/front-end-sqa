@@ -11,7 +11,7 @@ import { useUser } from "../../shared/hooks/useUser";
 
 const VistaAlumno = () => {
   const { currentUser, token } = useUser();
-  const { currentSchedule } = useSelector((state) => state.schedule);
+  const { currentSchedule, isLoading } = useSelector((state) => state.schedule);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,8 +42,12 @@ const VistaAlumno = () => {
               </Tr>
             </Thead>
             <Tbody>
+              {isLoading ? (
+                <td colSpan="8">
+                  <h1>CARGANDO... </h1>
+                </td>
+              ) : null}
               {currentSchedule?.map((materia) => {
-                console.log(materia);
                 return (
                   <Tr key={materia?.materia}>
                     <Td>{materia?.materia}</Td>

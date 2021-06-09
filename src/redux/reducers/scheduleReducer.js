@@ -4,6 +4,7 @@ const initialState = {
   currentSchedule: null,
   isLoading: false,
   newSchedule: {},
+  error: {},
 };
 
 let newState;
@@ -14,6 +15,7 @@ const sessionReducer = (state = initialState, { type, payload }) => {
       return (state = {
         ...state,
         isLoading: true,
+        currentSchedule: null,
       });
     case Schedule.GET_SCHEDULE_SUCCESSFUL:
       return (state = {
@@ -25,7 +27,7 @@ const sessionReducer = (state = initialState, { type, payload }) => {
     case Schedule.GET_SCHEDULE_ERROR:
       return (state = {
         ...state,
-        currentSchedule: payload,
+        error: payload,
       });
     case Schedule.SELECT_CLASSROOM:
       newState = { ...state };

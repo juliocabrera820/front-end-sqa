@@ -44,6 +44,6 @@ export const logout = () => (dispatch) =>
 
 const routes = {
   Administrador: () => "/administrador",
-  Maestro: () => "/maestro",
+  Profesor: () => "/maestro",
   Alumno: () => "/alumno",
 };

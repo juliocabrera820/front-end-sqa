@@ -22,7 +22,7 @@ const Header = () => {
         <Img src={calendar}></Img>SISTEMA DE HORARIOS
       </a>
       <div className="navbar">
-        <a>{currentUser.Usuario}</a>
+        <a>{`${currentUser.nombres} ${currentUser.apellidos}`}</a>
         <div className="form-inline">
           <Button className="btn btn-light" onClick={salir}>
             Cerrar sesion

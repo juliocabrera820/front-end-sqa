@@ -10,88 +10,17 @@ import { getSchedule } from "../../redux/actions/scheduleAction";
 import { useUser } from "../../shared/hooks/useUser";
 
 const VistaProfes = () => {
-  const { currentUser, isLoading, redirectTo } = useUser();
-  const { currentSchedule } = useSelector((state) => state.schedule);
+  const { currentUser, token } = useUser();
+  const { currentSchedule, isLoading } = useSelector((state) => state.schedule);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSchedule(currentUser.Usuario, "maestros"));
+    dispatch(getSchedule(currentUser.id, token, "maestros"));
   }, []);
 
-  const filtrar = () => {
-    let asg = [
-      ...new Set(
-        currentSchedule?.map((x) => {
-          return {
-            Clv_Materia: x.Clv_Materia,
-            Clv_Grupo: x.Clv_Grupo,
-          };
-        })
-      ),
-    ];
-    let set = new Set(asg.map(JSON.stringify));
-    let arr = Array.from(set).map(JSON.parse);
-    return arr;
-  };
-
-  const creartabla = () => {
-    let asignaturas = filtrar();
-    let aux = [];
-
-    for (let i = 0; i < asignaturas.length; i++) {
-      let hora = currentSchedule.filter(
-        (x) =>
-          x.Clv_Materia === asignaturas[i].Clv_Materia &&
-          x.Clv_Grupo === asignaturas[i].Clv_Grupo
-      );
-      aux[i] = {
-        Nombre: hora[0].Nombres,
-        ApellidoM: hora[0].ApellidoM,
-        ApellidoP: hora[0].ApellidoP,
-        Clv_Materia: hora[0].Clv_Materia,
-        Materia: hora[0].Materia,
-        Grupo: hora[0].Clv_Grupo,
-        Lunes: {
-          Aula: "",
-          HoraI: "",
-          HoraF: "",
-        },
-        Martes: {
-          Aula: "",
-          HoraI: "",
-          HoraF: "",
-        },
-        Miercoles: {
-          Aula: "",
-          HoraI: "",
-          HoraF: "",
-        },
-        Jueves: {
-          Aula: "",
-          HoraI: "",
-          HoraF: "",
-        },
-        Viernes: {
-          Aula: "",
-          HoraI: "",
-          HoraF: "",
-        },
-      };
-
-      for (let j = 0; j < hora.length; j++) {
-        aux[i][hora[j].Dia]["Aula"] = hora[j].Aula;
-        aux[i][hora[j].Dia]["HoraI"] = hora[j].HInicio;
-        aux[i][hora[j].Dia]["HoraF"] = hora[j].HFinal;
-      }
-    }
-    return aux;
-  };
-
   const formatoH = (hora) => {
-    return hora.slice(0, -3);
+    return hora?.slice(0, 5);
   };
-
-  const materias = creartabla();
 
   return (
     <div>
@@ -112,101 +41,70 @@ const VistaProfes = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {materias.map((materia) => {
+            {isLoading ? (
+              <td colSpan="8">
+                <h1>CARGANDO... </h1>
+              </td>
+            ) : null}
+            {currentSchedule?.map((materia) => {
               return (
-                <Tr key={materia.Clv_materiaeria + " " + materia.Grupo}>
-                  <Td>{materia.Materia}</Td>
-                  <Td>
-                    {materia.Nombre +
-                      " " +
-                      materia.ApellidoM +
-                      " " +
-                      materia.ApellidoP}
-                  </Td>
-                  <Td>{materia.Grupo}</Td>
+                <Tr key={materia.materia + " " + materia.Grupo}>
+                  <Td>{materia.materia}</Td>
+                  <Td>{materia.maestro}</Td>
+                  <Td>{materia.grupo}</Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Lunes.HoraI) +
+                        formatoH(materia.Lunes?.hInicio) +
                         "-" +
-                        formatoH(materia.Lunes.HoraF)
+                        formatoH(materia.Lunes?.hFinal)
                       }
-                      aula={materia.Lunes.Aula}
-                      profesor={
-                        materia.Nombre +
-                        " " +
-                        materia.ApellidoM +
-                        " " +
-                        materia.ApellidoP
-                      }
+                      aula={materia.Lunes?.aula}
+                      profesor={materia.maestro}
                     />
                   </Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Martes.HoraI) +
+                        formatoH(materia.Martes?.hInicio) +
                         "-" +
-                        formatoH(materia.Martes.HoraF)
+                        formatoH(materia.Martes?.hFinal)
                       }
-                      aula={materia.Martes.Aula}
-                      profesor={
-                        materia.Nombre +
-                        " " +
-                        materia.ApellidoM +
-                        " " +
-                        materia.ApellidoP
-                      }
+                      aula={materia.Martes?.aula}
+                      profesor={materia.maestro}
                     />
                   </Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Miercoles.HoraI) +
+                        formatoH(materia.Miercoles?.hInicio) +
                         "-" +
-                        formatoH(materia.Miercoles.HoraF)
+                        formatoH(materia.Miercoles?.hFinal)
                       }
-                      aula={materia.Miercoles.Aula}
-                      profesor={
-                        materia.Nombre +
-                        " " +
-                        materia.ApellidoM +
-                        " " +
-                        materia.ApellidoP
-                      }
+                      aula={materia.Miercoles?.aula}
+                      profesor={materia.maestro}
                     />
                   </Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Jueves.HoraI) +
+                        formatoH(materia.Jueves?.hInicio) +
                         "-" +
-                        formatoH(materia.Jueves.HoraF)
+                        formatoH(materia.Jueves?.hFinal)
                       }
-                      aula={materia.Jueves.Aula}
-                      profesor={
-                        materia.Nombre +
-                        " " +
-                        materia.ApellidoM +
-                        " " +
-                        materia.ApellidoP
-                      }
+                      aula={materia.Jueves?.aula}
+                      profesor={materia.maestro}
                     />
                   </Td>
                   <Td>
                     <ItemHorario
                       hora={
-                        formatoH(materia.Viernes.HoraI) +
+                        formatoH(materia.Viernes?.hInicio) +
                         "-" +
-                        formatoH(materia.Viernes.HoraF)
+                        formatoH(materia.Viernes?.hFinal)
                       }
-                      aula={materia.Viernes.Aula}
-                      profesor={
-                        materia.Nombre +
-                        " " +
-                        materia.ApellidoM +
-                        " " +
-                        materia.ApellidoP
-                      }
+                      aula={materia.Viernes?.aula}
+                      profesor={materia.maestro}
                     />
                   </Td>
                 </Tr>
