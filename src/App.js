@@ -15,19 +15,19 @@ const App = () => (
       <PrivateRoute
         exact
         path="/maestro"
-        roles={[Role[2]]}
+        roles={[Role["Maestro"]]}
         component={vistaprofes}
       />
       <PrivateRoute
         exact
         path="/alumno"
-        roles={[Role[3]]}
+        roles={[Role["Administrador"]]}
         component={vistaAlumno}
       />
       <PrivateRoute
         exact
         path="/administrador"
-        roles={[Role[1]]}
+        roles={[Role["Alumno"]]}
         component={vistaAdmin}
       />
       <Route component={NotFound} />

@@ -5,11 +5,13 @@ import notificacion from "../../componentes/notificacion";
 export const login = (user, password) => async (dispatch) => {
   try {
     setLoading(dispatch);
-    const { data } = await usuariosService().auth(user, password);
     const userData = {};
-    userData.currentUser = data.data[0];
-    userData.token = "123";
-    userData.redirectTo = routes[data.data[0].TipoUser].call();
+    const { data } = await usuariosService().auth(user, password);
+    userData.token = data.token;
+    const response = await usuariosService().self(data.token);
+    userData.currentUser = response.data;
+    console.log(response.data);
+    userData.redirectTo = routes[response.data.tipoUsuario].call();
     loginSuccessful(dispatch, userData);
     notificacion("Has iniciado sesión", "success", 1);
   } catch (error) {
@@ -41,7 +43,7 @@ export const logout = () => (dispatch) =>
   });
 
 const routes = {
-  1: () => "/Administrador",
-  2: () => "/Maestro",
-  3: () => "/Alumno",
+  Administrador: () => "/administrador",
+  Maestro: () => "/maestro",
+  Alumno: () => "/alumno",
 };

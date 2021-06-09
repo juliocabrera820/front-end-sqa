@@ -15,7 +15,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
           );
         }
 
-        if (roles && roles.indexOf(currentUser.TipoUser) === -1) {
+        if (roles && roles.includes(currentUser.tipoUsuario)) {
           return <Redirect to={{ pathname: redirectTo }} />;
         }
 
