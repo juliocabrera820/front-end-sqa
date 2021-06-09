@@ -2,14 +2,16 @@ import scheduleService from "../../services/horariosService";
 import { Schedule } from "../types";
 import notificacion from "../../componentes/notificacion";
 
-export const getSchedule = (id, typeUser) => async (dispatch) => {
+export const getSchedule = (id, token, typeUser) => async (dispatch) => {
   try {
     setLoading(dispatch);
-    const { data } = await scheduleService().get(id, typeUser);
-    getScheduleSuccessful(dispatch, data.data);
-    data.data.length === 0 &&
+    const { data } = await scheduleService().get(id, token, typeUser);
+    console.log(data);
+    getScheduleSuccessful(dispatch, data);
+    data.length === 0 &&
       notificacion("No tienes un horario asignado", "warning", 1);
   } catch (error) {
+    console.log(error);
     getScheduleError(dispatch, error);
     notificacion("Hubo un error con el horario", "error", 1);
   }
