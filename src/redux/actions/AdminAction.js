@@ -5,30 +5,22 @@ import notificacion from "../../componentes/notificacion";
 export const saveSchedule = (user, token, newSchedule) => async (dispatch) => {
   try {
     const { data } = await scheduleService().create(user, token, newSchedule);
-    console.log(data);
     notificacion(
       `El horario del ${newSchedule.dia} ha sido cargado exitosamente`,
       "success",
       1
     );
-    // if (data.data === "Horario Creado.") {
-    //   notificacion(
-    //     `El horario del ${newSchedule.dia} ha sido cargado exitosamente`,
-    //     "success",
-    //     1
-    //   );
-    // } else {
-    //   let mensaje = `No se puede guardar el horario del ${newSchedule.dia}. `;
-    //   data.data.aula ? (mensaje += "Aula ocupada. ") : (newSchedule.dia += " ");
-    //   data.data.grupo
-    //     ? (mensaje += "El grupo ya tienen una materia en esa hora. ")
-    //     : (mensaje += " ");
-    //   data.data.maestro
-    //     ? (mensaje += "El  Maestro ya tienen una materia asignada a esa hora.")
-    //     : (mensaje += "");
-    //   notificacion(mensaje, "error", 1);
-    // }
   } catch (error) {
-    notificacion("Hubo un error en el servidor", "error", 1);
+    if (error.response) {
+      notificacion(
+        `Error: ${newSchedule.dia}, el horario del elegido y la aula translapan`,
+        "error",
+        1
+      );
+    } else if (error.request) {
+      notificacion(error.request, "error", 1);
+    } else {
+      notificacion(error.message, "error", 1);
+    }
   }
 };

@@ -33,7 +33,6 @@ const setLoading = (dispatch) =>
   });
 
 export const setCurrentSubject = (subject, token) => (dispatch) => {
-  console.log("set current Subject", subject, token);
   dispatch({
     type: Subject.SET_CURRENT_SUBJECT,
     payload: subject,
