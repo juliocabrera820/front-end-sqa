@@ -14,7 +14,7 @@ import { useUser } from "../../shared/hooks/useUser";
 import notificacion from "../../componentes/notificacion";
 
 const CreacionHorarios = () => {
-  const { token } = useUser();
+  const { currentUser, token } = useUser();
   const { groups, currentGroup } = useSelector((state) => state.group);
   const { subjects, currentSubject } = useSelector((state) => state.subject);
   const { teachers, currentTeacher } = useSelector((state) => state.teacher);
@@ -41,7 +41,8 @@ const CreacionHorarios = () => {
   };
 
   const Materia = (materia) => {
-    dispatch(setCurrentSubject(materia));
+    console.log("materia", materia, token);
+    dispatch(setCurrentSubject(materia, token));
   };
 
   const SelecionarMaestro = (clvMaestro) => {
@@ -52,14 +53,15 @@ const CreacionHorarios = () => {
     const horarioSeleccionado = {
       maestro: `${currentTeacher}`,
       grupo: `${currentGroup}`,
-      materia: `${currentSubject.clv_materia}`,
+      materia: `${currentSubject}`,
       aula: `${newSchedule[dia].classroom}`,
       hInicio: `${newSchedule[dia].startH}:${newSchedule[dia].startM}:00`,
       hFinal: `${newSchedule[dia].finishH}:${newSchedule[dia].finishM}:00`,
       dia: `${dia}`,
     };
 
-    dispatch(saveSchedule(horarioSeleccionado));
+    console.log(horarioSeleccionado);
+    dispatch(saveSchedule(currentUser.id, token, horarioSeleccionado));
   };
 
   const validarHoras = (dia) => {
@@ -137,12 +139,12 @@ const CreacionHorarios = () => {
             {subjects?.map((materia) => {
               return (
                 <div
-                  key={materia.clv_materia}
+                  key={materia.nombre}
                   className="col-12 col-md-6 col-xl-12"
-                  onClick={(e) => Materia(materia)}
+                  onClick={(e) => Materia(materia.nombre)}
                 >
                   <ItemMateria
-                    materia={materia.Materia}
+                    materia={materia.nombre}
                     className="align-items-center"
                   />
                 </div>
@@ -154,7 +156,7 @@ const CreacionHorarios = () => {
               <Text>Nombre del Grupo: {currentGroup}</Text>
             </Div>
             <Div className="col-6 col-xl-4">
-              <Text>Materia: {currentSubject?.Materia}</Text>
+              <Text>Materia: {currentSubject}</Text>
             </Div>
 
             <Select className="col-12 col-xl-4">
@@ -167,8 +169,8 @@ const CreacionHorarios = () => {
                 <option value="">Selecciona un profesor</option>
                 {teachers?.map((maestro) => {
                   return (
-                    <option key={maestro.Maestro} value={maestro.Maestro}>
-                      {`${maestro.Nombres} ${maestro.ApellidoM} ${maestro.ApellidoP}`}
+                    <option key={maestro.nombre} value={maestro.nombre}>
+                      {`${maestro.nombre}`}
                     </option>
                   );
                 })}

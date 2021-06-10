@@ -13,13 +13,13 @@ function horariosService() {
     });
   }
 
-  function create(horario, token) {
+  function create(admin, token, horario) {
     return axios({
       baseURL: BASE_API_URL,
       method: "POST",
-      url: "/horarios",
+      url: `/administrador/${admin}/horarios`,
       data: horario,
-      headers: { 'Authorization': token }
+      headers: { Authorization: token },
     });
   }
   return {

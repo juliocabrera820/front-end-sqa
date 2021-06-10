@@ -7,7 +7,7 @@ export const getSubjects = (id, token) => async (dispatch) => {
   try {
     setLoading(dispatch);
     const { data } = await groupService().getOne(id, token);
-    getSubjectsSuccessful(dispatch, data.data);
+    getSubjectsSuccessful(dispatch, data);
   } catch (error) {
     getSubjectsError(dispatch, error);
     notificacion("Hubo un error con las materias", "error", 1);
@@ -32,10 +32,11 @@ const setLoading = (dispatch) =>
     type: Subject.GET_SUBJECTS,
   });
 
-export const setCurrentSubject = (subject) => (dispatch) => {
+export const setCurrentSubject = (subject, token) => (dispatch) => {
+  console.log("set current Subject", subject, token);
   dispatch({
     type: Subject.SET_CURRENT_SUBJECT,
     payload: subject,
   });
-  dispatch(getTeachers(subject.clv_materia));
+  dispatch(getTeachers(subject, token));
 };

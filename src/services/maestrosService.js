@@ -17,10 +17,11 @@ function maestrosService() {
     });
   }
   function getMateria(clvMateria, token) {
+    clvMateria = clvMateria.replace(/\s/g, "_");
     return axios({
       baseURL: BASE_API_URL,
       method: "GET",
-      url: `/maestros/${clvMateria}/materias`,
+      url: `/materias/${clvMateria}/maestros`,
       headers: {
         Authorization: token,
       },
