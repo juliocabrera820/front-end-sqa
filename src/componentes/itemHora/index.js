@@ -44,8 +44,8 @@ const ItemHora = (props) => {
           <option>Selecciona un salón</option>
           {classrooms?.map((a) => {
             return (
-              <option key={a.Clv_Aula} value={a.Clv_Aula}>
-                {a.Clv_Aula}
+              <option key={a.nombre} value={a.nombre}>
+                {a.nombre}
               </option>
             );
           })}

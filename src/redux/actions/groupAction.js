@@ -3,11 +3,11 @@ import { Group } from "../types";
 import notificacion from "../../componentes/notificacion";
 import { getSubjects } from "./subjectsAction";
 
-export const getGroups = () => async (dispatch) => {
+export const getGroups = (token) => async (dispatch) => {
   try {
     setLoading(dispatch);
-    const { data } = await gruposService().getAll();
-    getGroupsSuccessful(dispatch, data.data);
+    const { data } = await gruposService().getAll(token);
+    getGroupsSuccessful(dispatch, data);
   } catch (error) {
     getGroupsError(dispatch, error);
     notificacion("Hubo un error con los grupos", "error", 1);
@@ -31,10 +31,10 @@ const setLoading = (dispatch) =>
     type: Group.GET_GROUPS,
   });
 
-export const setCurrentGroup = (group) => (dispatch) => {
+export const setCurrentGroup = (group,token) => (dispatch) => {
   dispatch({
     type: Group.SET_CURRENT_GROUP,
     payload: group,
   });
-  dispatch(getSubjects(group));
+  dispatch(getSubjects(group, token));
 };

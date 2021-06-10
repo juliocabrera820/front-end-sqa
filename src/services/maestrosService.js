@@ -16,11 +16,14 @@ function maestrosService() {
       url: `/maestros/${id}/horarios`,
     });
   }
-  function getMateria(clvMateria) {
+  function getMateria(clvMateria, token) {
     return axios({
       baseURL: BASE_API_URL,
       method: "GET",
-      url: `/maestros/materias/${clvMateria}`,
+      url: `/maestros/${clvMateria}/materias`,
+      headers: {
+        Authorization: token,
+      },
     });
   }
   return {

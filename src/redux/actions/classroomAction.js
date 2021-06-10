@@ -2,11 +2,11 @@ import classroomsService from "../../services/aulasService";
 import { Classroom } from "../types";
 import notificacion from "../../componentes/notificacion";
 
-export const getClassrooms = () => async (dispatch) => {
+export const getClassrooms = (token) => async (dispatch) => {
   try {
     setLoading(dispatch);
-    const { data } = await classroomsService().getAll();
-    getClassroomSuccessful(dispatch, data.data);
+    const { data } = await classroomsService().getAll(token);
+    getClassroomSuccessful(dispatch, data);
   } catch (error) {
     getClassroomError(dispatch, error);
     notificacion("Hubo un error con los aulas", "error", 1);

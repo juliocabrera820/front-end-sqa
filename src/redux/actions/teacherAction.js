@@ -6,7 +6,7 @@ export const getTeachers = (id) => async (dispatch) => {
   try {
     setLoading(dispatch);
     const { data } = await TeacherService().getMateria(id);
-    getTeachersSuccessful(dispatch, data.data);
+    getTeachersSuccessful(dispatch, data);
   } catch (error) {
     getTeachersError(dispatch, error);
     notificacion("Hubo un error con las maestros", "error", 1);

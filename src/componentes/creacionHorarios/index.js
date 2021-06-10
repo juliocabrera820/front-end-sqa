@@ -10,9 +10,11 @@ import { setCurrentSubject } from "../../redux/actions/subjectsAction";
 import { setCurrentTeacher } from "../../redux/actions/teacherAction";
 import { saveSchedule } from "../../redux/actions/AdminAction";
 import { cleanSchedule } from "../../redux/actions/scheduleAction";
+import { useUser } from "../../shared/hooks/useUser";
 import notificacion from "../../componentes/notificacion";
 
 const CreacionHorarios = () => {
+  const { token } = useUser();
   const { groups, currentGroup } = useSelector((state) => state.group);
   const { subjects, currentSubject } = useSelector((state) => state.subject);
   const { teachers, currentTeacher } = useSelector((state) => state.teacher);
@@ -28,14 +30,14 @@ const CreacionHorarios = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getGroups());
-    dispatch(getClassrooms());
+    dispatch(getGroups(token));
+    dispatch(getClassrooms(token));
     return () => dispatch(cleanSchedule());
   }, []);
 
   const getMaterias = (e) => {
     const select = e.currentTarget.value;
-    dispatch(setCurrentGroup(select));
+    dispatch(setCurrentGroup(select, token));
   };
 
   const Materia = (materia) => {
@@ -124,8 +126,8 @@ const CreacionHorarios = () => {
                   <option>Selecciona un grupo</option>
                   {groups?.map((grupo) => {
                     return (
-                      <option key={grupo.Clv_Grupo} value={grupo.Clv_Grupo}>
-                        {grupo.Clv_Grupo}
+                      <option key={grupo.nombre} value={grupo.nombre}>
+                        {grupo.nombre}
                       </option>
                     );
                   })}

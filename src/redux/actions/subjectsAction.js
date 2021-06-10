@@ -3,10 +3,10 @@ import { Subject } from "../types";
 import notificacion from "../../componentes/notificacion";
 import { getTeachers } from "./teacherAction";
 
-export const getSubjects = (id) => async (dispatch) => {
+export const getSubjects = (id, token) => async (dispatch) => {
   try {
     setLoading(dispatch);
-    const { data } = await groupService().getOne(id);
+    const { data } = await groupService().getOne(id, token);
     getSubjectsSuccessful(dispatch, data.data);
   } catch (error) {
     getSubjectsError(dispatch, error);
