@@ -41,7 +41,6 @@ const CreacionHorarios = () => {
   };
 
   const Materia = (materia) => {
-    console.log("materia", materia, token);
     dispatch(setCurrentSubject(materia, token));
   };
 
@@ -60,7 +59,6 @@ const CreacionHorarios = () => {
       dia: `${dia}`,
     };
 
-    console.log(horarioSeleccionado);
     dispatch(saveSchedule(currentUser.id, token, horarioSeleccionado));
   };
 

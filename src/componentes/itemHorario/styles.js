@@ -15,6 +15,15 @@ export const Item = styled.div`
 export const Div = styled.div`
   background-color: white;
   margin-left: 5px;
+
+  img {
+    width: 0.7rem;
+    height: 0.7rem;
+    &:hover {
+      background-color: red;
+      padding: 0.2rem;
+    }
+  }
 `;
 
 export const Hora = styled.div`

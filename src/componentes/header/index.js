@@ -18,9 +18,7 @@ const Header = () => {
 
   return (
     <Nav className="navbar">
-      <a>
-        <Img src={calendar}></Img>SISTEMA DE HORARIOS
-      </a>
+      <Img>SISTEMA DE HORARIOS</Img>
       <div className="navbar">
         <a>{`${currentUser.nombres} ${currentUser.apellidos}`}</a>
         <div className="form-inline">
