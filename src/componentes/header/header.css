@@ -1,6 +1,14 @@
 @media (max-width: 1200px) {
     .navbar-user {
         margin-left: 10px;
+    }
+}
+
+@media (max-width: 750px) {
+    a {
+        margin: auto;
+    }
+    .navbar-user {
         margin: auto;
     }
 }
@@ -9,11 +17,7 @@
     .navbar-user {
         display: flex;
         flex-direction: column;
-    }
-}
-
-@media (max-width: 580px) {
-    a {
         margin: auto;
     }
 }
+
