@@ -1,74 +1,38 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import imagen from "../../assets/aula.jpeg";
 import signin from "../../assets/iniciar-sesion.png";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { withRouter } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {Img,Titulo,Cuerpo,Seccion,Input,InputF,Button,Formato} from './styles';
+import { Redirect } from "react-router-dom";
+import {
+  Img,
+  Titulo,
+  Cuerpo,
+  Seccion,
+  Input,
+  InputF,
+  Button,
+  Formato,
+} from "./styles";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../../schemas/loginSchema";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions/sessionAction";
+import { useUser } from "../../shared/hooks/useUser";
 
-toast.configure({
-  autoClose: 2000,
-  draggable: false,
-  position: toast.POSITION.BOTTOM_RIGHT,
-});
-
-function Login(props) {
-  const { history } = props;
-  const { register, handleSubmit, errors } = useForm();
-  const estado = useSelector((state) => state);
+function Login() {
   const dispatch = useDispatch();
+  const { redirectTo } = useUser();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
 
-  const onSubmit = (data, event) => {
-    login(data);
+  const onSubmit = (data) => {
+    dispatch(login(data.username, data.password));
   };
 
-  const notify = (error) =>
-    toast(error, {
-      type: toast.TYPE.ERROR,
-      toastId: 1,
-    });
-
-  const login = (data) => {
-    axios
-      .get(`http://localhost/SGH-BackEnd/api/usuarios/${data["username"]}`)
-      .then((response) => {
-        if (response.data.data[0]["Usuario"] === data["username"]) {
-          if (response.data.data[0]["contrasena"] === data["password"]) {
-            if (response.data.data[0]["TipoUser"] === "1") {
-              dispatch({
-                type: "SET_USUARIO",
-                payload: response.data.data[0],
-              });
-              history.push("/Administrador");
-            } else {
-              if (response.data.data[0]["TipoUser"] === "2") {
-                dispatch({
-                  type: "SET_USUARIO",
-                  payload: response.data.data[0],
-                });
-
-                history.push("/Maestro");
-              } else {
-                dispatch({
-                  type: "SET_USUARIO",
-                  payload: response.data.data[0],
-                });
-
-                history.push("/Alumno");
-              }
-            }
-          } else {
-            notify("contraseña invalida");
-          }
-        } else {
-          notify("usuario y contraseña invalida");
-        }
-      })
-      .catch((error) => notify("Error al conectarse al servidor"));
-  };
+  if (redirectTo) {
+    return <Redirect to={redirectTo} />;
+  }
   return (
     <div className="container-fluid">
       <div className="row">
@@ -143,4 +107,4 @@ function Login(props) {
   );
 }
 
-export default withRouter(Login);
+export default Login;
