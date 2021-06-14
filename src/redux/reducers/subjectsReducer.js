@@ -23,6 +23,7 @@ const subjectReducer = (state = initialState, { type, payload }) => {
         isError: true,
         errorMessage: payload,
         isLoading: false,
+        subjects: null
       });
     case Subject.GET_SUBJECTS:
       return (state = {
