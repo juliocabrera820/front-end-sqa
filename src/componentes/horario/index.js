@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import { HorarioStyled, A }from './styles'
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import ItemHorario from "../../componentes/itemHorario";
 import { useUser } from "../../shared/hooks/useUser";
@@ -8,15 +8,6 @@ import { BASE_API_URL } from "../../shared/consts/envar";
 import axios from "axios";
 import notificacion from "../../componentes/notificacion";
 
-export const HorarioStyled = styled.div`
-  margin: 4rem 5% 5% 5%;
-`;
-
-export const A = styled.div`
-  font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 2em;
-  opacity: 0.85;
-`;
 
 const Horario = () => {
   const [currentSchedule, setcurrentSchedule] = useState([]);
@@ -26,7 +17,7 @@ const Horario = () => {
 
   useEffect(() => {
     setcurrentSchedule([]);
-    if (currentGroup) {
+    if (currentGroup !== "Selecciona un grupo") {
       getSchedule();
     }
   }, [currentGroup]);
