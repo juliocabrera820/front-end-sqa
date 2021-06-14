@@ -16,7 +16,6 @@ export const Button = styled.button`
   margin-left: 30px;
 `;
 
-export const Img = styled.img`
-  width: 50px;
-  margin-right: 20px;
+export const Img = styled.a`
+  margin-left: 4rem;
 `;
