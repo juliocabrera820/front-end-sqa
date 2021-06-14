@@ -36,5 +36,9 @@ export const setCurrentGroup = (group,token) => (dispatch) => {
     type: Group.SET_CURRENT_GROUP,
     payload: group,
   });
-  dispatch(getSubjects(group, token));
+  if (group !== "Selecciona un grupo"){
+    dispatch(getSubjects(group, token));
+  }else{
+    notificacion("Debes seleccionar un grupo", "warning", 1)
+  }
 };
