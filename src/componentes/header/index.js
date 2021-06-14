@@ -1,4 +1,5 @@
 import React from "react";
+import "./header.css";
 import { useDispatch } from "react-redux";
 import { useUser } from "../../shared/hooks/useUser";
 import calendar from "../../assets/calendar.png";
@@ -21,9 +22,9 @@ const Header = () => {
       <a>
         <Img src={calendar}></Img>SISTEMA DE HORARIOS
       </a>
-      <div className="navbar">
-        <a>{`${currentUser.nombres} ${currentUser.apellidos}`}</a>
-        <div className="form-inline">
+      <div className="navbar navbar-user">
+        <a className="mx-auto">{`${currentUser.nombres} ${currentUser.apellidos}`}</a>
+        <div className="mx-auto form-inline">
           <Button className="btn btn-light" onClick={salir}>
             Cerrar sesion
           </Button>

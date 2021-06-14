@@ -1,0 +1,19 @@
+@media (max-width: 1200px) {
+    .navbar-user {
+        margin-left: 10px;
+        margin: auto;
+    }
+}
+
+@media (max-width: 580px) {
+    .navbar-user {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 580px) {
+    a {
+        margin: auto;
+    }
+}
