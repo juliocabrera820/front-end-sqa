@@ -5,6 +5,14 @@ export const Img = styled.img`
   object-position: center center;
   width: 100%;
   height: 750px;
+  @media (max-width: 991px) {
+    width: 98%;
+    position: absolute;
+    opacity: .3;
+  }
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `;
 
 export const Titulo = styled.div`
