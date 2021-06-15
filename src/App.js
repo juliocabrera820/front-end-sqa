@@ -5,15 +5,31 @@ import vistaAdmin from "./paginas/vistaAdmin";
 import vistaprofes from "./paginas/vistaProfes";
 import NotFound from "./paginas/NotFound";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import {RutaAdministrador,RutaAlumno,RutaMaestro} from './rutas';
+import PrivateRoute from "./shared/routes";
+import Role from "./shared/roles";
 
 const App = () => (
   <Router>
     <Switch>
       <Route exact path="/" component={login} />
-      <RutaMaestro exact path="/Maestro" component={vistaprofes} />
-      <RutaAlumno exact path="/Alumno" component={vistaAlumno} />
-      <RutaAdministrador exact path="/Administrador" component={vistaAdmin} />
+      <PrivateRoute
+        exact
+        path="/maestro"
+        roles={[Role["Maestro"]]}
+        component={vistaprofes}
+      />
+      <PrivateRoute
+        exact
+        path="/alumno"
+        roles={[Role["Administrador"]]}
+        component={vistaAlumno}
+      />
+      <PrivateRoute
+        exact
+        path="/administrador"
+        roles={[Role["Alumno"]]}
+        component={vistaAdmin}
+      />
       <Route component={NotFound} />
     </Switch>
   </Router>

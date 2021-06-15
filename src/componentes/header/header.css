@@ -1,0 +1,23 @@
+@media (max-width: 1200px) {
+    .navbar-user {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 750px) {
+    a {
+        margin: auto;
+    }
+    .navbar-user {
+        margin: auto;
+    }
+}
+
+@media (max-width: 580px) {
+    .navbar-user {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+}
+
