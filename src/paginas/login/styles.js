@@ -4,11 +4,11 @@ export const Img = styled.img`
   object-fit: cover;
   object-position: center center;
   width: 100%;
-  height: 750px;
+  height: 100vh;
   @media (max-width: 991px) {
     width: 98%;
     position: absolute;
-    opacity: .3;
+    opacity: 0.3;
   }
   @media (max-width: 768px) {
     width: 95%;
@@ -28,10 +28,7 @@ export const Cuerpo = styled.div`
   margin-bottom: 10px;
 `;
 
-export const Seccion = styled.div`
-  margin: 0 auto;
-  margin-top: 15%;
-`;
+export const Seccion = styled.div``;
 
 export const InputF = styled.div`
   padding: 15px;
