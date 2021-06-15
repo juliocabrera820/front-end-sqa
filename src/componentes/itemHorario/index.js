@@ -2,7 +2,7 @@ import React from "react";
 import { Item, Div, Hora, Aula, Maestro } from "./styles";
 
 const itemHorario = ({ hora, aula, profesor }) => {
-  if (hora === "" || aula === "") {
+  if (hora === undefined || aula === undefined) {
     return <div></div>;
   } else {
     return (
