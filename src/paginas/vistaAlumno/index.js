@@ -8,6 +8,7 @@ import ItemHorario from "../../componentes/itemHorario";
 import Header from "../../componentes/header";
 import { Horario, A } from "./styles";
 import { useUser } from "../../shared/hooks/useUser";
+import alumnosService from "../../services/alumnosService";
 
 const VistaAlumno = () => {
   const { currentUser, token } = useUser();
@@ -22,12 +23,30 @@ const VistaAlumno = () => {
     return hora?.slice(0, 5);
   };
 
+  const generatePDF = () => {
+    alumnosService()
+      .generatePDF(currentUser.id, token)
+      .then((response) => goToSchedule(response.data))
+      .catch((error) => console.log(error));
+  };
+
+  const goToSchedule = ({ link }) => {
+    window.open(link, '_blank')
+  };
+
   return (
     <div>
       <div>
         <Header />
         <Horario>
           <A>Consulta tu horario</A>
+          <button
+            onClick={generatePDF}
+            disabled={!currentSchedule}
+            className="btn btn-outline-dark mb-3"
+          >
+            Generar Horario
+          </button>
           <Table>
             <Thead>
               <Tr>
