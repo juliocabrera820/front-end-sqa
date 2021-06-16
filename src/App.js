@@ -7,6 +7,8 @@ import NotFound from "./paginas/NotFound";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import PrivateRoute from "./shared/routes";
 import Role from "./shared/roles";
+import Group from "./paginas/Grupos";
+import ListStudents from "./paginas/ListaAlumnos";
 
 const App = () => (
   <Router>
@@ -15,21 +17,33 @@ const App = () => (
       <PrivateRoute
         exact
         path="/maestro"
-        roles={[Role["Maestro"]]}
+        roles={[Role["Profesor"]]}
         component={vistaprofes}
       />
       <PrivateRoute
         exact
         path="/alumno"
-        roles={[Role["Administrador"]]}
+        roles={[Role["Alumno"]]}
         component={vistaAlumno}
       />
       <PrivateRoute
         exact
         path="/administrador"
-        roles={[Role["Alumno"]]}
+        roles={[Role["Administrador"]]}
         component={vistaAdmin}
       />
+      <PrivateRoute
+        exact
+        path="/grupos"
+        roles={[Role["Administrador"]]}
+        component={Group}
+      ></PrivateRoute>
+      <PrivateRoute
+        exact
+        path="/grupo/:id"
+        roles={[Role["Administrador"]]}
+        component={ListStudents}
+      ></PrivateRoute>
       <Route component={NotFound} />
     </Switch>
   </Router>
