@@ -16,9 +16,18 @@ function alumnosService() {
       url: `/alumnos/${id}/horarios`,
     });
   }
+  function generatePDF(id, token) {
+    return axios({
+      baseURL: BASE_API_URL,
+      method: "GET",
+      url: `/alumnos/${id}/imprimir`,
+      headers: { Authorization: token },
+    });
+  }
   return {
     getOne,
     getHorario,
+    generatePDF
   };
 }
 
