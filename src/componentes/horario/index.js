@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { HorarioStyled, A }from './styles'
+import { HorarioStyled, A } from "./styles";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import ItemHorario from "../../componentes/itemHorario";
 import { useUser } from "../../shared/hooks/useUser";
 import { BASE_API_URL } from "../../shared/consts/envar";
 import axios from "axios";
 import notificacion from "../../componentes/notificacion";
-
 
 const Horario = () => {
   const [currentSchedule, setcurrentSchedule] = useState([]);
@@ -58,9 +57,16 @@ const Horario = () => {
       });
     }
   };
+
+  const refresh = () => {
+    getSchedule();
+  };
   return (
     <HorarioStyled>
       <A>Horario del grupo: {currentGroup}</A>
+      <button className="btn btn-info" onClick={refresh}>
+        Actualizar
+      </button>
       <Table>
         <Thead>
           <Tr>

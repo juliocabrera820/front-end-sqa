@@ -3,7 +3,16 @@ import moment from "moment";
 import ItemMateria from "../itemMateria";
 import ItemHora from "../itemHora";
 import "./horarios.css";
-import { Div, Item, Input, Button, ButtonDanger, Select, Text, Titulo } from "./styles";
+import {
+  Div,
+  Item,
+  Input,
+  Button,
+  ButtonDanger,
+  Select,
+  Text,
+  Titulo,
+} from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroups, setCurrentGroup } from "../../redux/actions/groupAction";
 import { getClassrooms } from "../../redux/actions/classroomAction";
@@ -21,11 +30,11 @@ const CreacionHorarios = () => {
   const { teachers, currentTeacher } = useSelector((state) => state.teacher);
   const { newSchedule } = useSelector((state) => state.schedule);
   const [checkbox, setCheckbox] = useState({
-    lunes: true,
-    martes: true,
-    miercoles: true,
-    jueves: true,
-    viernes: true,
+    Lunes: true,
+    Martes: true,
+    Miercoles: true,
+    Jueves: true,
+    Viernes: true,
   });
 
   const dispatch = useDispatch();
@@ -93,7 +102,9 @@ const CreacionHorarios = () => {
     console.log(newSchedule);
 
     for (const property in newSchedule) {
+      console.log(property);
       console.log(newSchedule[property]);
+      console.log(checkbox[property]);
       if (!encabezado && !checkbox[property])
         if (
           validarHoras(property) &&
@@ -177,13 +188,13 @@ const CreacionHorarios = () => {
             </Select>
 
             <Item className=" col-xl-2">
-              <ItemHora dia="Lunes" status={checkbox.lunes} />
+              <ItemHora dia="Lunes" status={checkbox.Lunes} />
               <div className="form-check ">
                 <Input
                   type="checkbox"
                   className="form-check-input"
                   onChange={(e) =>
-                    setCheckbox({ ...checkbox, lunes: !checkbox.lunes })
+                    setCheckbox({ ...checkbox, Lunes: !checkbox.Lunes })
                   }
                 ></Input>
                 <label className="form-check-label">
@@ -192,13 +203,13 @@ const CreacionHorarios = () => {
               </div>
             </Item>
             <Item className=" col-xl-2">
-              <ItemHora dia="Martes" status={checkbox.martes} />
+              <ItemHora dia="Martes" status={checkbox.Martes} />
               <div className="form-check ">
                 <Input
                   type="checkbox"
                   className="form-check-input"
                   onChange={(e) =>
-                    setCheckbox({ ...checkbox, martes: !checkbox.martes })
+                    setCheckbox({ ...checkbox, Martes: !checkbox.Martes })
                   }
                 ></Input>
                 <label className="form-check-label">
@@ -207,13 +218,13 @@ const CreacionHorarios = () => {
               </div>
             </Item>
             <Item className=" col-xl-2">
-              <ItemHora dia="Miercoles" status={checkbox.miercoles} />
+              <ItemHora dia="Miercoles" status={checkbox.Miercoles} />
               <div className="form-check ">
                 <Input
                   type="checkbox"
                   className="form-check-input"
                   onChange={(e) =>
-                    setCheckbox({ ...checkbox, miercoles: !checkbox.miercoles })
+                    setCheckbox({ ...checkbox, Miercoles: !checkbox.Miercoles })
                   }
                 ></Input>
                 <label className="form-check-label">
@@ -222,13 +233,13 @@ const CreacionHorarios = () => {
               </div>
             </Item>
             <Item className=" col-xl-2">
-              <ItemHora dia="Jueves" status={checkbox.jueves} />
+              <ItemHora dia="Jueves" status={checkbox.Jueves} />
               <div className="form-check ">
                 <Input
                   type="checkbox"
                   className="form-check-input"
                   onChange={(e) =>
-                    setCheckbox({ ...checkbox, jueves: !checkbox.jueves })
+                    setCheckbox({ ...checkbox, Jueves: !checkbox.Jueves })
                   }
                 ></Input>
                 <label className="form-check-label">
@@ -237,13 +248,13 @@ const CreacionHorarios = () => {
               </div>
             </Item>
             <Item className="col-xl-2">
-              <ItemHora dia="Viernes" status={checkbox.viernes} />
+              <ItemHora dia="Viernes" status={checkbox.Viernes} />
               <div className="form-check">
                 <Input
                   type="checkbox"
                   className="form-check-input"
                   onChange={(e) =>
-                    setCheckbox({ ...checkbox, viernes: !checkbox.viernes })
+                    setCheckbox({ ...checkbox, Viernes: !checkbox.Viernes })
                   }
                 ></Input>
                 <label className="form-check-label">
