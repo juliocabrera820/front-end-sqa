@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import menu from "../../assets/list.svg";
 import close from "../../assets/close.svg";
+import { Link } from "react-router-dom";
 
 const Img = styled.img`
   width: 2.5rem;
@@ -73,15 +74,15 @@ const Sidebar = () => {
       <Container isActive={isActive} onClick={handleClose}>
         <SidebarStyled isActive={isActive}>
           <img src={close} onClick={handleClose} />
-          <p id="home" className="menu-title">
+          <Link className="menu-title" to="/administrador">
             Menú
-          </p>
-          <a id="about" className="menu-item" href="/grupos">
+          </Link>
+          <Link className="menu-item" to="/grupos">
             Administrar Grupos
-          </a>
-          <a id="contact" className="menu-item" href="/administrador">
+          </Link>
+          <Link className="menu-item" to="/administrador">
             Crear Horarios
-          </a>
+          </Link>
         </SidebarStyled>
       </Container>
     </React.Fragment>
