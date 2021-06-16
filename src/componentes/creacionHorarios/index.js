@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import ItemMateria from "../itemMateria";
 import ItemHora from "../itemHora";
-import { Div, Item, Input, Button, Select, Text, Titulo } from "./styles";
+import "./horarios.css";
+import { Div, Item, Input, Button, ButtonDanger, Select, Text, Titulo } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroups, setCurrentGroup } from "../../redux/actions/groupAction";
 import { getClassrooms } from "../../redux/actions/classroomAction";
@@ -177,7 +178,7 @@ const CreacionHorarios = () => {
 
             <Item className=" col-xl-2">
               <ItemHora dia="Lunes" status={checkbox.lunes} />
-              <div className="form-check form-check-inline">
+              <div className="form-check ">
                 <Input
                   type="checkbox"
                   className="form-check-input"
@@ -192,7 +193,7 @@ const CreacionHorarios = () => {
             </Item>
             <Item className=" col-xl-2">
               <ItemHora dia="Martes" status={checkbox.martes} />
-              <div className="form-check form-check-inline">
+              <div className="form-check ">
                 <Input
                   type="checkbox"
                   className="form-check-input"
@@ -207,7 +208,7 @@ const CreacionHorarios = () => {
             </Item>
             <Item className=" col-xl-2">
               <ItemHora dia="Miercoles" status={checkbox.miercoles} />
-              <div className="form-check form-check-inline">
+              <div className="form-check ">
                 <Input
                   type="checkbox"
                   className="form-check-input"
@@ -222,7 +223,7 @@ const CreacionHorarios = () => {
             </Item>
             <Item className=" col-xl-2">
               <ItemHora dia="Jueves" status={checkbox.jueves} />
-              <div className="form-check form-check-inline">
+              <div className="form-check ">
                 <Input
                   type="checkbox"
                   className="form-check-input"
@@ -235,9 +236,9 @@ const CreacionHorarios = () => {
                 </label>
               </div>
             </Item>
-            <Item className=" col-xl-2">
+            <Item className="col-xl-2">
               <ItemHora dia="Viernes" status={checkbox.viernes} />
-              <div className="form-check form-check-inline">
+              <div className="form-check">
                 <Input
                   type="checkbox"
                   className="form-check-input"
@@ -250,9 +251,9 @@ const CreacionHorarios = () => {
                 </label>
               </div>
             </Item>
-            <div className=" col-xl-2 row">
-              <Titulo className="col-12 align-self-start">Opciones</Titulo>
-              <div className="col-12 align-self-center">
+            <div className="col-xl-2 row">
+              <Titulo className="col-12 text-center">Opciones</Titulo>
+              <div className="col-12 text-center">
                 <Button
                   className="btn btn-success"
                   onClick={(e) => crearHorario()}
@@ -260,8 +261,8 @@ const CreacionHorarios = () => {
                   Aceptar
                 </Button>
               </div>
-              <div className="col-12 align-self-center">
-                <Button className="btn btn-danger">Cancelar</Button>
+              <div className="col-12 text-center">
+                <ButtonDanger className="btn btn-danger">Cancelar</ButtonDanger>
               </div>
             </div>
           </div>

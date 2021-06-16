@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Div = styled.div`
   height: 100px;
-  margin-botton: 0px;
+  margin-bottom: 0px;
 `;
 
 export const Item = styled.div`
@@ -10,6 +10,13 @@ export const Item = styled.div`
 `;
 
 export const Button = styled.button``;
+
+export const ButtonDanger = styled.button` 
+  @media (max-width: 1200px) {
+   margin-top: 10px;
+   margin-bottom: 10px;
+  }
+`;
 
 export const Select = styled.div`
   font-family: "Yanone Kaffeesatz", sans-serif;

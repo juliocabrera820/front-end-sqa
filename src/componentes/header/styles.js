@@ -14,6 +14,9 @@ export const Button = styled.button`
   border: none;
   color: black;
   margin-left: 30px;
+  @media (max-width: 768px) {
+    margin-left: 0;
+   }
 `;
 
 export const Img = styled.a`

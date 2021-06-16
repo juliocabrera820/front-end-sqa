@@ -1,4 +1,5 @@
 import React from "react";
+import "./header.css";
 import { useDispatch } from "react-redux";
 import { useUser } from "../../shared/hooks/useUser";
 import calendar from "../../assets/calendar.png";

@@ -36,10 +36,13 @@ function Login() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-5">
-          <Img src={imagen} alt="imagen"></Img>
+        <div className="col-lg-5 overflow-hidden">
+          <Img src={imagen} alt="imagen" />
         </div>
-        <div className="col-7 ">
+        <div
+          className="col-lg-7 d-flex justify-content-center align-items-center"
+          style={{ height: "100vh" }}
+        >
           <Seccion className="col-sm-8 ">
             <Titulo className="col-12 text-center">BIENVENIDO</Titulo>
 
