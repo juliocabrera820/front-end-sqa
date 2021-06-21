@@ -1,9 +1,35 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Horas, Minutos } from "../../utils/horarios";
 import { Item, Label, Titulo } from "./styles";
+import {
+  selectClassroom,
+  selectStartHour,
+  selectStartMinutes,
+  selectFinishHour,
+  selectFinishMinutes,
+} from "../../redux/actions/scheduleAction";
 
-const itemHora = (props) => {
-  const { Dia, hi, hf, mi, mf } = props;
+const ItemHora = (props) => {
+  const dispatch = useDispatch();
+
+  const { classrooms } = useSelector((state) => state.classroom);
+
+  const setClassrom = (day, classroom) => {
+    dispatch(selectClassroom(day, classroom));
+  };
+  const setStartHour = (day, sh) => {
+    dispatch(selectStartHour(day, sh));
+  };
+  const setStartMinutes = (day, sm) => {
+    dispatch(selectStartMinutes(day, sm));
+  };
+  const setFinishHour = (day, fs) => {
+    dispatch(selectFinishHour(day, fs));
+  };
+  const setFinishMinutes = (day, fm) => {
+    dispatch(selectFinishMinutes(day, fm));
+  };
 
   return (
     <Item className="row">
@@ -13,13 +39,13 @@ const itemHora = (props) => {
         <select
           className="form-control"
           disabled={props.status}
-          onChange={(e) => Dia(props.dia, e.currentTarget.value)}
+          onChange={(e) => setClassrom(props.dia, e.currentTarget.value)}
         >
           <option>Selecciona un salón</option>
-          {props.aulas.map((a) => {
+          {classrooms?.map((a) => {
             return (
-              <option key={a.Clv_Aula} value={a.Clv_Aula}>
-                {a.Clv_Aula}
+              <option key={a.nombre} value={a.nombre}>
+                {a.nombre}
               </option>
             );
           })}
@@ -30,7 +56,7 @@ const itemHora = (props) => {
         <select
           className="col-6 form-control-sm"
           disabled={props.status}
-          onChange={(e) => hi(props.dia, e.currentTarget.value)}
+          onChange={(e) => setStartHour(props.dia, e.currentTarget.value)}
         >
           {Horas.map((h) => {
             return <option key={h.hora}>{h.hora}</option>;
@@ -39,7 +65,7 @@ const itemHora = (props) => {
         <select
           className="col-6 form-control-sm"
           disabled={props.status}
-          onChange={(e) => mi(props.dia, e.currentTarget.value)}
+          onChange={(e) => setStartMinutes(props.dia, e.currentTarget.value)}
         >
           {Minutos.map((h) => {
             return <option key={h.minutos}>{h.minutos}</option>;
@@ -51,7 +77,7 @@ const itemHora = (props) => {
         <select
           className="col-6 form-control-sm"
           disabled={props.status}
-          onChange={(e) => hf(props.dia, e.currentTarget.value)}
+          onChange={(e) => setFinishHour(props.dia, e.currentTarget.value)}
         >
           {Horas.map((h) => {
             return <option key={h.hora}>{h.hora}</option>;
@@ -60,7 +86,7 @@ const itemHora = (props) => {
         <select
           className="col-6 form-control-sm"
           disabled={props.status}
-          onChange={(e) => mf(props.dia, e.currentTarget.value)}
+          onChange={(e) => setFinishMinutes(props.dia, e.currentTarget.value)}
         >
           {Minutos.map((h) => {
             return <option key={h.minutos}>{h.minutos}</option>;
@@ -71,4 +97,4 @@ const itemHora = (props) => {
   );
 };
 
-export default itemHora;
+export default ItemHora;
